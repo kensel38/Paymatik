@@ -1,0 +1,573 @@
+﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
+  <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E2A490F8-0742-47AE-B236-14B274A471C2}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Paymatik_WebAdmin</RootNamespace>
+    <AssemblyName>Paymatik_WebAdmin</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort>44336</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="EPPlus, Version=7.7.0.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.7.7.0\lib\net462\EPPlus.dll</HintPath>
+    </Reference>
+    <Reference Include="EPPlus.Interfaces, Version=8.0.0.0, Culture=neutral, PublicKeyToken=a694d7f3b0907a61, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.Interfaces.8.0.0\lib\net462\EPPlus.Interfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="EPPlus.System.Drawing, Version=8.0.0.0, Culture=neutral, PublicKeyToken=2308d35469c9bac0, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.System.Drawing.8.0.0\lib\net462\EPPlus.System.Drawing.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.IO.RecyclableMemoryStream, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.IO.RecyclableMemoryStream.3.0.1\lib\netstandard2.0\Microsoft.IO.RecyclableMemoryStream.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.5.1\lib\net461\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ComponentModel.Annotations.5.0.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Drawing.Common, Version=9.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Drawing.Common.9.0.1\lib\net462\System.Drawing.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.5\lib\net461\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\net461\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Security" />
+    <Reference Include="System.Security.Cryptography.Xml, Version=8.0.0.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Security.Cryptography.Xml.8.0.2\lib\net462\System.Security.Cryptography.Xml.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System.Web.Razor">
+      <HintPath>..\packages\Microsoft.AspNet.Razor.3.2.9\lib\net45\System.Web.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Webpages">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.9\lib\net45\System.Web.Webpages.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Webpages.Deployment">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.9\lib\net45\System.Web.Webpages.Deployment.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Webpages.Razor">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.9\lib\net45\System.Web.Webpages.Razor.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Helpers">
+      <HintPath>..\packages\Microsoft.AspNet.Webpages.3.2.9\lib\net45\System.Web.Helpers.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Web.Infrastructure">
+      <HintPath>..\packages\Microsoft.Web.Infrastructure.2.0.1\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Mvc">
+      <HintPath>..\packages\Microsoft.AspNet.Mvc.5.2.9\lib\net45\System.Web.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
+      <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\css\adminlte.min.css" />
+    <Content Include="Content\css\BinaGorsel.css" />
+    <Content Include="Content\datatables\bootstrap\js\bootstrap.bundle.js" />
+    <Content Include="Content\datatables\bootstrap\js\bootstrap.bundle.min.js" />
+    <Content Include="Content\datatables\bootstrap\js\bootstrap.js" />
+    <Content Include="Content\datatables\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Content\datatables\datatables-bs4\css\dataTables.bootstrap4.css" />
+    <Content Include="Content\datatables\datatables-bs4\css\dataTables.bootstrap4.min.css" />
+    <Content Include="Content\datatables\datatables-bs4\js\dataTables.bootstrap4.js" />
+    <Content Include="Content\datatables\datatables-bs4\js\dataTables.bootstrap4.min.js" />
+    <Content Include="Content\datatables\datatables-buttons\css\buttons.bootstrap4.css" />
+    <Content Include="Content\datatables\datatables-buttons\css\buttons.bootstrap4.min.css" />
+    <Content Include="Content\datatables\datatables-buttons\js\buttons.bootstrap4.js" />
+    <Content Include="Content\datatables\datatables-buttons\js\buttons.bootstrap4.min.js" />
+    <Content Include="Content\datatables\datatables-buttons\js\buttons.colVis.js" />
+    <Content Include="Content\datatables\datatables-buttons\js\buttons.colVis.min.js" />
+    <Content Include="Content\datatables\datatables-buttons\js\buttons.flash.js" />
+    <Content Include="Content\datatables\datatables-buttons\js\buttons.flash.min.js" />
+    <Content Include="Content\datatables\datatables-buttons\js\buttons.html5.js" />
+    <Content Include="Content\datatables\datatables-buttons\js\buttons.html5.min.js" />
+    <Content Include="Content\datatables\datatables-buttons\js\buttons.print.js" />
+    <Content Include="Content\datatables\datatables-buttons\js\buttons.print.min.js" />
+    <Content Include="Content\datatables\datatables-buttons\js\dataTables.buttons.js" />
+    <Content Include="Content\datatables\datatables-buttons\js\dataTables.buttons.min.js" />
+    <Content Include="Content\datatables\datatables-responsive\css\responsive.bootstrap4.css" />
+    <Content Include="Content\datatables\datatables-responsive\css\responsive.bootstrap4.min.css" />
+    <Content Include="Content\datatables\datatables-responsive\js\dataTables.responsive.js" />
+    <Content Include="Content\datatables\datatables-responsive\js\dataTables.responsive.min.js" />
+    <Content Include="Content\datatables\datatables-responsive\js\responsive.bootstrap4.js" />
+    <Content Include="Content\datatables\datatables-responsive\js\responsive.bootstrap4.min.js" />
+    <Content Include="Content\datatables\datatables\jquery.dataTables.js" />
+    <Content Include="Content\datatables\datatables\jquery.dataTables.min.js" />
+    <Content Include="Content\datatables\jquery\jquery.js" />
+    <Content Include="Content\datatables\jquery\jquery.min.js" />
+    <Content Include="Content\datatables\jquery\jquery.slim.js" />
+    <Content Include="Content\datatables\jquery\jquery.slim.min.js" />
+    <Content Include="Content\datatables\jszip\jszip.js" />
+    <Content Include="Content\datatables\jszip\jszip.min.js" />
+    <Content Include="Content\datatables\pdfmake\pdfmake.js" />
+    <Content Include="Content\datatables\pdfmake\pdfmake.min.js" />
+    <Content Include="Content\datatables\pdfmake\vfs_fonts.js" />
+    <Content Include="Content\img\cati.png" />
+    <Content Include="Content\img\favicon.ico" />
+    <Content Include="Content\img\loader.gif" />
+    <Content Include="Content\img\logo.png" />
+    <Content Include="Content\img\Mata_Logo.png" />
+    <Content Include="Content\img\user_avatar.jpg" />
+    <Content Include="Content\inputmask\inputmask.es6.js" />
+    <Content Include="Content\inputmask\inputmask.js" />
+    <Content Include="Content\inputmask\inputmask.min.js" />
+    <Content Include="Content\inputmask\jquery.inputmask.js" />
+    <Content Include="Content\inputmask\jquery.inputmask.min.js" />
+    <Content Include="Content\js\additional-methods.min.js" />
+    <Content Include="Content\js\adminlte.min.js" />
+    <Content Include="Content\js\demo.js" />
+    <Content Include="Content\js\jquery.unobtrusive-ajax.js" />
+    <Content Include="Content\js\jquery.validate.min.js" />
+    <Content Include="Content\js\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Content\js\moment.min.js" />
+    <Content Include="Content\leaflet_files\Custom.css" />
+    <Content Include="Content\leaflet_files\images\folder.svg" />
+    <Content Include="Content\leaflet_files\images\layers-2x.png" />
+    <Content Include="Content\leaflet_files\images\layers.png" />
+    <Content Include="Content\leaflet_files\images\marker-icon-2x.png" />
+    <Content Include="Content\leaflet_files\images\marker-icon.png" />
+    <Content Include="Content\leaflet_files\images\marker-shadow.png" />
+    <Content Include="Content\leaflet_files\leaflet-src.esm.js" />
+    <Content Include="Content\leaflet_files\leaflet-src.js" />
+    <Content Include="Content\leaflet_files\leaflet.css" />
+    <Content Include="Content\leaflet_files\leaflet.js" />
+    <Content Include="Content\leaflet_files\plugins\CustomIcon\images\leaf-green.png" />
+    <Content Include="Content\leaflet_files\plugins\CustomIcon\images\leaf-shadow.png" />
+    <Content Include="Content\leaflet_files\plugins\DrawToolbar\ColorPicker.js" />
+    <Content Include="Content\leaflet_files\plugins\DrawToolbar\deps\leaflet-draw\dist\images\spritesheet-2x.png" />
+    <Content Include="Content\leaflet_files\plugins\DrawToolbar\deps\leaflet-draw\dist\images\spritesheet.png" />
+    <Content Include="Content\leaflet_files\plugins\DrawToolbar\deps\leaflet-draw\dist\images\spritesheet.svg" />
+    <Content Include="Content\leaflet_files\plugins\DrawToolbar\deps\leaflet-draw\dist\leaflet.draw-src.js" />
+    <Content Include="Content\leaflet_files\plugins\DrawToolbar\deps\leaflet-draw\dist\leaflet.draw.css" />
+    <Content Include="Content\leaflet_files\plugins\DrawToolbar\deps\leaflet-toolbar\dist\leaflet.toolbar-src.js" />
+    <Content Include="Content\leaflet_files\plugins\DrawToolbar\deps\leaflet-toolbar\dist\leaflet.toolbar.css" />
+    <Content Include="Content\leaflet_files\plugins\DrawToolbar\dist\images\spritesheet-2x.png" />
+    <Content Include="Content\leaflet_files\plugins\DrawToolbar\dist\images\spritesheet.png" />
+    <Content Include="Content\leaflet_files\plugins\DrawToolbar\dist\leaflet.draw-toolbar.css" />
+    <Content Include="Content\leaflet_files\plugins\DrawToolbar\dist\leaflet.draw-toolbar.js" />
+    <Content Include="Content\leaflet_files\plugins\Dropdown\dist\css\dd.css" />
+    <Content Include="Content\leaflet_files\plugins\Dropdown\dist\css\flags.css" />
+    <Content Include="Content\leaflet_files\plugins\Dropdown\dist\images\icons\Amex-56.png" />
+    <Content Include="Content\leaflet_files\plugins\Dropdown\dist\images\icons\Discover-56.png" />
+    <Content Include="Content\leaflet_files\plugins\Dropdown\dist\images\icons\Mastercard-56.png" />
+    <Content Include="Content\leaflet_files\plugins\Dropdown\dist\js\dd.min.js" />
+    <Content Include="Content\leaflet_files\plugins\Dropdown\dist\js\dd.min.js.LICENSE.txt" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet-Opencage-Search\css\L.Control.OpenCageSearch.css" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet-Opencage-Search\images\geocoder.png" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet-Opencage-Search\images\spinner.gif" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet-Opencage-Search\js\L.Control.OpenCageSearch.js" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet-Providers\leaflet-providers.js" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet-Sidebar\L.Control.Sidebar.css" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet-Sidebar\L.Control.Sidebar.js" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.Awesome-markers\images\markers-matte%402x.png" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.Awesome-markers\images\markers-matte.png" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.Awesome-markers\images\markers-plain.png" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.Awesome-markers\images\markers-shadow%402x.png" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.Awesome-markers\images\markers-shadow.png" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.Awesome-markers\images\markers-soft%402x.png" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.Awesome-markers\images\markers-soft.png" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.Awesome-markers\leaflet.awesome-markers.css" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.Awesome-markers\leaflet.awesome-markers.js" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.Awesome-markers\leaflet.awesome-markers.min.js" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.Draw\Control.Draw.js" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.Draw\copyright.js" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.Draw\draw\DrawToolbar.js" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.Draw\draw\handler\Draw.Circle.js" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.Draw\draw\handler\Draw.CircleMarker.js" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.Draw\draw\handler\Draw.Feature.js" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.Draw\draw\handler\Draw.Marker.js" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.Draw\draw\handler\Draw.Polygon.js" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.Draw\draw\handler\Draw.Polyline.js" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.Draw\draw\handler\Draw.Rectangle.js" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.Draw\draw\handler\Draw.SimpleShape.js" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.Draw\edit\EditToolbar.js" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.Draw\edit\handler\Edit.Circle.js" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.Draw\edit\handler\Edit.CircleMarker.js" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.Draw\edit\handler\Edit.Marker.js" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.Draw\edit\handler\Edit.Poly.js" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.Draw\edit\handler\Edit.Rectangle.js" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.Draw\edit\handler\Edit.SimpleShape.js" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.Draw\edit\handler\EditToolbar.Delete.js" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.Draw\edit\handler\EditToolbar.Edit.js" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.Draw\ext\GeometryUtil.js" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.Draw\ext\LatLngUtil.js" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.Draw\ext\LineUtil.Intersect.js" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.Draw\ext\Polygon.Intersect.js" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.Draw\ext\Polyline.Intersect.js" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.Draw\ext\TouchEvents.js" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.Draw\images\spritesheet-2x.png" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.Draw\images\spritesheet.png" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.Draw\images\spritesheet.svg" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.Draw\leaflet.draw.css" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.Draw\Leaflet.Draw.Event.js" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.Draw\Leaflet.draw.js" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.Draw\Toolbar.js" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.Draw\Tooltip.js" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.EasyButton\easy-button.css" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.EasyButton\easy-button.js" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.Markercluster\leaflet.markercluster.js" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.Markercluster\MarkerCluster.css" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.Markercluster\MarkerCluster.Default.css" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.MousePosition\L.Control.MousePosition.css" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.MousePosition\L.Control.MousePosition.js" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.Pancontrol\images\pan-down.png" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.Pancontrol\images\pan-left.png" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.Pancontrol\images\pan-right.png" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.Pancontrol\images\pan-up.png" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.Pancontrol\L.Control.Pan.css" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.Pancontrol\L.Control.Pan.ie.css" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.Pancontrol\L.Control.Pan.js" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.Pancontrol\L.Control.Zoominfo.css" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.Pancontrol\L.Control.Zoominfo.js" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.Pancontrol\L.Control.Zoomslider.css" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.Pancontrol\L.Control.Zoomslider.js" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.PolylineMeasure\Leaflet.PolylineMeasure.css" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.PolylineMeasure\Leaflet.PolylineMeasure.js" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.StyleEditor\css\Leaflet.StyleEditor.min.css" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.StyleEditor\img\control.svg" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.StyleEditor\img\icon.png" />
+    <Content Include="Content\leaflet_files\plugins\Leaflet.StyleEditor\javascript\Leaflet.StyleEditor.min.js" />
+    <Content Include="Content\leaflet_files\plugins\OSMBuildings\OSMBuildings-Leaflet.js" />
+    <Content Include="Content\leaflet_files\plugins\OSMBuildings\OSMBuildings.css" />
+    <Content Include="Content\leaflet_files\plugins\OSMBuildings\OSMBuildings.debug.js" />
+    <Content Include="Content\leaflet_files\plugins\OSMBuildings\OSMBuildings.js" />
+    <Content Include="Content\leaflet_files\plugins\PulseIcon\L.Icon.Pulse.css" />
+    <Content Include="Content\leaflet_files\plugins\PulseIcon\L.Icon.Pulse.js" />
+    <Content Include="Content\leaflet_files\plugins\wkt-parser\terraformer-1.0.12.min.js" />
+    <Content Include="Content\leaflet_files\plugins\wkt-parser\terraformer-wkt-parser-1.2.1.min.js" />
+    <Content Include="Content\Notes.txt" />
+    <Content Include="Content\plugins\bootstrap-colorpicker\css\bootstrap-colorpicker.css" />
+    <Content Include="Content\plugins\bootstrap-colorpicker\css\bootstrap-colorpicker.min.css" />
+    <Content Include="Content\plugins\bootstrap-colorpicker\js\bootstrap-colorpicker.js" />
+    <Content Include="Content\plugins\bootstrap-colorpicker\js\bootstrap-colorpicker.min.js" />
+    <Content Include="Content\plugins\bootstrap\js\bootstrap.bundle.js" />
+    <Content Include="Content\plugins\bootstrap\js\bootstrap.bundle.min.js" />
+    <Content Include="Content\plugins\bootstrap\js\bootstrap.js" />
+    <Content Include="Content\plugins\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Content\plugins\bs-custom-file-input\bs-custom-file-input.js" />
+    <Content Include="Content\plugins\bs-custom-file-input\bs-custom-file-input.min.js" />
+    <Content Include="Content\plugins\chart.js\Chart.bundle.js" />
+    <Content Include="Content\plugins\chart.js\Chart.bundle.min.js" />
+    <Content Include="Content\plugins\chart.js\Chart.css" />
+    <Content Include="Content\plugins\chart.js\Chart.js" />
+    <Content Include="Content\plugins\chart.js\Chart.min.css" />
+    <Content Include="Content\plugins\chart.js\Chart.min.js" />
+    <Content Include="Content\plugins\colorpicker\colorpicker.css" />
+    <Content Include="Content\plugins\colorpicker\colorpicker.js" />
+    <Content Include="Content\plugins\colorpicker\img\alpha-horizontal.png" />
+    <Content Include="Content\plugins\colorpicker\img\alpha.png" />
+    <Content Include="Content\plugins\colorpicker\img\hue-horizontal.png" />
+    <Content Include="Content\plugins\colorpicker\img\hue.png" />
+    <Content Include="Content\plugins\colorpicker\img\saturation.png" />
+    <Content Include="Content\plugins\colorpicker\jquery-2.2.2.min.js" />
+    <Content Include="Content\plugins\dropzone\basic.css" />
+    <Content Include="Content\plugins\dropzone\basic.min.css" />
+    <Content Include="Content\plugins\dropzone\dropzone-amd-module.js" />
+    <Content Include="Content\plugins\dropzone\dropzone-amd-module.min.js" />
+    <Content Include="Content\plugins\dropzone\dropzone.css" />
+    <Content Include="Content\plugins\dropzone\dropzone.js" />
+    <Content Include="Content\plugins\dropzone\dropzone.min.css" />
+    <Content Include="Content\plugins\dropzone\dropzone.min.js" />
+    <Content Include="Content\plugins\ekko-lightbox\ekko-lightbox.css" />
+    <Content Include="Content\plugins\ekko-lightbox\ekko-lightbox.js" />
+    <Content Include="Content\plugins\ekko-lightbox\ekko-lightbox.min.js" />
+    <Content Include="Content\plugins\fontawesome-free\css\all.css" />
+    <Content Include="Content\plugins\fontawesome-free\css\all.min.css" />
+    <Content Include="Content\plugins\fontawesome-free\css\brands.css" />
+    <Content Include="Content\plugins\fontawesome-free\css\brands.min.css" />
+    <Content Include="Content\plugins\fontawesome-free\css\fontawesome.css" />
+    <Content Include="Content\plugins\fontawesome-free\css\fontawesome.min.css" />
+    <Content Include="Content\plugins\fontawesome-free\css\regular.css" />
+    <Content Include="Content\plugins\fontawesome-free\css\regular.min.css" />
+    <Content Include="Content\plugins\fontawesome-free\css\solid.css" />
+    <Content Include="Content\plugins\fontawesome-free\css\solid.min.css" />
+    <Content Include="Content\plugins\fontawesome-free\css\svg-with-js.css" />
+    <Content Include="Content\plugins\fontawesome-free\css\svg-with-js.min.css" />
+    <Content Include="Content\plugins\fontawesome-free\css\v4-shims.css" />
+    <Content Include="Content\plugins\fontawesome-free\css\v4-shims.min.css" />
+    <Content Include="Content\plugins\fontawesome-free\webfonts\fa-brands-400.svg" />
+    <Content Include="Content\plugins\fontawesome-free\webfonts\fa-regular-400.svg" />
+    <Content Include="Content\plugins\fontawesome-free\webfonts\fa-solid-900.svg" />
+    <Content Include="Content\plugins\jquery\dashboard.js" />
+    <Content Include="Content\plugins\jquery\jquery-ui\images\ui-icons_444444_256x240.png" />
+    <Content Include="Content\plugins\jquery\jquery-ui\images\ui-icons_555555_256x240.png" />
+    <Content Include="Content\plugins\jquery\jquery-ui\images\ui-icons_777620_256x240.png" />
+    <Content Include="Content\plugins\jquery\jquery-ui\images\ui-icons_777777_256x240.png" />
+    <Content Include="Content\plugins\jquery\jquery-ui\images\ui-icons_cc0000_256x240.png" />
+    <Content Include="Content\plugins\jquery\jquery-ui\images\ui-icons_ffffff_256x240.png" />
+    <Content Include="Content\plugins\jquery\jquery-ui\jquery-ui.css" />
+    <Content Include="Content\plugins\jquery\jquery-ui\jquery-ui.js" />
+    <Content Include="Content\plugins\jquery\jquery-ui\jquery-ui.min.css" />
+    <Content Include="Content\plugins\jquery\jquery-ui\jquery-ui.min.js" />
+    <Content Include="Content\plugins\jquery\jquery-ui\jquery-ui.structure.css" />
+    <Content Include="Content\plugins\jquery\jquery-ui\jquery-ui.structure.min.css" />
+    <Content Include="Content\plugins\jquery\jquery-ui\jquery-ui.theme.css" />
+    <Content Include="Content\plugins\jquery\jquery-ui\jquery-ui.theme.min.css" />
+    <Content Include="Content\plugins\jquery\jquery-ui\LICENSE.txt" />
+    <Content Include="Content\plugins\jquery\jquery.js" />
+    <Content Include="Content\plugins\jquery\jquery.min.js" />
+    <Content Include="Content\plugins\jquery\jquery.slim.js" />
+    <Content Include="Content\plugins\jquery\jquery.slim.min.js" />
+    <None Include="Content\plugins\jquery\unobtrusive-ajax\jquery-1.8.0.intellisense.js" />
+    <Content Include="Content\plugins\jquery\unobtrusive-ajax\jquery-1.8.0.js" />
+    <Content Include="Content\plugins\jquery\unobtrusive-ajax\jquery-1.8.0.min.js" />
+    <Content Include="Content\plugins\jquery\unobtrusive-ajax\jquery.unobtrusive-ajax.js" />
+    <Content Include="Content\plugins\jquery\unobtrusive-ajax\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Content\plugins\leaflet\images\layers-2x.png" />
+    <Content Include="Content\plugins\leaflet\images\layers.png" />
+    <Content Include="Content\plugins\leaflet\images\marker-icon-2x.png" />
+    <Content Include="Content\plugins\leaflet\images\marker-icon.png" />
+    <Content Include="Content\plugins\leaflet\images\marker-shadow.png" />
+    <Content Include="Content\plugins\leaflet\leaflet-src.esm.js" />
+    <Content Include="Content\plugins\leaflet\leaflet-src.js" />
+    <Content Include="Content\plugins\leaflet\leaflet.css" />
+    <Content Include="Content\plugins\leaflet\leaflet.js" />
+    <Content Include="Content\plugins\leaflet\plugins\CustomIcon\images\leaf-green.png" />
+    <Content Include="Content\plugins\leaflet\plugins\CustomIcon\images\leaf-shadow.png" />
+    <Content Include="Content\plugins\leaflet\plugins\DrawToolbar\ColorPicker.js" />
+    <Content Include="Content\plugins\leaflet\plugins\DrawToolbar\deps\leaflet-draw\dist\images\spritesheet-2x.png" />
+    <Content Include="Content\plugins\leaflet\plugins\DrawToolbar\deps\leaflet-draw\dist\images\spritesheet.png" />
+    <Content Include="Content\plugins\leaflet\plugins\DrawToolbar\deps\leaflet-draw\dist\images\spritesheet.svg" />
+    <Content Include="Content\plugins\leaflet\plugins\DrawToolbar\deps\leaflet-draw\dist\leaflet.draw-src.js" />
+    <Content Include="Content\plugins\leaflet\plugins\DrawToolbar\deps\leaflet-draw\dist\leaflet.draw.css" />
+    <Content Include="Content\plugins\leaflet\plugins\DrawToolbar\deps\leaflet-toolbar\dist\leaflet.toolbar-src.js" />
+    <Content Include="Content\plugins\leaflet\plugins\DrawToolbar\deps\leaflet-toolbar\dist\leaflet.toolbar.css" />
+    <Content Include="Content\plugins\leaflet\plugins\DrawToolbar\dist\images\spritesheet-2x.png" />
+    <Content Include="Content\plugins\leaflet\plugins\DrawToolbar\dist\images\spritesheet.png" />
+    <Content Include="Content\plugins\leaflet\plugins\DrawToolbar\dist\leaflet.draw-toolbar.css" />
+    <Content Include="Content\plugins\leaflet\plugins\DrawToolbar\dist\leaflet.draw-toolbar.js" />
+    <Content Include="Content\plugins\leaflet\plugins\EasyButton\easy-button.css" />
+    <Content Include="Content\plugins\leaflet\plugins\EasyButton\easy-button.js" />
+    <Content Include="Content\plugins\leaflet\plugins\PulseIcon\L.Icon.Pulse.css" />
+    <Content Include="Content\plugins\leaflet\plugins\PulseIcon\L.Icon.Pulse.js" />
+    <Content Include="Content\plugins\select2\select2-bootstrap4.min.css" />
+    <Content Include="Content\plugins\select2\select2.full.min.js" />
+    <Content Include="Content\plugins\select2\select2.min.css" />
+    <Content Include="Content\plugins\sweetalert2-theme-bootstrap-4\bootstrap-4.css" />
+    <Content Include="Content\plugins\sweetalert2-theme-bootstrap-4\bootstrap-4.min.css" />
+    <Content Include="Content\plugins\sweetalert2-theme-bootstrap-4\sweetalert2.all.min.js" />
+    <Content Include="Content\plugins\sweetalert2-theme-bootstrap-4\sweetalert2.min.js" />
+    <Content Include="Content\plugins\toastr\toastr.css" />
+    <Content Include="Content\plugins\toastr\toastr.min.css" />
+    <Content Include="Content\plugins\toastr\toastr.min.js" />
+    <Content Include="Content\Site.css" />
+    <Content Include="Content\_MyScripts\BinaGorsel.js" />
+    <Content Include="Content\_MyScripts\crudprocess.js" />
+    <Content Include="Global.asax" />
+    <Content Include="Notlar.txt" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\BagBolController.cs" />
+    <Compile Include="Controllers\BinaController.cs" />
+    <Compile Include="Controllers\DonemController.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\PaylasimController.cs" />
+    <Compile Include="Controllers\SayacController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\PaylasimDetayViewModel.cs" />
+    <Compile Include="Models\SayacOkumaViewModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\web.config" />
+    <Content Include="Content\datatables\bootstrap\js\bootstrap.bundle.js.map" />
+    <Content Include="Content\datatables\bootstrap\js\bootstrap.bundle.min.js.map" />
+    <Content Include="Content\datatables\bootstrap\js\bootstrap.js.map" />
+    <Content Include="Content\datatables\bootstrap\js\bootstrap.min.js.map" />
+    <Content Include="Content\datatables\jquery\jquery.min.map" />
+    <Content Include="Content\datatables\jquery\jquery.slim.min.map" />
+    <Content Include="Content\datatables\pdfmake\pdfmake.js.map" />
+    <Content Include="Content\datatables\pdfmake\pdfmake.min.js.map" />
+    <Content Include="Content\leaflet_files\leaflet-src.esm.js.map" />
+    <Content Include="Content\leaflet_files\leaflet-src.js.map" />
+    <Content Include="Content\leaflet_files\leaflet.js.map" />
+    <Content Include="Content\plugins\bootstrap-colorpicker\css\bootstrap-colorpicker.css.map" />
+    <Content Include="Content\plugins\bootstrap-colorpicker\css\bootstrap-colorpicker.min.css.map" />
+    <Content Include="Content\plugins\bootstrap-colorpicker\js\bootstrap-colorpicker.js.map" />
+    <Content Include="Content\plugins\bootstrap-colorpicker\js\bootstrap-colorpicker.min.js.map" />
+    <Content Include="Content\plugins\bootstrap\js\bootstrap.bundle.js.map" />
+    <Content Include="Content\plugins\bootstrap\js\bootstrap.bundle.min.js.map" />
+    <Content Include="Content\plugins\bootstrap\js\bootstrap.js.map" />
+    <Content Include="Content\plugins\bootstrap\js\bootstrap.min.js.map" />
+    <Content Include="Content\plugins\bs-custom-file-input\bs-custom-file-input.js.map" />
+    <Content Include="Content\plugins\bs-custom-file-input\bs-custom-file-input.min.js.map" />
+    <Content Include="Content\plugins\ekko-lightbox\ekko-lightbox.js.map" />
+    <Content Include="Content\plugins\ekko-lightbox\ekko-lightbox.min.js.map" />
+    <Content Include="Content\plugins\fontawesome-free\webfonts\fa-brands-400.eot" />
+    <Content Include="Content\plugins\fontawesome-free\webfonts\fa-brands-400.ttf" />
+    <Content Include="Content\plugins\fontawesome-free\webfonts\fa-brands-400.woff" />
+    <Content Include="Content\plugins\fontawesome-free\webfonts\fa-brands-400.woff2" />
+    <Content Include="Content\plugins\fontawesome-free\webfonts\fa-regular-400.eot" />
+    <Content Include="Content\plugins\fontawesome-free\webfonts\fa-regular-400.ttf" />
+    <Content Include="Content\plugins\fontawesome-free\webfonts\fa-regular-400.woff" />
+    <Content Include="Content\plugins\fontawesome-free\webfonts\fa-regular-400.woff2" />
+    <Content Include="Content\plugins\fontawesome-free\webfonts\fa-solid-900.eot" />
+    <Content Include="Content\plugins\fontawesome-free\webfonts\fa-solid-900.ttf" />
+    <Content Include="Content\plugins\fontawesome-free\webfonts\fa-solid-900.woff" />
+    <Content Include="Content\plugins\fontawesome-free\webfonts\fa-solid-900.woff2" />
+    <Content Include="Content\plugins\jquery\jquery.min.map" />
+    <Content Include="Content\plugins\jquery\jquery.slim.min.map" />
+    <Content Include="Content\plugins\leaflet\leaflet-src.esm.js.map" />
+    <Content Include="Content\plugins\leaflet\leaflet-src.js.map" />
+    <Content Include="Content\plugins\leaflet\leaflet.js.map" />
+    <Content Include="Content\plugins\toastr\toastr.js.map" />
+    <None Include="packages.config" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Home\Index.cshtml" />
+    <Content Include="Views\Shared\_navbar.cshtml" />
+    <Content Include="Views\Bina\Index.cshtml" />
+    <Content Include="Views\Shared\_modalPage.cshtml" />
+    <Content Include="Views\Bina\_binaEkleDuzenlePartial.cshtml" />
+    <Content Include="Views\BagBol\Index.cshtml" />
+    <Content Include="Views\BagBol\_bagBol_Ekle.cshtml" />
+    <Content Include="Views\BagBol\_bagBol_Duzenle.cshtml" />
+    <Content Include="Views\BagBol\_bagBol_Liste.cshtml" />
+    <Content Include="Views\BagBol\OkumaSiralamasi.cshtml" />
+    <Content Include="Views\BagBol\OkumaSiralamasi_Liste.cshtml" />
+    <Content Include="Views\Sayac\Index.cshtml" />
+    <Content Include="Views\Paylasim\Index.cshtml" />
+    <Content Include="Views\Paylasim\_paylasimEkle.cshtml" />
+    <Content Include="Views\Paylasim\Detay.cshtml" />
+    <Content Include="Views\Donem\Index.cshtml" />
+    <Content Include="Views\Donem\_donemEkleDuzenle.cshtml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BL\BL.csproj">
+      <Project>{f3d23cf5-9d69-4ef6-8793-c2e995a06306}</Project>
+      <Name>BL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DAL\DAL.csproj">
+      <Project>{FEBAD232-C80F-48E9-B7FE-36EBE97A9FCB}</Project>
+      <Name>DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\EL\EL.csproj">
+      <Project>{d701cde3-23f4-488c-b6af-218e65163ba7}</Project>
+      <Name>EL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>61784</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>https://localhost:44336/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

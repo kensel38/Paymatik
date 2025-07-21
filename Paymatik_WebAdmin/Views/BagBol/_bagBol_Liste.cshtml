@@ -1,0 +1,101 @@
+﻿
+@model IEnumerable<EL.tbl_BagBol>
+
+
+<table id="bagbolTable" class="table table-bordered table-striped  table-responsive-sm table-hover table-data" data-col_order="1" data-order_type="asc" style="width:100%">
+    <thead style="background-color: #CFD8DC">
+        <tr>
+            <th hidden>
+                @Html.DisplayNameFor(model => model.ID)
+            </th>
+            <th>
+                @Html.DisplayName("Kat No")                
+            </th>
+            <th>
+                @Html.DisplayName("Cephe")
+            </th>
+            <th>
+                @Html.DisplayName("Kapı No")
+            </th>
+            <th>
+                @Html.DisplayName("Metrekare")
+            </th>
+            <th>
+                @Html.DisplayName("Tür")
+            </th>
+            <th>
+                @Html.DisplayName("OrtakAlan")
+            </th>
+            <th> İşlemler </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr id="tr_@item.ID">
+                <td hidden>
+                    @item.ID
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.KatNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cephe)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.KapiNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Metrekare)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BagBolTur)
+                </td>
+                <td>
+                    @if (item.OrtakAlan == true)
+                    {
+                        <span>Evet</span>
+                    }
+                    else
+                    {
+                        <span>Hayır</span>
+                    }
+                </td>
+
+                <td>
+                    <div style='text-align:center'>
+
+                        <a class='btn btn-outline-primary btn-xs' title="Düzenle" data-toggle="modal" data-target="#_modal" onclick="Show_Modal_URL(@item.ID,'/BagBol/BagBol_Duzenle?id=@item.ID')">
+                            <span class='far fa-edit'></span>
+                        </a>
+
+                        <a class='btn btn-outline-danger btn-xs' title="Kaydı Sil !" data-id="@item.ID" onclick="Delete_URL(@item.ID,'/BagBol/BagBol_Sil?id=@item.ID')">
+                            <i class='fas fa-trash-alt'></i>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+
+
+
+
+<script>
+    $(document).ready(function () {
+        initTables(); // Layout'taki metodu çağır
+    });
+</script>
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,142 @@
+﻿@model IEnumerable<EL.tbl_Donem>
+
+@{
+    EL.tbl_Bina _bina = (EL.tbl_Bina)ViewBag.Bina;
+}
+
+<div class="card card-outline card-warning">
+    <div class="card-header" style="padding: 1px 15px 1px 0px; margin-bottom: -16px; background-color: #e6e6e9 ">
+
+        <div class="card-title" style="margin:5px;">
+            <i class="fab fa-staylinked">
+                &nbsp; <b>@_bina.Ad </b> Apartmanı  Okuma Dönemleri Listesi
+            </i>
+        </div>
+
+        <div class="card-tools">
+            <a id="btn_geriDon" href="/Bina/Index" style="margin:3px;" class="btn btn-outline-info btn-sm"> <i class="fas fa-level-down-alt fa-rotate-90"></i>&nbsp;&nbsp; Binalar Listesine Geri Dön&nbsp;&nbsp;</a>
+
+            <a id="btn_YeniKayit" onclick="Show_Modal_Param(0,'BinaId=@_bina.ID')" href="#" style="margin:5px" class="btn btn-outline-dark" data-toggle="modal" data-target="#_modal"> <span class="fas fa-plus">    &nbsp; Kayıt Ekle </span></a>
+        </div>
+    </div>
+
+</div>
+
+
+<!-- /.card-header -->
+<div class="card-body  card-outline  card-blue">
+    <table id="binaListesi" class="table table-bordered table-striped  table-responsive-sm table-hover table-data" data-col_order="1" data-order_type="asc" data-show_Length="0" style="width:100%">
+        <thead style="background-color: #CFD8DC">
+            <tr>
+                <th>
+                    @Html.DisplayName("Bina Adı")
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DonemNo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DonemAdi)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Durum)
+                </th>
+                <th> İşlemler </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr id="tr_@item.ID">
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.tbl_Bina.Ad)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DonemNo)
+                    </td>
+
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DonemAdi)
+                    </td>
+
+                    <td>
+                        @if (item.Durum == true)
+                        {
+                            <span>Tamamlandı</span>
+                        }
+                        else
+                        {
+                            <span>Eksik Okuma !</span>
+                        }
+                    </td>
+
+                    <td>
+                        <div style="text-align: center;">
+
+                            <a class='btn btn-outline-primary btn-xs' title="Düzenle" onclick="Show_Modal(@item.ID)" data-toggle="modal" data-target="#_modal">
+                                <span class='far fa-edit'></span> Düzenle
+                            </a>
+                            <a class='btn btn-outline-danger btn-xs' title="Kaydı Sil !" data-id="@item.ID" onclick="Delete(@item.ID)">
+                                <i class='fas fa-trash-alt'></i> Kaydı Sil !
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        </tbody>
+
+    </table>
+</div>
+<!-- /.card-body -->
+
+
+
+
+
+@Html.Partial("_modalPage")
+
+
+<style>
+    .modal:nth-of-type(even) {
+        z-index: 1051 !important;
+    }
+</style>
+
+<div class="modal fade" id="_modalHarita" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header bg-gradient-info">
+                <h4 class="modal-title" id="_modalHaritaTitle">Harita Modal</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" id="_modalHaritaBody">
+            </div>
+
+            <div style="text-align: center; display: none" id="loaderDiv">
+                Kaydediliyor...
+                <br />
+                <img src="~/Content/img/loader.gif" width="200" />
+            </div>
+
+            <div class="modal-footer justify-content-between" style="background-color: whitesmoke;">
+                <button type="button" id="btn_close" class="btn btn-outline-dark" data-dismiss="modal">Kapat</button>
+                <button type="button" id="btn_KaydetHarita" class="btn btn-outline-dark">Kaydet</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@section scripts{
+
+    <script>
+        _control = "Donem";
+    </script>
+
+
+}
+

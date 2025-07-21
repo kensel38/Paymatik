@@ -1,0 +1,645 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="PaymatikDBModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="tbl_BagBol">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BinaId" Type="int" Nullable="false" />
+          <Property Name="KatNo" Type="int" />
+          <Property Name="Cephe" Type="nvarchar" MaxLength="50" />
+          <Property Name="KapiNo" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Metrekare" Type="float" />
+          <Property Name="BagBolTur" Type="nvarchar" MaxLength="50" />
+          <Property Name="OrtakAlan" Type="bit" Nullable="false" />
+          <Property Name="OkumaSirasi" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_Bina">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Ad" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="BinaKodu" Type="nvarchar" MaxLength="50" />
+          <Property Name="Adres" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="tbl_Donem">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BinaId" Type="int" />
+          <Property Name="DonemNo" Type="int" />
+          <Property Name="DonemAdi" Type="nvarchar" MaxLength="20" />
+          <Property Name="Durum" Type="bit" />
+        </EntityType>
+        <EntityType Name="tbl_Kullanici">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="AdSoyad" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="Telefon" Type="nvarchar" MaxLength="50" />
+          <Property Name="Eposta" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="SifreHash" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Rol" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Durum" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_Paylasim">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BinaId" Type="int" Nullable="false" />
+          <Property Name="Donem" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="SayactanOkunanHacim" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="FaturaTutar" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="SuSicakligi" Type="int" />
+          <Property Name="DusukKullanimCeza" Type="bit" />
+          <Property Name="CezaDagitimTur" Type="nvarchar" MaxLength="10" />
+          <Property Name="HesaplamaTarihi" Type="datetime" />
+          <Property Name="FaturaSonOdemeTarihi" Type="datetime" />
+        </EntityType>
+        <EntityType Name="tbl_PaylasimDetay">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="PaylasimId" Type="int" Nullable="false" />
+          <Property Name="DaireId" Type="int" Nullable="false" />
+          <Property Name="IsinmaTuketim" Type="float" Nullable="false" />
+          <Property Name="IsinmaTutar" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="SuTuketim" Type="float" Nullable="false" />
+          <Property Name="SuTutar" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="OrtakAlanTutar" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="DusukKullanimTutar" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="ToplamTutar" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_SayacOkuma">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BagBolId" Type="int" Nullable="false" />
+          <Property Name="DonemID" Type="int" Nullable="false" />
+          <Property Name="SayacTuru" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="OncekiDeger" Type="float" />
+          <Property Name="GuncelDeger" Type="float" Nullable="false" />
+          <Property Name="OkumaTarihi" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_Tanimlar">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Adi" Type="nvarchar" MaxLength="50" />
+          <Property Name="Degeri" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK__Daireler__BinaId__2A4B4B5E">
+          <End Role="tbl_Bina" Type="Self.tbl_Bina" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tbl_BagBol" Type="Self.tbl_BagBol" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Bina">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tbl_BagBol">
+              <PropertyRef Name="BinaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PaylasimD__Daire__3B75D760">
+          <End Role="tbl_BagBol" Type="Self.tbl_BagBol" Multiplicity="1" />
+          <End Role="tbl_PaylasimDetay" Type="Self.tbl_PaylasimDetay" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_BagBol">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tbl_PaylasimDetay">
+              <PropertyRef Name="DaireId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PaylasimD__Payla__3A81B327">
+          <End Role="tbl_Paylasim" Type="Self.tbl_Paylasim" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tbl_PaylasimDetay" Type="Self.tbl_PaylasimDetay" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Paylasim">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tbl_PaylasimDetay">
+              <PropertyRef Name="PaylasimId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Paylasiml__BinaI__37A5467C">
+          <End Role="tbl_Bina" Type="Self.tbl_Bina" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tbl_Paylasim" Type="Self.tbl_Paylasim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Bina">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tbl_Paylasim">
+              <PropertyRef Name="BinaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Donem_tbl_Bina">
+          <End Role="tbl_Bina" Type="Self.tbl_Bina" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tbl_Donem" Type="Self.tbl_Donem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Bina">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tbl_Donem">
+              <PropertyRef Name="BinaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_SayacOkuma_tbl_BagBol">
+          <End Role="tbl_BagBol" Type="Self.tbl_BagBol" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="tbl_SayacOkuma" Type="Self.tbl_SayacOkuma" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_BagBol">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tbl_SayacOkuma">
+              <PropertyRef Name="BagBolId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_SayacOkuma_tbl_Donem">
+          <End Role="tbl_Donem" Type="Self.tbl_Donem" Multiplicity="1" />
+          <End Role="tbl_SayacOkuma" Type="Self.tbl_SayacOkuma" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Donem">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tbl_SayacOkuma">
+              <PropertyRef Name="DonemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="PaymatikDBModelStoreContainer">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_BagBol" EntityType="Self.tbl_BagBol" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Bina" EntityType="Self.tbl_Bina" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Donem" EntityType="Self.tbl_Donem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Kullanici" EntityType="Self.tbl_Kullanici" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Paylasim" EntityType="Self.tbl_Paylasim" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_PaylasimDetay" EntityType="Self.tbl_PaylasimDetay" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_SayacOkuma" EntityType="Self.tbl_SayacOkuma" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tbl_Tanimlar" EntityType="Self.tbl_Tanimlar" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__Daireler__BinaId__2A4B4B5E" Association="Self.FK__Daireler__BinaId__2A4B4B5E">
+            <End Role="tbl_Bina" EntitySet="tbl_Bina" />
+            <End Role="tbl_BagBol" EntitySet="tbl_BagBol" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PaylasimD__Daire__3B75D760" Association="Self.FK__PaylasimD__Daire__3B75D760">
+            <End Role="tbl_BagBol" EntitySet="tbl_BagBol" />
+            <End Role="tbl_PaylasimDetay" EntitySet="tbl_PaylasimDetay" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PaylasimD__Payla__3A81B327" Association="Self.FK__PaylasimD__Payla__3A81B327">
+            <End Role="tbl_Paylasim" EntitySet="tbl_Paylasim" />
+            <End Role="tbl_PaylasimDetay" EntitySet="tbl_PaylasimDetay" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Paylasiml__BinaI__37A5467C" Association="Self.FK__Paylasiml__BinaI__37A5467C">
+            <End Role="tbl_Bina" EntitySet="tbl_Bina" />
+            <End Role="tbl_Paylasim" EntitySet="tbl_Paylasim" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Donem_tbl_Bina" Association="Self.FK_tbl_Donem_tbl_Bina">
+            <End Role="tbl_Bina" EntitySet="tbl_Bina" />
+            <End Role="tbl_Donem" EntitySet="tbl_Donem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_SayacOkuma_tbl_BagBol" Association="Self.FK_tbl_SayacOkuma_tbl_BagBol">
+            <End Role="tbl_BagBol" EntitySet="tbl_BagBol" />
+            <End Role="tbl_SayacOkuma" EntitySet="tbl_SayacOkuma" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_SayacOkuma_tbl_Donem" Association="Self.FK_tbl_SayacOkuma_tbl_Donem">
+            <End Role="tbl_Donem" EntitySet="tbl_Donem" />
+            <End Role="tbl_SayacOkuma" EntitySet="tbl_SayacOkuma" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="PaymatikDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="PaymatikDBEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="sysdiagrams" EntityType="PaymatikDBModel.sysdiagrams" />
+          <EntitySet Name="tbl_BagBol" EntityType="PaymatikDBModel.tbl_BagBol" />
+          <EntitySet Name="tbl_Bina" EntityType="PaymatikDBModel.tbl_Bina" />
+          <EntitySet Name="tbl_Donem" EntityType="PaymatikDBModel.tbl_Donem" />
+          <EntitySet Name="tbl_Kullanici" EntityType="PaymatikDBModel.tbl_Kullanici" />
+          <EntitySet Name="tbl_Paylasim" EntityType="PaymatikDBModel.tbl_Paylasim" />
+          <EntitySet Name="tbl_PaylasimDetay" EntityType="PaymatikDBModel.tbl_PaylasimDetay" />
+          <EntitySet Name="tbl_SayacOkuma" EntityType="PaymatikDBModel.tbl_SayacOkuma" />
+          <EntitySet Name="tbl_Tanimlar" EntityType="PaymatikDBModel.tbl_Tanimlar" />
+          <AssociationSet Name="FK__Daireler__BinaId__2A4B4B5E" Association="PaymatikDBModel.FK__Daireler__BinaId__2A4B4B5E">
+            <End Role="tbl_Bina" EntitySet="tbl_Bina" />
+            <End Role="tbl_BagBol" EntitySet="tbl_BagBol" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PaylasimD__Daire__3B75D760" Association="PaymatikDBModel.FK__PaylasimD__Daire__3B75D760">
+            <End Role="tbl_BagBol" EntitySet="tbl_BagBol" />
+            <End Role="tbl_PaylasimDetay" EntitySet="tbl_PaylasimDetay" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_SayacOkuma_tbl_BagBol" Association="PaymatikDBModel.FK_tbl_SayacOkuma_tbl_BagBol">
+            <End Role="tbl_BagBol" EntitySet="tbl_BagBol" />
+            <End Role="tbl_SayacOkuma" EntitySet="tbl_SayacOkuma" />
+          </AssociationSet>
+          <AssociationSet Name="FK__Paylasiml__BinaI__37A5467C" Association="PaymatikDBModel.FK__Paylasiml__BinaI__37A5467C">
+            <End Role="tbl_Bina" EntitySet="tbl_Bina" />
+            <End Role="tbl_Paylasim" EntitySet="tbl_Paylasim" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_Donem_tbl_Bina" Association="PaymatikDBModel.FK_tbl_Donem_tbl_Bina">
+            <End Role="tbl_Bina" EntitySet="tbl_Bina" />
+            <End Role="tbl_Donem" EntitySet="tbl_Donem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tbl_SayacOkuma_tbl_Donem" Association="PaymatikDBModel.FK_tbl_SayacOkuma_tbl_Donem">
+            <End Role="tbl_Donem" EntitySet="tbl_Donem" />
+            <End Role="tbl_SayacOkuma" EntitySet="tbl_SayacOkuma" />
+          </AssociationSet>
+          <AssociationSet Name="FK__PaylasimD__Payla__3A81B327" Association="PaymatikDBModel.FK__PaylasimD__Payla__3A81B327">
+            <End Role="tbl_Paylasim" EntitySet="tbl_Paylasim" />
+            <End Role="tbl_PaylasimDetay" EntitySet="tbl_PaylasimDetay" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="tbl_BagBol">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BinaId" Type="Int32" Nullable="false" />
+          <Property Name="KatNo" Type="Int32" />
+          <Property Name="Cephe" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="KapiNo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Metrekare" Type="Double" />
+          <Property Name="BagBolTur" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OrtakAlan" Type="Boolean" Nullable="false" />
+          <Property Name="OkumaSirasi" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tbl_Bina" Relationship="PaymatikDBModel.FK__Daireler__BinaId__2A4B4B5E" FromRole="tbl_BagBol" ToRole="tbl_Bina" />
+          <NavigationProperty Name="tbl_PaylasimDetay" Relationship="PaymatikDBModel.FK__PaylasimD__Daire__3B75D760" FromRole="tbl_BagBol" ToRole="tbl_PaylasimDetay" />
+          <NavigationProperty Name="tbl_SayacOkuma" Relationship="PaymatikDBModel.FK_tbl_SayacOkuma_tbl_BagBol" FromRole="tbl_BagBol" ToRole="tbl_SayacOkuma" />
+        </EntityType>
+        <EntityType Name="tbl_Bina">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Ad" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="BinaKodu" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Adres" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="tbl_BagBol" Relationship="PaymatikDBModel.FK__Daireler__BinaId__2A4B4B5E" FromRole="tbl_Bina" ToRole="tbl_BagBol" />
+          <NavigationProperty Name="tbl_Paylasim" Relationship="PaymatikDBModel.FK__Paylasiml__BinaI__37A5467C" FromRole="tbl_Bina" ToRole="tbl_Paylasim" />
+          <NavigationProperty Name="tbl_Donem" Relationship="PaymatikDBModel.FK_tbl_Donem_tbl_Bina" FromRole="tbl_Bina" ToRole="tbl_Donem" />
+        </EntityType>
+        <EntityType Name="tbl_Donem">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BinaId" Type="Int32" />
+          <Property Name="DonemNo" Type="Int32" />
+          <Property Name="DonemAdi" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Durum" Type="Boolean" />
+          <NavigationProperty Name="tbl_Bina" Relationship="PaymatikDBModel.FK_tbl_Donem_tbl_Bina" FromRole="tbl_Donem" ToRole="tbl_Bina" />
+          <NavigationProperty Name="tbl_SayacOkuma" Relationship="PaymatikDBModel.FK_tbl_SayacOkuma_tbl_Donem" FromRole="tbl_Donem" ToRole="tbl_SayacOkuma" />
+        </EntityType>
+        <EntityType Name="tbl_Kullanici">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AdSoyad" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="Telefon" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Eposta" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="SifreHash" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Rol" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="Durum" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tbl_Paylasim">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BinaId" Type="Int32" Nullable="false" />
+          <Property Name="Donem" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="SayactanOkunanHacim" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="FaturaTutar" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="SuSicakligi" Type="Int32" />
+          <Property Name="DusukKullanimCeza" Type="Boolean" />
+          <Property Name="CezaDagitimTur" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="HesaplamaTarihi" Type="DateTime" Precision="3" />
+          <Property Name="FaturaSonOdemeTarihi" Type="DateTime" Precision="3" />
+          <NavigationProperty Name="tbl_Bina" Relationship="PaymatikDBModel.FK__Paylasiml__BinaI__37A5467C" FromRole="tbl_Paylasim" ToRole="tbl_Bina" />
+          <NavigationProperty Name="tbl_PaylasimDetay" Relationship="PaymatikDBModel.FK__PaylasimD__Payla__3A81B327" FromRole="tbl_Paylasim" ToRole="tbl_PaylasimDetay" />
+        </EntityType>
+        <EntityType Name="tbl_PaylasimDetay">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PaylasimId" Type="Int32" Nullable="false" />
+          <Property Name="DaireId" Type="Int32" Nullable="false" />
+          <Property Name="IsinmaTuketim" Type="Double" Nullable="false" />
+          <Property Name="IsinmaTutar" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="SuTuketim" Type="Double" Nullable="false" />
+          <Property Name="SuTutar" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="OrtakAlanTutar" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="DusukKullanimTutar" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="ToplamTutar" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <NavigationProperty Name="tbl_BagBol" Relationship="PaymatikDBModel.FK__PaylasimD__Daire__3B75D760" FromRole="tbl_PaylasimDetay" ToRole="tbl_BagBol" />
+          <NavigationProperty Name="tbl_Paylasim" Relationship="PaymatikDBModel.FK__PaylasimD__Payla__3A81B327" FromRole="tbl_PaylasimDetay" ToRole="tbl_Paylasim" />
+        </EntityType>
+        <EntityType Name="tbl_SayacOkuma">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BagBolId" Type="Int32" Nullable="false" />
+          <Property Name="DonemID" Type="Int32" Nullable="false" />
+          <Property Name="SayacTuru" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="OncekiDeger" Type="Double" />
+          <Property Name="GuncelDeger" Type="Double" Nullable="false" />
+          <Property Name="OkumaTarihi" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="tbl_BagBol" Relationship="PaymatikDBModel.FK_tbl_SayacOkuma_tbl_BagBol" FromRole="tbl_SayacOkuma" ToRole="tbl_BagBol" />
+          <NavigationProperty Name="tbl_Donem" Relationship="PaymatikDBModel.FK_tbl_SayacOkuma_tbl_Donem" FromRole="tbl_SayacOkuma" ToRole="tbl_Donem" />
+        </EntityType>
+        <EntityType Name="tbl_Tanimlar">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Adi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Degeri" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <Association Name="FK__Daireler__BinaId__2A4B4B5E">
+          <End Type="PaymatikDBModel.tbl_Bina" Role="tbl_Bina" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="PaymatikDBModel.tbl_BagBol" Role="tbl_BagBol" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Bina">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tbl_BagBol">
+              <PropertyRef Name="BinaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PaylasimD__Daire__3B75D760">
+          <End Type="PaymatikDBModel.tbl_BagBol" Role="tbl_BagBol" Multiplicity="1" />
+          <End Type="PaymatikDBModel.tbl_PaylasimDetay" Role="tbl_PaylasimDetay" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_BagBol">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tbl_PaylasimDetay">
+              <PropertyRef Name="DaireId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_SayacOkuma_tbl_BagBol">
+          <End Type="PaymatikDBModel.tbl_BagBol" Role="tbl_BagBol" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="PaymatikDBModel.tbl_SayacOkuma" Role="tbl_SayacOkuma" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_BagBol">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tbl_SayacOkuma">
+              <PropertyRef Name="BagBolId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__Paylasiml__BinaI__37A5467C">
+          <End Type="PaymatikDBModel.tbl_Bina" Role="tbl_Bina" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="PaymatikDBModel.tbl_Paylasim" Role="tbl_Paylasim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Bina">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tbl_Paylasim">
+              <PropertyRef Name="BinaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_Donem_tbl_Bina">
+          <End Type="PaymatikDBModel.tbl_Bina" Role="tbl_Bina" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="PaymatikDBModel.tbl_Donem" Role="tbl_Donem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Bina">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tbl_Donem">
+              <PropertyRef Name="BinaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tbl_SayacOkuma_tbl_Donem">
+          <End Type="PaymatikDBModel.tbl_Donem" Role="tbl_Donem" Multiplicity="1" />
+          <End Type="PaymatikDBModel.tbl_SayacOkuma" Role="tbl_SayacOkuma" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Donem">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tbl_SayacOkuma">
+              <PropertyRef Name="DonemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__PaylasimD__Payla__3A81B327">
+          <End Type="PaymatikDBModel.tbl_Paylasim" Role="tbl_Paylasim" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="PaymatikDBModel.tbl_PaylasimDetay" Role="tbl_PaylasimDetay" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tbl_Paylasim">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="tbl_PaylasimDetay">
+              <PropertyRef Name="PaylasimId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="PaymatikDBModelStoreContainer" CdmEntityContainer="PaymatikDBEntities">
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="PaymatikDBModel.sysdiagrams">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="definition" ColumnName="definition" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="name" ColumnName="name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_BagBol">
+            <EntityTypeMapping TypeName="PaymatikDBModel.tbl_BagBol">
+              <MappingFragment StoreEntitySet="tbl_BagBol">
+                <ScalarProperty Name="OkumaSirasi" ColumnName="OkumaSirasi" />
+                <ScalarProperty Name="OrtakAlan" ColumnName="OrtakAlan" />
+                <ScalarProperty Name="BagBolTur" ColumnName="BagBolTur" />
+                <ScalarProperty Name="Metrekare" ColumnName="Metrekare" />
+                <ScalarProperty Name="KapiNo" ColumnName="KapiNo" />
+                <ScalarProperty Name="Cephe" ColumnName="Cephe" />
+                <ScalarProperty Name="KatNo" ColumnName="KatNo" />
+                <ScalarProperty Name="BinaId" ColumnName="BinaId" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Bina">
+            <EntityTypeMapping TypeName="PaymatikDBModel.tbl_Bina">
+              <MappingFragment StoreEntitySet="tbl_Bina">
+                <ScalarProperty Name="Adres" ColumnName="Adres" />
+                <ScalarProperty Name="BinaKodu" ColumnName="BinaKodu" />
+                <ScalarProperty Name="Ad" ColumnName="Ad" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Donem">
+            <EntityTypeMapping TypeName="PaymatikDBModel.tbl_Donem">
+              <MappingFragment StoreEntitySet="tbl_Donem">
+                <ScalarProperty Name="Durum" ColumnName="Durum" />
+                <ScalarProperty Name="DonemAdi" ColumnName="DonemAdi" />
+                <ScalarProperty Name="DonemNo" ColumnName="DonemNo" />
+                <ScalarProperty Name="BinaId" ColumnName="BinaId" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Kullanici">
+            <EntityTypeMapping TypeName="PaymatikDBModel.tbl_Kullanici">
+              <MappingFragment StoreEntitySet="tbl_Kullanici">
+                <ScalarProperty Name="Durum" ColumnName="Durum" />
+                <ScalarProperty Name="Rol" ColumnName="Rol" />
+                <ScalarProperty Name="SifreHash" ColumnName="SifreHash" />
+                <ScalarProperty Name="Eposta" ColumnName="Eposta" />
+                <ScalarProperty Name="Telefon" ColumnName="Telefon" />
+                <ScalarProperty Name="AdSoyad" ColumnName="AdSoyad" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Paylasim">
+            <EntityTypeMapping TypeName="PaymatikDBModel.tbl_Paylasim">
+              <MappingFragment StoreEntitySet="tbl_Paylasim">
+                <ScalarProperty Name="FaturaSonOdemeTarihi" ColumnName="FaturaSonOdemeTarihi" />
+                <ScalarProperty Name="HesaplamaTarihi" ColumnName="HesaplamaTarihi" />
+                <ScalarProperty Name="CezaDagitimTur" ColumnName="CezaDagitimTur" />
+                <ScalarProperty Name="DusukKullanimCeza" ColumnName="DusukKullanimCeza" />
+                <ScalarProperty Name="SuSicakligi" ColumnName="SuSicakligi" />
+                <ScalarProperty Name="FaturaTutar" ColumnName="FaturaTutar" />
+                <ScalarProperty Name="SayactanOkunanHacim" ColumnName="SayactanOkunanHacim" />
+                <ScalarProperty Name="Donem" ColumnName="Donem" />
+                <ScalarProperty Name="BinaId" ColumnName="BinaId" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_PaylasimDetay">
+            <EntityTypeMapping TypeName="PaymatikDBModel.tbl_PaylasimDetay">
+              <MappingFragment StoreEntitySet="tbl_PaylasimDetay">
+                <ScalarProperty Name="ToplamTutar" ColumnName="ToplamTutar" />
+                <ScalarProperty Name="DusukKullanimTutar" ColumnName="DusukKullanimTutar" />
+                <ScalarProperty Name="OrtakAlanTutar" ColumnName="OrtakAlanTutar" />
+                <ScalarProperty Name="SuTutar" ColumnName="SuTutar" />
+                <ScalarProperty Name="SuTuketim" ColumnName="SuTuketim" />
+                <ScalarProperty Name="IsinmaTutar" ColumnName="IsinmaTutar" />
+                <ScalarProperty Name="IsinmaTuketim" ColumnName="IsinmaTuketim" />
+                <ScalarProperty Name="DaireId" ColumnName="DaireId" />
+                <ScalarProperty Name="PaylasimId" ColumnName="PaylasimId" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_SayacOkuma">
+            <EntityTypeMapping TypeName="PaymatikDBModel.tbl_SayacOkuma">
+              <MappingFragment StoreEntitySet="tbl_SayacOkuma">
+                <ScalarProperty Name="OkumaTarihi" ColumnName="OkumaTarihi" />
+                <ScalarProperty Name="GuncelDeger" ColumnName="GuncelDeger" />
+                <ScalarProperty Name="OncekiDeger" ColumnName="OncekiDeger" />
+                <ScalarProperty Name="SayacTuru" ColumnName="SayacTuru" />
+                <ScalarProperty Name="DonemID" ColumnName="DonemID" />
+                <ScalarProperty Name="BagBolId" ColumnName="BagBolId" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tbl_Tanimlar">
+            <EntityTypeMapping TypeName="PaymatikDBModel.tbl_Tanimlar">
+              <MappingFragment StoreEntitySet="tbl_Tanimlar">
+                <ScalarProperty Name="Degeri" ColumnName="Degeri" />
+                <ScalarProperty Name="Adi" ColumnName="Adi" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

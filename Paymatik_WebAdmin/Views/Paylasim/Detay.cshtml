@@ -1,0 +1,213 @@
+﻿@using EL
+@model Paymatik_WebAdmin.Models.PaylasimDetayViewModel
+
+
+
+<style>
+    .col-kalorimetre {
+        background-color: #f1cf99; /* açık turuncu */
+    }
+
+    .col-sicaksu {
+        background-color: #E3F2FD; /* açık mavi */
+    }
+
+    .col-isinma {
+        background-color: #E8F5E9; /* açık yeşil */
+    }
+
+    .col-su {
+        background-color: #df8900; /* turuncu */
+    }
+</style>
+
+
+<div class="card card-outline card-warning" style="background-color: #dee2e6; margin-bottom: 0px">
+
+    <!-- /.card-header -->
+    <div class="card-body" style=" padding: 15px; padding-bottom: 0px; margin: -7px; margin-bottom:-10px ">
+
+        <!-- Üst Küçük Kartlar -->
+        <div class="row">
+
+            <div class="col-12 col-sm-2 ">
+                <div class="info-box bg-gradient-light">
+                    <div class="info-box-content">
+                        <span class="info-box-text text-center text-muted">Bina Adı</span>
+                        <span class="info-box-number text-center text-muted mb-0">@Model.BinaAdi</span>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-12 col-sm-1 ">
+                <div class="info-box bg-gradient-light">
+                    <div class="info-box-content">
+                        <span class="info-box-text text-center text-muted">Dönem</span>
+                        <span class="info-box-number text-center text-muted mb-0">@Model.DonemAdi</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-2 ">
+                <div class="info-box bg-gradient-light">
+                    <div class="info-box-content">
+                        <span class="info-box-text text-center text-muted">Sayaçtan Okunan Hacim</span>
+                        <span class="info-box-number text-center text-muted mb-0">  @(Model.SayactanOkunanHacim.ToString("N2") + "\u00A0m³")</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-2 ">
+                <div class="info-box bg-gradient-light">
+                    <div class="info-box-content">
+                        <span class="info-box-text text-center text-muted">Fatura Tutar</span>
+                        <span class="info-box-number text-center text-muted mb-0"> @(Model.FaturaTutar.ToString("#,##0.00 '₺'"))</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-sm-1 ">
+                <div class="info-box bg-gradient-light">
+                    <div class="info-box-content ">
+                        <span class="info-box-text text-center text-muted">Su Sicakligi</span>
+                        <span class="info-box-number text-center text-muted mb-0">@Model.SuSicakligi</span>
+                    </div>
+                </div>
+            </div>
+            @if (Model.DusukKullanimCeza == true)
+            {
+                <div class="col-12 col-sm-2 ">
+                    <div class="info-box bg-gradient-light">
+                        <div class="info-box-content ">
+                            <span class="info-box-text text-center text-muted">Ceza Dağıtım Tür</span>
+                            <span class="info-box-number text-center text-muted mb-0">@Model.CezaDagitimTur</span>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            <div class="col-12 col-sm-1 ">
+                <div class="info-box bg-gradient-light">
+                    <div class="info-box-content">
+                        <span class="info-box-text text-center text-muted">Son Odeme Tarihi</span>
+                        <span class="info-box-number text-center text-muted mb-0">@String.Format("{0:d}", Model.SonOdemeTarihi)</span>
+                    </div>
+                </div>
+            </div>
+
+
+
+        </div>
+
+    </div>
+    <!-- /.card-body -->
+
+
+</div>
+
+<!-- /.card-header -->
+<div class="card-body  card-outline  card-dark">
+
+    @*<div class="text-end mb-3">
+        <a href="@Url.Action("ExportPaylasimDetayToExcel", "Paylasim", new { paylasimId = ViewBag.PaylasimId })" class="btn btn-success">
+            <i class="fa fa-file-excel"></i> Excel’e Aktar
+        </a>
+    </div>*@
+
+
+    <table id="binaListesi" class="table table-bordered table-striped  table-responsive-sm table-hover table-data " data-col_order="0" data-order_type="asc" data-show_Length="1" style="width:100%">
+        <thead style="background-color: #CFD8DC">
+
+            <tr style="background-color: #878f66; color: black;">
+                <th rowspan="2">KatNo</th>
+                <th rowspan="2">D.No</th>
+                <th rowspan="2">Alan</th>
+                <th rowspan="2">D.Türü</th>
+                <th colspan="3" class="text-center col-kalorimetre">Kalorimetre</th>
+                <th colspan="3" class="text-center col-sicaksu">Sıcak Su</th>
+                <th colspan="3" class="text-center col-isinma">Isınma Bedeli</th>
+                <th colspan="3" class="text-center col-su">SıcakSu Bedeli</th>
+                <th rowspan="2">Ortak Alanlar</th>
+                <th rowspan="2">Düşük Kullanim</th>
+                <th rowspan="2">Toplam Borç</th>
+            </tr>
+            <tr style="background-color: #90A4AE; color: black;">
+                <th>İlk</th>
+                <th>Son</th>
+                <th>Fark</th>
+                <th>İlk</th>
+                <th>Son</th>
+                <th>Fark</th>
+                <th>Ortak</th>
+                <th>Daire</th>
+                <th>Toplam Isınma</th>
+                <th>Isıtma Bedeli</th>
+                <th>Su Bedeli</th>
+                <th>Toplam Sıcak Su</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model.Detaylar)
+            {
+                var rowClass = item.IsOrtakAlan ? "table-success" : (item.DusukKullanimTutar > 0 ? "table-danger" : "");
+
+                <tr class="@rowClass">
+                    <td>@item.KatNo</td>
+                    <td>@item.KapiNo</td>
+                    <td>@item.Metrekare.ToString("N0")</td>
+                    <td>@item.BagBolTur</td>
+
+                    <td>@item.KalorimetreOnceki.ToString("N0")</td>
+                    <td>@item.KalorimetreGuncel.ToString("N0")</td>
+                    <td>@item.KalorimetreFark.ToString("N0")</td>
+
+                    <td>@item.SicakSuOnceki.ToString("N0")</td>
+                    <td>@item.SicakSuGuncel.ToString("N0")</td>
+                    <td>@item.SicakSuFark.ToString("N0")</td>
+
+                    <td>@item.IsinmaOrtak.ToString("C")</td>
+                    <td>@item.IsinmaDaire.ToString("C")</td>
+                    <td>@item.IsinmaToplam.ToString("C")</td>
+
+                    <td>@item.SicakSuIsitma.ToString("C")</td>
+                    <td>@item.SicakSuTuketim.ToString("C")</td>
+                    <td>@item.SicakSuToplam.ToString("C")</td>
+
+                    <td>@item.OrtakAlanToplam.ToString("C")</td>
+                    <td>@item.DusukKullanimTutar.ToString("C")</td>
+                    <td><strong>@item.ToplamBorc.ToString("C")</strong></td>
+                </tr>
+            }
+        </tbody>
+
+        <tfoot class="fw-bold" style="background-color: #d9ac73; font-style:oblique; font-weight:bold">
+            <tr>
+                <td colspan="4">TOPLAM</td>
+
+                <td>-</td>
+                <td>-</td>
+                <td>@Model.Detaylar.Sum(x => x.KalorimetreFark).ToString("N0")</td>
+
+                <td>-</td>
+                <td>-</td>
+                <td>@Model.Detaylar.Sum(x => x.SicakSuFark).ToString("N0")</td>
+
+                <td>@Model.Detaylar.Sum(x => x.IsinmaOrtak).ToString("C")</td>
+                <td>@Model.Detaylar.Sum(x => x.IsinmaDaire).ToString("C")</td>
+                <td>@Model.Detaylar.Sum(x => x.IsinmaToplam).ToString("C")</td>
+
+                <td>@Model.Detaylar.Sum(x => x.SicakSuIsitma).ToString("C")</td>
+                <td>@Model.Detaylar.Sum(x => x.SicakSuTuketim).ToString("C")</td>
+                <td>@Model.Detaylar.Sum(x => x.SicakSuToplam).ToString("C")</td>
+
+                <td>@Model.Detaylar.Sum(x => x.OrtakAlanToplam).ToString("C")</td>
+                <td>@Model.Detaylar.Sum(x => x.DusukKullanimTutar).ToString("C")</td>
+                <td>@Model.Detaylar.Sum(x => x.ToplamBorc).ToString("C")</td>
+            </tr>
+        </tfoot>
+
+
+    </table>
+</div>

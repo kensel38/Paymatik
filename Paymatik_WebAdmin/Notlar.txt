@@ -1,0 +1,5 @@
+﻿1- ceza alan daire en alt kat olabilir. o zaman tüm bedeli üst kat aynı cepheye  vereceğiz.
+2- ceza alan daire en üst kat olabilir. o zaman tüm bedeli alt kat cepheye vereceğiz.
+3- cezalı dairenin alt veya üst katları da cezalı olabilir . bu durumda daha üst veya daha alt dairelere vereceğiz.
+4- dağıtımı oransal yapacağız. %50 - %50 gibi.
+5- cezalı dairenin üst veya alt katında veya onlarında bir üst veya altında aynı cephede daire yoksa cezayı üst veya alt kattaki diğer ceza almayan dairlere eşit oranda dağıtıyoruz.

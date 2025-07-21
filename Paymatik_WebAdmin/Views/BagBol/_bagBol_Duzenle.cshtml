@@ -1,0 +1,117 @@
+﻿
+@model  EL.tbl_BagBol
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "form_entity" }))
+{
+    <div class="form-horizontal">
+
+        @Html.AntiForgeryToken()
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.ID)
+
+        <div class="form-group row">
+            @Html.TextBoxFor(model => model.BinaId, new { @class = "form-control", @Value = Model.BinaId, @readonly = "readonly", @style = "display: none" })
+        </div>
+
+        <div class="form-group row">
+            @Html.LabelFor(model => model.KatNo, "Kat No", htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.KatNo, new { htmlAttributes = new { @class = "form-control Miktar" } })
+                @Html.ValidationMessageFor(model => model.KatNo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            @Html.LabelFor(model => model.Cephe, "Cephesi", htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                <select id="Cephe" name="Cephe" class="form-control">
+                    <option value="">--Seçiniz--</option>
+                    @foreach (var item in ViewBag.Cephe as SelectList)
+                    {
+                        <option value="@item.Value" @(Model.Cephe == item.Value ? "selected" : "")>@item.Text</option>
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            @Html.LabelFor(model => model.KapiNo, "Kapı No", htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.KapiNo, new { htmlAttributes = new { @class = "form-control Miktar" } })
+                @Html.ValidationMessageFor(model => model.KapiNo, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            @Html.LabelFor(model => model.Metrekare, "Metrekare", htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.EditorFor(model => model.Metrekare, new { htmlAttributes = new { @class = "form-control Miktar" } })
+                @Html.ValidationMessageFor(model => model.Metrekare, "", new { @class = "text-danger" })
+            </div>
+        </div>    
+
+        <div class="form-group row">
+            @Html.LabelFor(model => model.BagBolTur, "Türü", htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                <select id="BagBolTur" name="BagBolTur" class="form-control">
+                    <option value="">--Seçiniz--</option>
+                    @foreach (var item in ViewBag.BagBolTur as SelectList)
+                    {
+                        <option value="@item.Value" @(Model.BagBolTur == item.Value ? "selected" : "")>@item.Text</option>
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            @Html.LabelFor(model => model.OrtakAlan, "Ortak Alanı ?", htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9 ">
+                @Html.RadioButton("OrtakAlan", false, new { @class = "control-label col-md-1" })
+                Hayır
+                @Html.RadioButton("OrtakAlan", true, new { @class = "control-label col-md-1 offset-2" })
+                Evet
+            </div>
+        </div>
+
+    </div>
+
+}
+
+
+
+<script>
+    var entityID =@Model.ID;
+
+    // Save Process
+    $("#btn_Kaydet").click(function () {
+       // debugger;
+        var KatNo = $("#form_entity #KatNo").val();
+        var Cephe = $("#form_entity #Cephe :selected").text();
+        var KapiNo = $("#form_entity #KapiNo").val();
+        var Metrekare = $("#form_entity #Metrekare").val();
+        var BagBolTur = $("#form_entity #BagBolTur  :selected").text();
+        var _ortakAlan = $("input[name='OrtakAlan']:checked").val() === "True" ? "Evet" : "Hayır";
+
+        var currentRow = $('#bagbolTable ' + "#tr_" + entityID);
+        currentRow.find("td:eq(1)").text(KatNo);
+        currentRow.find("td:eq(2)").text(Cephe);
+        currentRow.find("td:eq(3)").text(KapiNo);
+        currentRow.find("td:eq(4)").html(Metrekare);
+        currentRow.find("td:eq(5)").html(BagBolTur);
+        currentRow.find("td:eq(6)").html(_ortakAlan);
+
+        
+        Add_URL('/BagBol/BagBol_Duzenle', '/BagBol/Index/@Model.BinaId');
+
+
+    });
+    //- Save Process
+
+</script>
+
+
+
+
+
+

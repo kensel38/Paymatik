@@ -1,0 +1,190 @@
+﻿
+
+<style>
+    .nav-link {
+        color: #FFECB3 !important;
+    }
+</style>
+
+<nav class="main-header navbar navbar-expand-md navbar-light bg-gradient-navy text-md  border-bottom-0 ">
+    <div class="container-fluid ">
+        <a href="/Home/Index" class="navbar-brand">
+            <img src="~/Content/img/logo.png" style="height:28px" alt="KYAM Logo" title="Matatek Bilişim Hizmetleri" class="brand-image">
+            <span class="brand-text font-weight-bold" title="Yakıt Dağıtım Sistemi" style="color: #fec227;"> PayMatik </span>
+        </a>
+
+        <button class="navbar-toggler order-1" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse order-3" id="navbarCollapse">
+            <!-- Left navbar links -->
+            <ul class="navbar-nav">
+
+                <li class="nav-item">
+                    <a href="/Home/Index" class="nav-link">
+                        <i class="nav-icon fas fa-compress"> &nbsp; Kontrol Paneli </i>
+                    </a>
+                </li>               
+
+                <li class="nav-item">
+                    <a href="/Bina/Index" class="nav-link">
+                        <i class="nav-icon far fa-building"> &nbsp; Bina Yönetimi </i>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="/Paylasim/Index" class="nav-link">
+                        <i class="nav-icon fas fa-square-root-alt"> &nbsp; Gider Paylaşımı </i>                        
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="/Analizler/Index" class="nav-link">
+                        <i class="nav-icon fas fa-chart-line"> &nbsp;Raporlar</i>
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a href="/AlanTurleri/Index" class="nav-link">
+                       <i class="nav-icon fas fa-user-cog">  &nbsp;Kullanıcı Yönetimi</i>
+                    </a>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a id="dropdownSubMenu1" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link dropdown-toggle">
+                        <i class="nav-icon fas fa-tools">
+                            &nbsp;
+                            Ayarlar
+                        </i>
+                    </a>
+                    <ul aria-labelledby="dropdownSubMenu1" class="dropdown-menu border-0 shadow">
+
+                        <!-- Level two dropdown-->
+                        <li class="dropdown-submenu dropdown-hover">
+                            <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">Yetki İşlemleri</a>
+                            <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">
+                                <li>
+                                    <a tabindex="-1" href="/Kullanicilar/Index" class="dropdown-item">Kullanıcılar</a>
+                                </li>
+
+                                <li><a href="#" class="dropdown-item">Sayfalar</a></li>
+                                <li><a href="#" class="dropdown-item">Roller</a></li>
+                                <li><a href="#" class="dropdown-item">Kullanıcı & Rol</a></li>
+                                <li><a href="#" class="dropdown-item">Sayfa & Rol</a></li>
+
+                            </ul>
+                        </li>
+                        <!-- End Level two -->
+                        <li class="dropdown-divider"></li>
+                        <!-- Level two dropdown-->
+                        <li class="dropdown-submenu dropdown-hover">
+                            <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">Personel İşlemleri</a>
+                            <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">
+                                <li>
+                                    <a tabindex="-1" href="/PersonelTurleri/Index" class="dropdown-item">Personel Tür Tanımlama</a>
+                                </li>
+
+                                <li><a href="/PersonelTanim/Index" class="dropdown-item">Personel Tanımlama</a></li>
+                            </ul>
+                        </li>
+                        <!-- End Level two -->
+                        <li class="dropdown-divider"></li>
+                        <!-- Level two dropdown-->
+                        <li class="dropdown-submenu dropdown-hover">
+                            <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">Ekipman İşlemleri</a>
+                            <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">
+
+                                <li>
+                                    <a href="/EkipmanTurleri/Index" class="dropdown-item">Ekipman Tür Tanımlama</a>
+                                </li>
+                                <li>
+                                    <a href="/Ekipmanlar/TumEkipmanlar" class="dropdown-item">Bütün Ekipmanlar Listesi</a>
+                                </li>
+
+                            </ul>
+                        </li>
+                        <!-- End Level two -->
+                        <li class="dropdown-divider"></li>
+                        <!-- Level two dropdown-->
+                        <li class="dropdown-submenu dropdown-hover">
+                            <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">Malzeme İşlemleri</a>
+                            <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">
+                                <li>
+                                    <a href="/MalzemeTurleri/Index" class="dropdown-item">Malzeme Tür Tanımlama</a>
+                                </li>
+
+                                <li>
+                                    <a href="/Malzemeler/TumMalzemeler" class="dropdown-item">Bütün Malzemeler Listesi</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <!-- End Level two -->
+                        <li class="dropdown-divider"></li>
+                        <!-- Level two dropdown-->
+                        <li class="dropdown-submenu dropdown-hover">
+                            <a id="dropdownSubMenu2" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">Diğer İşlemleri</a>
+                            <ul aria-labelledby="dropdownSubMenu2" class="dropdown-menu border-0 shadow">
+                                <li>
+                                    <a href="/AfetTurleri/Index" class="dropdown-item">Afet Tür Tanımlama</a>
+                                </li>
+
+                                <li>
+                                    <a href="/Afet_OperasyonTurleri/Index" class="dropdown-item">Operasyon Tür Tanımlama</a>
+                                </li>
+                                <li>
+                                    <a href="/AlanTurleri/Index" class="dropdown-item">
+                                        <i class="fas fa-map-marker-alt"></i> &nbsp;Alan Tür Tanımları
+                                    </a>
+                                </li>
+
+                                <li>
+                                    <a href="/Operasyon_AlanTurleri/Index" class="dropdown-item">Operasyon Alan Tür Tanımlama</a>
+                                </li>
+                                <li>
+                                    <a href="/YasGruplari/Index" class="dropdown-item">Yaş Grup  Tanımlama</a>
+                                </li>
+
+                                <li>
+                                    <a href="/Kategoriler/Index" class="dropdown-item">Kategori  Tanımlama</a>
+                                </li>
+
+
+
+                                <!-- Level two dropdown-->
+                                <li class="dropdown-submenu dropdown-hover">
+                                    <a id="dropdownSubMenu3" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="dropdown-item dropdown-toggle">Ölçü İşlemleri</a>
+                                    <ul aria-labelledby="dropdownSubMenu3" class="dropdown-menu border-0 shadow">
+                                        <li>
+                                            <a href="/OlcuBirimleri/Index" class="dropdown-item">Ölçü Birim Tanımlama</a>
+                                        </li>
+
+                                        <li>
+                                            <a href="/Olculer/Index" class="dropdown-item">Ölçü Tanımlama</a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <!-- End Level two -->
+
+
+                            </ul>
+                        </li>
+                        <!-- End Level two -->
+                    </ul>
+                </li>
+            </ul>
+
+        </div>
+
+        <!-- Right navbar links -->
+        <ul class="order-1 order-md-3 navbar-nav navbar-no-expand ml-auto">
+
+            <!-- Sidebar Footer - Sol Alt Köşe -->
+            <li class="nav-item">
+                <a href="/account/logout" class="btn btn-sm btn-danger w-100 text-start">
+                    <i class="fas fa-sign-out-alt me-2"></i> Çıkış Yap
+                </a>
+            </li>           
+        </ul>
+    </div>
+</nav>

@@ -1,0 +1,92 @@
+﻿
+@model  EL.tbl_Donem
+@using System.Globalization
+
+@{
+    var mevcutYil = DateTime.Now.Year;
+    var yillar = Enumerable.Range(mevcutYil - 2, 6); // 2 yıl önce - 3 yıl sonrası
+    var aylar = Enumerable.Range(1, 12)
+        .Select(i => new SelectListItem { Value = i.ToString("D2"), Text = CultureInfo.GetCultureInfo("tr-TR").DateTimeFormat.GetMonthName(i) });
+}
+
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "form_entity" }))
+{
+    <form class="form-horizontal ">
+        <div class="card-body">
+
+            <div class="form-horizontal">
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.ID)
+
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.BinaId)
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.DonemNo)
+
+                <div class="form-group row">
+                    <label class="control-label col-md-3">Yıl</label>
+                    <div class="col-md-9">
+                        <select name="SecilenYil" id="ddlYil" class="form-control">
+                            <option value="">Yıl Seçiniz</option>
+                            @foreach (var yil in yillar)
+                            {
+                                <option value="@yil">@yil</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="control-label col-md-3">Ay</label>
+                    <div class="col-md-9">
+                        <select name="SecilenAy" id="ddlAy" class="form-control">
+                            <option value="">Ay Seçiniz</option>
+                            @foreach (var ay in aylar)
+                            {
+                                <option value="@ay.Value">@ay.Text</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="control-label col-md-3">Dönem Adı</label>
+                    <div class="col-md-9">
+                        @Html.TextBoxFor(m => m.DonemAdi, new { @class = "form-control", @readonly = "readonly", id = "donemAdi" })
+                    </div>
+                </div>
+
+            </div>
+            </div>
+
+    </form>
+}
+
+
+<script>
+
+    function updateDonemAdi() {
+        var yil = $('#ddlYil').val();
+        var ayText = $('#ddlAy option:selected').text();
+        if (yil && ayText) {
+            $('#donemAdi').val(`${yil}-${ayText}`);
+        }
+    }
+
+    $('#ddlYil, #ddlAy').change(updateDonemAdi);
+    $(document).ready(updateDonemAdi);
+
+    
+    // Save Process
+    $("#btn_Kaydet").click(function () {
+        Add_URL('/Donem/EkleDuzenle', '/Donem/Index/@ViewBag.binaID');
+    });
+    //- Save Process
+</script>
+
+
+

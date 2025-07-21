@@ -1,0 +1,79 @@
+﻿@model IEnumerable<EL.tbl_BagBol>
+
+@{
+    EL.tbl_Bina _bina = (EL.tbl_Bina)ViewBag.Bina;
+}
+
+<div class="card card-outline card-warning">
+    <div class="card-header" style="padding: 1px 15px 1px 0px; margin-bottom: -16px; background-color: #e6e6e9 ">
+
+        <div class="card-title" style="margin:5px;">
+            <i class="fab fa-staylinked">
+                &nbsp; <b>@_bina.Ad </b> Apartmanı Okuma Sıralaması Düzenleme Sayfası
+            </i>
+        </div>
+
+        <div class="card-tools">
+            <a id="btn_geriDon" href="/Bina/Index" style="margin:3px;" class="btn btn-outline-info btn-sm"> <i class="fas fa-level-down-alt fa-rotate-90"></i>&nbsp;&nbsp; Binalar Listesine Geri Dön&nbsp;&nbsp;</a>
+        </div>
+    </div>
+
+</div>
+
+
+<div class="card card-outline card-info" style="background-color: #dee2e6;">
+
+    <div class="card-body">
+        <div class="row">
+
+            <section class="col-md-5">
+                <div class="card  card-outline card-warning">
+                    <div class="card-body" id="_bagbol_Gorsel">
+                        <div id="bina-gorseli"></div>
+                        <!-- Bina Görseli burada oluşacak -->
+                    </div>
+                </div>
+            </section>
+
+            <section class="col-md-7">
+                <div class="card  card-outline card-success">
+                    <div class="card-body" id="_bagbol_Liste">
+
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </div>
+
+</div>
+
+
+<link href="~/Content/css/BinaGorsel.css" rel="stylesheet" />
+<script src="~/Content/_MyScripts/BinaGorsel.js"></script>
+
+@section scripts{
+    <script>
+
+        $("#_bagbol_Liste").load('/BagBol/OkumaSiralamasi_Liste?id=' + @_bina.ID);
+    </script>
+
+
+    <script>
+
+            function gorseliYukle(binaId) {
+                fetch('/BagBol/GetBagBolListesi?binaId=' + binaId)
+                    .then(response => response.json())
+                    .then(data => binaGorseliniGuncelle(data));
+        }
+
+
+
+        document.addEventListener("DOMContentLoaded", function () {
+            gorseliYukle(@_bina.ID); // Sayfa yüklenince çiz
+        });
+    </script>
+
+}
+
+

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="c483a740dba54e21a8042196f257cefc" Name="Diagram1">
+        <EntityTypeShape EntityType="PaymatikDBModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="0.75" />
+        <EntityTypeShape EntityType="PaymatikDBModel.tbl_BagBol" Width="1.5" PointX="3" PointY="3.25" />
+        <EntityTypeShape EntityType="PaymatikDBModel.tbl_Bina" Width="1.5" PointX="0.75" PointY="7.375" />
+        <EntityTypeShape EntityType="PaymatikDBModel.tbl_Donem" Width="1.5" PointX="3" PointY="7.375" />
+        <EntityTypeShape EntityType="PaymatikDBModel.tbl_Kullanici" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="PaymatikDBModel.tbl_Paylasim" Width="1.5" PointX="3" PointY="10.5" />
+        <EntityTypeShape EntityType="PaymatikDBModel.tbl_PaylasimDetay" Width="1.5" PointX="5.25" PointY="8.875" />
+        <EntityTypeShape EntityType="PaymatikDBModel.tbl_SayacOkuma" Width="1.5" PointX="5.25" PointY="5.125" />
+        <EntityTypeShape EntityType="PaymatikDBModel.tbl_Tanimlar" Width="1.5" PointX="0.75" PointY="0.75" />
+        <AssociationConnector Association="PaymatikDBModel.FK__Daireler__BinaId__2A4B4B5E" />
+        <AssociationConnector Association="PaymatikDBModel.FK__PaylasimD__Daire__3B75D760" />
+        <AssociationConnector Association="PaymatikDBModel.FK_tbl_SayacOkuma_tbl_BagBol" />
+        <AssociationConnector Association="PaymatikDBModel.FK__Paylasiml__BinaI__37A5467C" />
+        <AssociationConnector Association="PaymatikDBModel.FK_tbl_Donem_tbl_Bina" />
+        <AssociationConnector Association="PaymatikDBModel.FK_tbl_SayacOkuma_tbl_Donem" />
+        <AssociationConnector Association="PaymatikDBModel.FK__PaylasimD__Payla__3A81B327" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

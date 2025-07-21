@@ -1,0 +1,175 @@
+﻿
+<!DOCTYPE html>
+
+<!--
+This is a starter template page. Use this page to start your new project from
+scratch. This page gets rid of all links and provides the needed markup only.
+-->
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Matatek - Yakıt Dağıtım Sistemi</title>
+    <link rel="shortcut icon" href="#" />
+
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome Icons -->
+    <link href="~/Content/plugins/fontawesome-free/css/all.min.css" rel="stylesheet" />
+
+
+    <!-- DataTables -->
+    <link href="~/Content/datatables/datatables-bs4/css/dataTables.bootstrap4.min.css" rel="stylesheet" />
+    <link href="~/Content/datatables/datatables-responsive/css/responsive.bootstrap4.min.css" rel="stylesheet" />
+    <link href="~/Content/datatables/datatables-buttons/css/buttons.bootstrap4.min.css" rel="stylesheet" />
+
+    <!-- Theme style -->
+    <link href="~/Content/css/adminlte.min.css" rel="stylesheet" />
+
+    <!-- SweetAlert2 -->
+    <link href="~/Content/plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css" rel="stylesheet" />
+
+    <!-- Select2 -->
+    <link href="~/Content/plugins/select2/select2.min.css" rel="stylesheet" />
+    <link href="~/Content/plugins/select2/select2-bootstrap4.min.css" rel="stylesheet" />
+
+    <!-- Toastr -->
+    <link href="~/Content/plugins/toastr/toastr.min.css" rel="stylesheet" />
+
+    @RenderSection("styles", required: false)
+
+</head>
+<body class="hold-transition layout-top-nav layout-navbar-fixed layout-footer-fixed text-sm">
+    <div class="wrapper">
+
+        <!-- Navbar -->
+        @Html.Partial("_navbar")
+        <!-- /.navbar -->
+        <!-- Content Wrapper. Contains page content -->
+        <div class="content-wrapper">
+            @RenderBody()
+        </div>
+        <!-- /.content-wrapper -->
+        <!-- Control Sidebar -->
+        <aside class="control-sidebar control-sidebar-dark">
+            <!-- Control sidebar content goes here -->
+        </aside>
+        <!-- /.control-sidebar -->
+        <!-- Main Footer -->
+        <footer class="main-footer text-sm">
+            <!-- To the right -->
+            <div class="float-right d-none d-sm-inline">
+                All rights reserved.
+            </div>
+            <!-- Default to the left -->
+            <strong>Copyright &copy; 2025 by <a href="https://matatek.com"> Matatek Bilişim Hizmetleri</a> </strong>
+        </footer>
+    </div>
+    <!-- ./wrapper -->
+    <!-- REQUIRED SCRIPTS -->
+    <!-- jQuery -->
+    <script src="~/Content/datatables/jquery/jquery.min.js"></script>
+    <script src="~/Content/js/jquery.validate.min.js"></script>
+    <script src="~/Content/js/jquery.validate.unobtrusive.min.js"></script>
+    <script src="~/Content/js/additional-methods.min.js"></script>
+    <script src="~/Content/js/jquery.unobtrusive-ajax.js"></script>
+
+    <script src="~/Content/plugins/jquery/jquery-ui/jquery-ui.min.js"></script>
+
+    <!-- jQuery-unobtrusive-ajax -->
+    <!--<script src="~/Content/plugins/jquery/unobtrusive-ajax/jquery.unobtrusive-ajax.min.js"></script>-->
+    <!-- Bootstrap 4 -->
+    <script src="~/Content/datatables/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- InputMask -->
+    <script src="~/Content/js/moment.min.js"></script>
+    <script src="~/Content/inputmask/jquery.inputmask.min.js"></script>
+
+    <!-- SweetAlert2 -->
+    <script src="~/Content/plugins/sweetalert2-theme-bootstrap-4/sweetalert2.all.min.js"></script>
+
+    <!-- Select2 -->
+    <script src="~/Content/plugins/select2/select2.full.min.js"></script>
+
+
+    <!-- DataTables  & Plugins -->
+    <script src="~/Content/datatables/datatables/jquery.dataTables.min.js"></script>
+    <script src="~/Content/datatables/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+    <script src="~/Content/datatables/datatables-responsive/js/dataTables.responsive.min.js"></script>
+    <script src="~/Content/datatables/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+    <script src="~/Content/datatables/datatables-buttons/js/dataTables.buttons.min.js"></script>
+    <script src="~/Content/datatables/datatables-buttons/js/buttons.bootstrap4.min.js"></script>
+    <script src="~/Content/datatables/jszip/jszip.min.js"></script>
+    <script src="~/Content/datatables/pdfmake/pdfmake.min.js"></script>
+    <script src="~/Content/datatables/pdfmake/vfs_fonts.js"></script>
+    <script src="~/Content/datatables/datatables-buttons/js/buttons.html5.min.js"></script>
+    <script src="~/Content/datatables/datatables-buttons/js/buttons.print.min.js"></script>
+    <script src="~/Content/datatables/datatables-buttons/js/buttons.colVis.min.js"></script>
+
+    <!-- AdminLTE App -->
+    <script src="~/Content/js/adminlte.min.js"></script>
+
+    <!-- AdminLTE for demo purposes -->
+    <script src="~/Content/js/demo.js"></script>
+
+    <!-- My Scripts -->
+    <script src="~/Content/_MyScripts/crudprocess.js"></script>
+
+    @RenderSection("scripts", required: false)
+
+
+    <!-- Page specific script -->
+
+    <script>
+        
+        window.initTables = function () {
+            $('.table-data').each(function () {
+                var tableId = $(this).attr('id'); // Tablo ID'sini al
+                var col_number = $(this).data("col_order") || 0;
+                var col_order_type = $(this).data("order_type") || "asc";               
+                var show_lengthChange = parseInt($("#binaListesi").attr("data-show_Length")) === 0 ? false : true;
+
+                // Footer için Arama Kutuları
+                $(this).find('tfoot th').each(function () {
+                    var title = $(this)[0].innerText;
+                    if (title != "") {
+                        $(this).html('<input type="text" placeholder=" Ara <' + title + '> "/>');
+                    }
+                });
+
+                // DataTable Başlat
+                var table = $(this).DataTable({
+                    "responsive": true,
+                    "lengthChange": show_lengthChange,
+                    "autoWidth": false,
+                    "paging": true,                   
+                    //"buttons": ["copy", "csv", "excel", "pdf", "print", "colvis"],
+                    "buttons": ["excel", "pdf", "print", "colvis"],
+                    initComplete: function () {
+                        this.api().columns().every(function () {
+                            var that = this;
+                            $('input', this.footer()).on('keyup change clear', function () {
+                                if (that.search() !== this.value) {
+                                    that.search(this.value).draw();
+                                }
+                            });
+                        });
+                    },
+                    order: [[col_number, col_order_type]],
+                }).buttons().container().appendTo(`#${tableId}_wrapper .col-md-6:eq(0)`);
+
+               
+
+            });
+        };
+
+        // İlk yükleme için çağır
+        $(document).ready(function () {
+            initTables(); // Layout'taki fonksiyonu çağırarak tüm tabloları başlat
+        });
+
+    </script>
+
+
+</body>
+</html>

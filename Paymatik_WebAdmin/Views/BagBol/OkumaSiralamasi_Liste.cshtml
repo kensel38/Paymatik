@@ -1,0 +1,155 @@
+﻿
+@model IEnumerable<EL.tbl_BagBol>
+
+
+<table id="bagbolTable" class="table table-bordered table-striped  table-responsive-sm table-hover table-data" data-col_order="1" data-order_type="asc" style="width:100%">
+    <thead style="background-color: #CFD8DC">
+        <tr>
+            <th hidden>
+                @Html.DisplayNameFor(model => model.ID)
+            </th>
+            <th>
+                @Html.DisplayName("Kat No")
+            </th>
+            <th>
+                @Html.DisplayName("Cephe")
+            </th>
+            <th>
+                @Html.DisplayName("Kapı No")
+            </th>
+            <th>
+                @Html.DisplayName("Tür")
+            </th>
+            <th>
+                @Html.DisplayName("OrtakAlan")
+            </th>
+            <th >
+                @Html.DisplayName("Okuma Sırası")
+            </th>
+            <th>
+            @Html.DisplayName("Güncelle")
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr id="tr_@item.ID">
+                <td hidden>
+                    @item.ID
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.KatNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cephe)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.KapiNo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BagBolTur)
+                </td>
+                <td>
+                    @if (item.OrtakAlan == true)
+                    {
+                        <span>Evet</span>
+                    }
+                    else
+                    {
+                        <span>Hayır</span>
+                    }
+                </td>
+
+                <td contenteditable="true" data-id="@item.ID" id="okumaSirasiCell">
+                    @item.OkumaSirasi
+                </td>
+                <td>
+                    <button class="btn btn-outline-dark btn-xs save-btn">Kaydet</button>
+                </td>               
+            </tr>
+        }
+    </tbody>
+
+</table>
+
+<style>
+    td[contenteditable="true"] {
+        text-align:center;
+        background-color: #cee9f58f; /* Beyaz arka plan */
+        border: 1px solid rgba(0, 123, 255, 0.5); /* İnce kenarlık */
+        padding: 5px; /* İç boşluk */
+        font-size: 14px; /* Yazı büyüklüğü */
+        font-family: Arial, sans-serif; /* Yazı fontu */
+        border-radius: 4px; /* Köşeleri yuvarlat */
+        cursor: text; /* Kullanıcı metin yazabileceğini anlasın */
+        min-width: 100px; /* Minimum genişlik */
+        display: inline-block; /* Blok yerine kutu gibi göster */
+    }
+
+        td[contenteditable="true"]:focus {
+            outline: 2px solid #007bff; /* Mavi çerçeve */
+            box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Hafif parlayan etki */
+        }
+
+</style>
+
+
+
+<script>
+    $(document).ready(function () {
+        initTables(); // Layout'taki metodu çağır
+    });
+
+    function saveChanges(element) {
+        var yeniDeger = $(element).text(); // Yeni değeri al
+        var id = $(element).data("id"); // Satıra ait ID'yi al
+
+         $.ajax({
+            url: '/BagBol/UpdateOkumaSirasi',
+            type: "POST",
+            data: { id: id, okumaSirasi: yeniDeger },
+            success: function () {
+                console.log("Güncelleme başarılı!");
+                $(function () {
+                    var Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        timer: 2000
+                    });
+                    Toast.fire({
+                        icon: 'success',
+                        title: 'Bilgiler Başarı ile Kaydedildi...'
+                    })
+                });
+            },
+            error: function () {
+                console.log("Güncelleme başarısız!");
+            }
+        });
+    }
+
+    $("td[contenteditable='true']").on("keypress", function (event) {
+        if (event.which === 13) { // Enter tuşuna basıldı mı?
+            event.preventDefault(); // Yeni satıra geçmeyi engelle
+            saveChanges(this); // Kaydetme fonksiyonunu çağır
+        }
+    });     
+    // Butona tıklanınca kaydet
+    $(".save-btn").on("click", function () {
+        var cell = $(this).closest("tr").find("td[contenteditable='true']");
+        saveChanges(cell);
+    });
+
+</script>
+
+
+
+
+
+
+
+
+
+

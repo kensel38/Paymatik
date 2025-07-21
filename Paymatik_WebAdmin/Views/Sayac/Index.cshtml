@@ -1,0 +1,121 @@
+﻿@model  Paymatik_WebAdmin.Models.SayacOkumaViewModel
+
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="card card-primary card-outline">
+            <div class="card-header">
+                <h3 class="card-title">
+                    @if (ViewBag.DonemDurum == null)
+                    {
+                        <strong>Sayaç Okuma – KatNo: @Model.KatNo | KapıNo: @Model.KapiNo | Cephe: @Model.Cephe - [@(Model.MevcutIndex+1) / @Model.ToplamBagBolSayisi]</strong>
+                    }
+                    else
+                    {
+                <strong style="color:darkred">@ViewBag.DonemDurum</strong>
+                    }
+
+                </h3>               
+            </div>
+            <div class="card-body">
+
+
+                <!-- Dönem Seçimi -->
+                <div class="form-group row">
+                    <label class="col-sm-1 col-form-label">Dönem:</label>
+                    <div class="col-sm-2">
+                        <input type="text" class="form-control" value="@Model.DonemAdi" />
+                    </div>
+                </div>
+
+                <div class="row">
+                    <!-- Sıcak Su Sayaç -->
+                    <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
+                        @using (Html.BeginForm("KaydetSicakSu", "Sayac", FormMethod.Post))
+                        {
+                            @Html.HiddenFor(m => m.BinaId)
+                            @Html.HiddenFor(m => m.BagimsizBolumId)
+                            @Html.HiddenFor(m => m.MevcutIndex)
+                            @Html.HiddenFor(m => m.ToplamBagBolSayisi)
+                            @Html.HiddenFor(m => m.DonemID)
+
+
+                            <h5 class="text-primary">Sıcak Su Sayacı</h5>
+                            <div class="form-group">
+                                <label>Önceki Değer</label>
+                                @Html.TextBoxFor(m => m.SicakSuOnceki, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                            <div class="form-group">
+                                <label>Güncel Değer</label>
+                                @Html.TextBoxFor(m => m.SicakSuGuncel, new { @class = "form-control", type = "number", step = "1" })
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-success">Sıcak Su Kaydet</button>
+                            </div>
+                        }
+                    </div>
+                    <!-- Doğalgaz Sayaç -->
+                    <div class="col-lg-6 col-md-6 col-sm-12 mb-3">
+                        @using (Html.BeginForm("KaydetDogalgaz", "Sayac", FormMethod.Post))
+                        {
+                            @Html.HiddenFor(m => m.BinaId)
+                            @Html.HiddenFor(m => m.BagimsizBolumId)
+                            @Html.HiddenFor(m => m.MevcutIndex)
+                            @Html.HiddenFor(m => m.ToplamBagBolSayisi)
+                            @Html.HiddenFor(m => m.DonemID)
+
+
+                            <h5 class="text-primary">Doğalgaz Sayacı</h5>
+                            <div class="form-group">
+                                <label>Önceki Değer</label>
+                                @Html.TextBoxFor(m => m.DogalgazOnceki, new { @class = "form-control", @readonly = "readonly" })
+                            </div>
+                            <div class="form-group">
+                                <label>Güncel Değer</label>
+                                @Html.TextBoxFor(m => m.DogalgazGuncel, new { @class = "form-control", type = "number", step = "1" })
+                            </div>
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-warning">Doğalgaz Kaydet</button>
+                            </div>
+
+                        }
+                    </div>
+                </div>
+
+                <!-- Navigasyon -->
+                <div class="text-center mt-4">
+                    <a class="btn btn-info @(Model.MevcutIndex == 0 ? "disabled" : "")"
+                       href="@Url.Action("Index", "Sayac", new { id = Model.BinaId, index = Model.MevcutIndex - 1 })">
+                        Geri
+                    </a>
+                    &nbsp;
+                    <a class="btn btn-primary @(Model.MevcutIndex + 1 >= Model.ToplamBagBolSayisi ? "disabled" : "")"
+                       href="@Url.Action("Index", "Sayac", new { id = Model.BinaId, index = Model.MevcutIndex + 1 })">
+                        İleri
+                    </a>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <script>
+            Swal.fire({
+                toast: true,
+                icon: 'success',
+                title: '@TempData["SuccessMessage"]',
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 2000
+            });
+        </script>
+    }
+}

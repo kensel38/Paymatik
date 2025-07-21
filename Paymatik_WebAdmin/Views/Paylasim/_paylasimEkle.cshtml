@@ -1,0 +1,193 @@
+﻿
+@model  EL.tbl_Paylasim
+
+<link href="~/Content/leaflet_files/plugins/Dropdown/dist/css/dd.css" rel="stylesheet" />
+<script src="~/Content/leaflet_files/plugins/Dropdown/dist/js/dd.min.js"></script>
+
+@{
+    var binalar = (List<EL.tbl_Bina>)ViewBag.Binalar;
+}
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "form_entity" }))
+{
+    <form class="form-horizontal ">
+        <div class="card-body">
+
+            <div class="form-horizontal">
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                @Html.HiddenFor(model => model.ID)
+
+                <!-- Bina Seçimi -->
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.BinaId, "Bina", htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        <select id="BinaId" name="BinaId" class="form-control">
+                            <option value="">-- Seçiniz --</option>
+                            @foreach (var bina in binalar)
+                            {
+                                <option value="@bina.ID">@bina.Ad</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Dönem Seçimi -->
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.Donem, "Dönem Seçiniz", htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        <select id="Donem" name="Donem" class="form-control">
+                            <option value="">-- Önce bina seçiniz --</option>
+                        </select>
+                    </div>
+                </div>
+
+
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.SayactanOkunanHacim, "Okunan Hacim", htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(model => model.SayactanOkunanHacim, new { @class = "form-control ", type = "number", step = "1", min = "0" })
+                        @Html.ValidationMessageFor(model => model.SayactanOkunanHacim, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.FaturaTutar, "FaturaTutar (₺)", htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(model => model.FaturaTutar, new { @class = "form-control ", type = "number", step = "0.01", min = "0" })
+                        @Html.ValidationMessageFor(model => model.FaturaTutar, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.SuSicakligi, "Su Sıcaklığı", htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(model => model.SuSicakligi, new { @class = "form-control ", type = "number", step = "1", min = "0" })
+                        @Html.ValidationMessageFor(model => model.SuSicakligi, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.FaturaSonOdemeTarihi, "Son Odeme Tarihi", htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.TextBoxFor(model => model.FaturaSonOdemeTarihi, new { @class = "form-control ", type = "date" })
+                        @Html.ValidationMessageFor(model => model.FaturaSonOdemeTarihi, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+        
+
+
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.DusukKullanimCeza, "Düşük Kullnm Ceza ?", htmlAttributes: new { @class = "control-label col-md-4", title = "Düşük kullanım cezası, belirli eşik altında tüketim yapanlar için uygulanır." })
+                    <div class="col-md-8 ">
+                        @Html.RadioButton("DusukKullanimCeza", false, new { @class = "control-label col-md-1", id = "DusukKullanimCeza_Hayir" })
+                        Hayır
+                        @Html.RadioButton("DusukKullanimCeza", true, new { @class = "control-label col-md-1 offset-1", id = "DusukKullanimCeza_Evet" })
+                        Evet
+                    </div>
+                </div>
+
+                <div id="CezaDagitimTurContainer" class="form-group row" style="display:flex">
+                    @Html.LabelFor(model => model.CezaDagitimTur, "Ceza Dağıtım Türü", htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.RadioButtonFor(model => model.CezaDagitimTur, BL.constants.CezaDagitimTur.KomsuKat, new
+                        { @class = "control-label col-md-1", id = "CezaDagitimTur_KomsuKat" })
+                        @BL.constants.CezaDagitimTur.KomsuKat
+
+                        @Html.RadioButtonFor(model => model.CezaDagitimTur, BL.constants.CezaDagitimTur.Genel, new
+                        { @class = "control-label col-md-1 offset-1", id = "CezaDagitimTur_Genel", @checked = true })
+                        @BL.constants.CezaDagitimTur.Genel
+
+                    </div>
+
+
+
+
+                </div>
+            </div>
+        </div>
+    </form>
+}
+
+<style>
+    #CezaDagitimTurContainer {
+        display: none;
+    }
+</style>
+
+
+<script>
+    // Save Process
+    $("#btn_Kaydet").click(function () {
+        Add();
+    });
+    //- Save Process
+
+</script>
+
+
+<script>
+    $(document).ready(function () {
+        $('#BinaId').change(function () {
+            const binaId = $(this).val();
+
+            if (binaId) {
+                $.ajax({
+                    url: '/Paylasim/GetDonemlerByBina', // controller/action
+                    type: 'GET',
+                    data: { binaId: binaId },
+                    success: function (donemler) {
+                        const donemDropdown = $('#Donem');
+                        donemDropdown.empty();
+
+                        donemDropdown.append($('<option>', {
+                            value: '',
+                            text: '-- Dönem Seçiniz --'
+                        }));
+
+                        $.each(donemler, function (i, item) {
+
+                            donemDropdown.append($('<option>', {
+                                value: item.value,
+                                text: item.text
+                            }));
+                        });
+                    }
+                });
+            }
+        });
+    });
+</script>
+
+<script>
+
+
+</script>
+
+
+
+<script>
+    $(document).ready(function () {
+        function toggleCezaTur() {
+            const cezaVar = $('input[name="DusukKullanimCeza"]:checked').val() === "True";
+            if (cezaVar) {
+                $("#CezaDagitimTurContainer").show();
+            } else {
+                $("#CezaDagitimTurContainer").hide();
+            }
+        }
+
+        // Sayfa yüklenince çalıştır
+        toggleCezaTur();
+
+        // Radyo buton değiştiğinde çalıştır
+        $('input[name="DusukKullanimCeza"]').change(function () {
+            toggleCezaTur();
+        });
+    });
+</script>
+
+
+
