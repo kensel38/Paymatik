@@ -24,6 +24,8 @@ namespace EL
         public Nullable<int> BinaId { get; set; }
         public Nullable<int> DonemNo { get; set; }
         public string DonemAdi { get; set; }
+        public Nullable<System.DateTime> BaslangicTarihi { get; set; }
+        public Nullable<System.DateTime> BitisTarihi { get; set; }
         public Nullable<bool> Durum { get; set; }
     
         public virtual tbl_Bina tbl_Bina { get; set; }

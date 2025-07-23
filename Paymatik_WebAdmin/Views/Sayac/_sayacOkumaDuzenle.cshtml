@@ -1,0 +1,73 @@
+﻿@model EL.tbl_SayacOkuma
+
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { id = "form_entity", @class = "form-horizontal" }))
+{
+    <div class="card-body">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @Html.HiddenFor(model => model.ID)
+        @Html.HiddenFor(model => model.BagBolId)
+        @Html.HiddenFor(model => model.DonemID)
+        <input type="hidden" name="BinaID" value="@ViewBag.BinaID" />
+
+        <div class="form-group row">
+            <label class="control-label col-md-3">Okuma Dönemi</label>
+            <div class="col-md-9">
+                @Html.TextBoxFor(m => m.tbl_Donem.DonemAdi, new { @class = "form-control", @readonly = "readonly", id = "DonemAdi" })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            @Html.Label("SayacTürü", "Sayaç Türü", htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+
+                @Html.RadioButtonFor(model => model.SayacTuru, BL.constants.SayacTurleri.SicakSu, new { @id = "SicakSu" })
+                <label for="SicakSu" class="mr-4">Sıcak Su</label>
+
+                @Html.RadioButtonFor(model => model.SayacTuru, BL.constants.SayacTurleri.DogalGaz, new { @id = "DogalGaz" })
+                <label for="DogalGaz">Doğal Gaz</label>
+
+            </div>
+        </div>
+
+
+        <div class="form-group row">
+            @Html.LabelFor(model => model.OncekiDeger, "Önceki Değer", htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.TextBoxFor(model => model.OncekiDeger, new { @class = "form-control OncekiDeger", type = "number" })
+                @Html.ValidationMessageFor(model => model.OncekiDeger, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group row">
+            @Html.LabelFor(model => model.GuncelDeger, "Güncel Değer", htmlAttributes: new { @class = "control-label col-md-3" })
+            <div class="col-md-9">
+                @Html.TextBoxFor(model => model.GuncelDeger, new { @class = "form-control GuncelDeger", type = "number" })
+                @Html.ValidationMessageFor(model => model.GuncelDeger, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+
+        <div class="form-group row">
+            <label class="control-label col-md-3">Okuma Tarihi</label>
+            <div class="col-md-9">
+                <input type="datetime-local" class="form-control" name="OkumaTarihi" id="OkumaTarihi" value="@Model.OkumaTarihi.ToString("yyyy-MM-ddTHH:mm")" />
+            </div>
+        </div>
+    </div>
+}
+
+
+<script>
+
+    // Save Process
+    $("#btn_Kaydet").click(function () {
+        /**/
+        Add_URL('/Sayac/EkleDuzenle', '/Sayac/DonemOkumaListesi?binaID=@ViewBag.BinaID&&donemID=@Model.DonemID');
+    /**/
+});
+//- Save Process
+
+
+</script>

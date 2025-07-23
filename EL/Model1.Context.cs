@@ -34,5 +34,7 @@ namespace EL
         public virtual DbSet<tbl_PaylasimDetay> tbl_PaylasimDetay { get; set; }
         public virtual DbSet<tbl_SayacOkuma> tbl_SayacOkuma { get; set; }
         public virtual DbSet<tbl_Tanimlar> tbl_Tanimlar { get; set; }
+        public virtual DbSet<view_BinaFaturaDetay> view_BinaFaturaDetay { get; set; }
+        public virtual DbSet<view_BinaSayacOkuma> view_BinaSayacOkuma { get; set; }
     }
 }

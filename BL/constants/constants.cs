@@ -2,7 +2,7 @@
 {
     public static class SayacTurleri
     {
-        public const string SicakSu = "SicakSu";
+        public const string SicakSu = "SıcakSu";
         public const string DogalGaz = "DogalGaz";
     }
 

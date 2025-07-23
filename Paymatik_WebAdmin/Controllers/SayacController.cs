@@ -13,7 +13,7 @@ namespace Paymatik_WebAdmin.Controllers
         UnitOfWork _uow = null;
         public SayacController() => _uow = new UnitOfWork();
 
-        // GET: Sayac 
+        // GET: Sayac
         public ActionResult Index(int id, int index = 0)
         {
             var bina = _uow.GetRepo<tbl_Bina>().GetByID(id);
@@ -27,7 +27,7 @@ namespace Paymatik_WebAdmin.Controllers
             var _aktifBagBol = bagBols[index];
 
             // Dönemler
-            var mevcutDonem = _uow.GetRepo<tbl_Donem>().GetAll_ByParam(x => x.BinaId == id).OrderByDescending(x => x.DonemNo).FirstOrDefault() ?? new tbl_Donem();
+            var mevcutDonem = _uow.GetRepo<tbl_Donem>().GetAll_ByParam(x => x.BinaId == id && x.Durum != true).OrderBy(x => x.DonemNo).FirstOrDefault() ?? new tbl_Donem();
             var oncekiDonem = _uow.GetRepo<tbl_Donem>().GetAll_ByParam(x => x.BinaId == id && x.DonemNo < mevcutDonem.DonemNo).OrderByDescending(x => x.DonemNo).FirstOrDefault() ?? new tbl_Donem();
 
 
@@ -138,5 +138,59 @@ namespace Paymatik_WebAdmin.Controllers
                 _uow.GetRepo<tbl_Donem>().Update(donem);
             }
         }
+
+        public ActionResult DonemOkumaListesi(int binaID, int donemID)
+        {
+            var ent = _uow.GetRepo<view_BinaSayacOkuma>().GetAll_ByParam(x => x.BinaID == binaID && x.DonemID == donemID);
+            ViewBag.Bina = ent.FirstOrDefault();
+            return View(ent);
+        }
+
+        [HttpGet]
+        public ActionResult EkleDuzenle(int id)
+        {
+            var ent = _uow.GetRepo<tbl_SayacOkuma>().GetByID(id);
+            ViewBag.BinaID = ent.tbl_BagBol.BinaId;
+            return PartialView("_sayacOkumaDuzenle", ent);
+        }
+
+        [HttpPost]
+        public ActionResult EkleDuzenle(tbl_SayacOkuma entity, int BinaID)
+        {
+            _uow.GetRepo<tbl_SayacOkuma>().Update(entity);
+            return Json(true, JsonRequestBehavior.AllowGet);
+        }
+
+        [HttpGet]
+        public JsonResult Sil_Onay(int id)
+        {
+            var entity = _uow.GetRepo<tbl_SayacOkuma>().GetByID(id);
+
+            if (entity != null)
+            {
+                return Json(true, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        [HttpPost]
+        public JsonResult Sil(int id)
+        {
+            int _result = _uow.GetRepo<tbl_SayacOkuma>().Delete(id);
+            if (_result > 0)
+            {
+                return Json(true, JsonRequestBehavior.AllowGet);
+            }
+            else
+            {
+                return Json(false, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+
+
     }
 }

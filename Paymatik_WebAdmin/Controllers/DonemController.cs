@@ -37,9 +37,9 @@ namespace Paymatik_WebAdmin.Controllers
             }
             else
             {
+                entity.DonemNo = (entity.BaslangicTarihi.Value.Year * 100) + entity.BaslangicTarihi.Value.Month;
                 _uow.GetRepo<tbl_Donem>().Update(entity);
             }
-
             return RedirectToAction("Index", new { id = entity.BinaId });
         }
 

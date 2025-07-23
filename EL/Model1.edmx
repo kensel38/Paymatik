@@ -46,6 +46,8 @@
           <Property Name="BinaId" Type="int" />
           <Property Name="DonemNo" Type="int" />
           <Property Name="DonemAdi" Type="nvarchar" MaxLength="20" />
+          <Property Name="BaslangicTarihi" Type="datetime" />
+          <Property Name="BitisTarihi" Type="datetime" />
           <Property Name="Durum" Type="bit" />
         </EntityType>
         <EntityType Name="tbl_Kullanici">
@@ -53,6 +55,8 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BinaID" Type="int" />
+          <Property Name="BagBolID" Type="int" />
           <Property Name="AdSoyad" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Telefon" Type="nvarchar" MaxLength="50" />
           <Property Name="Eposta" Type="nvarchar" MaxLength="100" Nullable="false" />
@@ -109,6 +113,71 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Adi" Type="nvarchar" MaxLength="50" />
           <Property Name="Degeri" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'PaymatikDB.dbo.view_BinaFaturaDetay' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="view_BinaFaturaDetay">
+          <Key>
+            <PropertyRef Name="BinaID" />
+            <PropertyRef Name="Ad" />
+            <PropertyRef Name="KapiNo" />
+            <PropertyRef Name="OrtakAlan" />
+            <PropertyRef Name="Donem" />
+            <PropertyRef Name="FaturaTutar" />
+            <PropertyRef Name="IsinmaTuketim" />
+            <PropertyRef Name="IsinmaTutar" />
+            <PropertyRef Name="SuTuketim" />
+            <PropertyRef Name="SuTutar" />
+            <PropertyRef Name="ToplamTutar" />
+          </Key>
+          <Property Name="BinaID" Type="int" Nullable="false" />
+          <Property Name="Ad" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="KatNo" Type="int" />
+          <Property Name="KapiNo" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="Metrekare" Type="float" />
+          <Property Name="BagBolTur" Type="nvarchar" MaxLength="50" />
+          <Property Name="OrtakAlan" Type="bit" Nullable="false" />
+          <Property Name="Donem" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="SayactanOkunanHacim" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="FaturaTutar" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="SuSicakligi" Type="int" />
+          <Property Name="DusukKullanimCeza" Type="bit" />
+          <Property Name="CezaDagitimTur" Type="nvarchar" MaxLength="10" />
+          <Property Name="HesaplamaTarihi" Type="datetime" />
+          <Property Name="FaturaSonOdemeTarihi" Type="datetime" />
+          <Property Name="IsinmaTuketim" Type="float" Nullable="false" />
+          <Property Name="IsinmaTutar" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="SuTuketim" Type="float" Nullable="false" />
+          <Property Name="SuTutar" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="OrtakAlanTutar" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="DusukKullanimTutar" Type="decimal" Precision="10" Scale="2" />
+          <Property Name="ToplamTutar" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'PaymatikDB.dbo.view_BinaSayacOkuma' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="view_BinaSayacOkuma">
+          <Key>
+            <PropertyRef Name="BinaID" />
+            <PropertyRef Name="DonemID" />
+            <PropertyRef Name="SayacOkumaID" />
+            <PropertyRef Name="Ad" />
+            <PropertyRef Name="KapiNo" />
+            <PropertyRef Name="SayacTuru" />
+            <PropertyRef Name="GuncelDeger" />
+            <PropertyRef Name="OkumaTarihi" />
+          </Key>
+          <Property Name="BinaID" Type="int" Nullable="false" />
+          <Property Name="DonemID" Type="int" Nullable="false" />
+          <Property Name="SayacOkumaID" Type="int" Nullable="false" />
+          <Property Name="Ad" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="DonemNo" Type="int" />
+          <Property Name="DonemAdi" Type="nvarchar" MaxLength="20" />
+          <Property Name="KatNo" Type="int" />
+          <Property Name="KapiNo" Type="nvarchar" MaxLength="10" Nullable="false" />
+          <Property Name="SayacTuru" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="OncekiDeger" Type="float" />
+          <Property Name="GuncelDeger" Type="float" Nullable="false" />
+          <Property Name="OkumaTarihi" Type="datetime" Nullable="false" />
         </EntityType>
         <Association Name="FK__Daireler__BinaId__2A4B4B5E">
           <End Role="tbl_Bina" Type="Self.tbl_Bina" Multiplicity="1">
@@ -214,6 +283,48 @@
           <EntitySet Name="tbl_PaylasimDetay" EntityType="Self.tbl_PaylasimDetay" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_SayacOkuma" EntityType="Self.tbl_SayacOkuma" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tbl_Tanimlar" EntityType="Self.tbl_Tanimlar" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="view_BinaFaturaDetay" EntityType="Self.view_BinaFaturaDetay" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [view_BinaFaturaDetay].[BinaID] AS [BinaID], 
+    [view_BinaFaturaDetay].[Ad] AS [Ad], 
+    [view_BinaFaturaDetay].[KatNo] AS [KatNo], 
+    [view_BinaFaturaDetay].[KapiNo] AS [KapiNo], 
+    [view_BinaFaturaDetay].[Metrekare] AS [Metrekare], 
+    [view_BinaFaturaDetay].[BagBolTur] AS [BagBolTur], 
+    [view_BinaFaturaDetay].[OrtakAlan] AS [OrtakAlan], 
+    [view_BinaFaturaDetay].[Donem] AS [Donem], 
+    [view_BinaFaturaDetay].[SayactanOkunanHacim] AS [SayactanOkunanHacim], 
+    [view_BinaFaturaDetay].[FaturaTutar] AS [FaturaTutar], 
+    [view_BinaFaturaDetay].[SuSicakligi] AS [SuSicakligi], 
+    [view_BinaFaturaDetay].[DusukKullanimCeza] AS [DusukKullanimCeza], 
+    [view_BinaFaturaDetay].[CezaDagitimTur] AS [CezaDagitimTur], 
+    [view_BinaFaturaDetay].[HesaplamaTarihi] AS [HesaplamaTarihi], 
+    [view_BinaFaturaDetay].[FaturaSonOdemeTarihi] AS [FaturaSonOdemeTarihi], 
+    [view_BinaFaturaDetay].[IsinmaTuketim] AS [IsinmaTuketim], 
+    [view_BinaFaturaDetay].[IsinmaTutar] AS [IsinmaTutar], 
+    [view_BinaFaturaDetay].[SuTuketim] AS [SuTuketim], 
+    [view_BinaFaturaDetay].[SuTutar] AS [SuTutar], 
+    [view_BinaFaturaDetay].[OrtakAlanTutar] AS [OrtakAlanTutar], 
+    [view_BinaFaturaDetay].[DusukKullanimTutar] AS [DusukKullanimTutar], 
+    [view_BinaFaturaDetay].[ToplamTutar] AS [ToplamTutar]
+    FROM [dbo].[view_BinaFaturaDetay] AS [view_BinaFaturaDetay]</DefiningQuery>
+          </EntitySet>
+          <EntitySet Name="view_BinaSayacOkuma" EntityType="Self.view_BinaSayacOkuma" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [view_BinaSayacOkuma].[BinaID] AS [BinaID], 
+    [view_BinaSayacOkuma].[DonemID] AS [DonemID], 
+    [view_BinaSayacOkuma].[SayacOkumaID] AS [SayacOkumaID], 
+    [view_BinaSayacOkuma].[Ad] AS [Ad], 
+    [view_BinaSayacOkuma].[DonemNo] AS [DonemNo], 
+    [view_BinaSayacOkuma].[DonemAdi] AS [DonemAdi], 
+    [view_BinaSayacOkuma].[KatNo] AS [KatNo], 
+    [view_BinaSayacOkuma].[KapiNo] AS [KapiNo], 
+    [view_BinaSayacOkuma].[SayacTuru] AS [SayacTuru], 
+    [view_BinaSayacOkuma].[OncekiDeger] AS [OncekiDeger], 
+    [view_BinaSayacOkuma].[GuncelDeger] AS [GuncelDeger], 
+    [view_BinaSayacOkuma].[OkumaTarihi] AS [OkumaTarihi]
+    FROM [dbo].[view_BinaSayacOkuma] AS [view_BinaSayacOkuma]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK__Daireler__BinaId__2A4B4B5E" Association="Self.FK__Daireler__BinaId__2A4B4B5E">
             <End Role="tbl_Bina" EntitySet="tbl_Bina" />
             <End Role="tbl_BagBol" EntitySet="tbl_BagBol" />
@@ -257,6 +368,8 @@
           <EntitySet Name="tbl_PaylasimDetay" EntityType="PaymatikDBModel.tbl_PaylasimDetay" />
           <EntitySet Name="tbl_SayacOkuma" EntityType="PaymatikDBModel.tbl_SayacOkuma" />
           <EntitySet Name="tbl_Tanimlar" EntityType="PaymatikDBModel.tbl_Tanimlar" />
+          <EntitySet Name="view_BinaFaturaDetay" EntityType="PaymatikDBModel.view_BinaFaturaDetay" />
+          <EntitySet Name="view_BinaSayacOkuma" EntityType="PaymatikDBModel.view_BinaSayacOkuma" />
           <AssociationSet Name="FK__Daireler__BinaId__2A4B4B5E" Association="PaymatikDBModel.FK__Daireler__BinaId__2A4B4B5E">
             <End Role="tbl_Bina" EntitySet="tbl_Bina" />
             <End Role="tbl_BagBol" EntitySet="tbl_BagBol" />
@@ -333,6 +446,8 @@
           <Property Name="BinaId" Type="Int32" />
           <Property Name="DonemNo" Type="Int32" />
           <Property Name="DonemAdi" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="BaslangicTarihi" Type="DateTime" Precision="3" />
+          <Property Name="BitisTarihi" Type="DateTime" Precision="3" />
           <Property Name="Durum" Type="Boolean" />
           <NavigationProperty Name="tbl_Bina" Relationship="PaymatikDBModel.FK_tbl_Donem_tbl_Bina" FromRole="tbl_Donem" ToRole="tbl_Bina" />
           <NavigationProperty Name="tbl_SayacOkuma" Relationship="PaymatikDBModel.FK_tbl_SayacOkuma_tbl_Donem" FromRole="tbl_Donem" ToRole="tbl_SayacOkuma" />
@@ -342,6 +457,8 @@
             <PropertyRef Name="ID" />
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BinaID" Type="Int32" />
+          <Property Name="BagBolID" Type="Int32" />
           <Property Name="AdSoyad" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Telefon" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Eposta" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
@@ -404,6 +521,67 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Adi" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Degeri" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityType Name="view_BinaFaturaDetay">
+          <Key>
+            <PropertyRef Name="BinaID" />
+            <PropertyRef Name="Ad" />
+            <PropertyRef Name="KapiNo" />
+            <PropertyRef Name="OrtakAlan" />
+            <PropertyRef Name="Donem" />
+            <PropertyRef Name="FaturaTutar" />
+            <PropertyRef Name="IsinmaTuketim" />
+            <PropertyRef Name="IsinmaTutar" />
+            <PropertyRef Name="SuTuketim" />
+            <PropertyRef Name="SuTutar" />
+            <PropertyRef Name="ToplamTutar" />
+          </Key>
+          <Property Name="BinaID" Type="Int32" Nullable="false" />
+          <Property Name="Ad" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="KatNo" Type="Int32" />
+          <Property Name="KapiNo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Metrekare" Type="Double" />
+          <Property Name="BagBolTur" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="OrtakAlan" Type="Boolean" Nullable="false" />
+          <Property Name="Donem" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="SayactanOkunanHacim" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="FaturaTutar" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="SuSicakligi" Type="Int32" />
+          <Property Name="DusukKullanimCeza" Type="Boolean" />
+          <Property Name="CezaDagitimTur" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="HesaplamaTarihi" Type="DateTime" Precision="3" />
+          <Property Name="FaturaSonOdemeTarihi" Type="DateTime" Precision="3" />
+          <Property Name="IsinmaTuketim" Type="Double" Nullable="false" />
+          <Property Name="IsinmaTutar" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="SuTuketim" Type="Double" Nullable="false" />
+          <Property Name="SuTutar" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="OrtakAlanTutar" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="DusukKullanimTutar" Type="Decimal" Precision="10" Scale="2" />
+          <Property Name="ToplamTutar" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+        </EntityType>
+        <EntityType Name="view_BinaSayacOkuma">
+          <Key>
+            <PropertyRef Name="BinaID" />
+            <PropertyRef Name="DonemID" />
+            <PropertyRef Name="SayacOkumaID" />
+            <PropertyRef Name="Ad" />
+            <PropertyRef Name="KapiNo" />
+            <PropertyRef Name="SayacTuru" />
+            <PropertyRef Name="GuncelDeger" />
+            <PropertyRef Name="OkumaTarihi" />
+          </Key>
+          <Property Name="BinaID" Type="Int32" Nullable="false" />
+          <Property Name="DonemID" Type="Int32" Nullable="false" />
+          <Property Name="SayacOkumaID" Type="Int32" Nullable="false" />
+          <Property Name="Ad" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="DonemNo" Type="Int32" />
+          <Property Name="DonemAdi" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="KatNo" Type="Int32" />
+          <Property Name="KapiNo" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="SayacTuru" Type="String" Nullable="false" MaxLength="20" FixedLength="false" Unicode="true" />
+          <Property Name="OncekiDeger" Type="Double" />
+          <Property Name="GuncelDeger" Type="Double" Nullable="false" />
+          <Property Name="OkumaTarihi" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
         <Association Name="FK__Daireler__BinaId__2A4B4B5E">
           <End Type="PaymatikDBModel.tbl_Bina" Role="tbl_Bina" Multiplicity="1">
@@ -545,6 +723,8 @@
             <EntityTypeMapping TypeName="PaymatikDBModel.tbl_Donem">
               <MappingFragment StoreEntitySet="tbl_Donem">
                 <ScalarProperty Name="Durum" ColumnName="Durum" />
+                <ScalarProperty Name="BitisTarihi" ColumnName="BitisTarihi" />
+                <ScalarProperty Name="BaslangicTarihi" ColumnName="BaslangicTarihi" />
                 <ScalarProperty Name="DonemAdi" ColumnName="DonemAdi" />
                 <ScalarProperty Name="DonemNo" ColumnName="DonemNo" />
                 <ScalarProperty Name="BinaId" ColumnName="BinaId" />
@@ -561,6 +741,8 @@
                 <ScalarProperty Name="Eposta" ColumnName="Eposta" />
                 <ScalarProperty Name="Telefon" ColumnName="Telefon" />
                 <ScalarProperty Name="AdSoyad" ColumnName="AdSoyad" />
+                <ScalarProperty Name="BagBolID" ColumnName="BagBolID" />
+                <ScalarProperty Name="BinaID" ColumnName="BinaID" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>
@@ -616,6 +798,52 @@
                 <ScalarProperty Name="Degeri" ColumnName="Degeri" />
                 <ScalarProperty Name="Adi" ColumnName="Adi" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="view_BinaFaturaDetay">
+            <EntityTypeMapping TypeName="PaymatikDBModel.view_BinaFaturaDetay">
+              <MappingFragment StoreEntitySet="view_BinaFaturaDetay">
+                <ScalarProperty Name="ToplamTutar" ColumnName="ToplamTutar" />
+                <ScalarProperty Name="DusukKullanimTutar" ColumnName="DusukKullanimTutar" />
+                <ScalarProperty Name="OrtakAlanTutar" ColumnName="OrtakAlanTutar" />
+                <ScalarProperty Name="SuTutar" ColumnName="SuTutar" />
+                <ScalarProperty Name="SuTuketim" ColumnName="SuTuketim" />
+                <ScalarProperty Name="IsinmaTutar" ColumnName="IsinmaTutar" />
+                <ScalarProperty Name="IsinmaTuketim" ColumnName="IsinmaTuketim" />
+                <ScalarProperty Name="FaturaSonOdemeTarihi" ColumnName="FaturaSonOdemeTarihi" />
+                <ScalarProperty Name="HesaplamaTarihi" ColumnName="HesaplamaTarihi" />
+                <ScalarProperty Name="CezaDagitimTur" ColumnName="CezaDagitimTur" />
+                <ScalarProperty Name="DusukKullanimCeza" ColumnName="DusukKullanimCeza" />
+                <ScalarProperty Name="SuSicakligi" ColumnName="SuSicakligi" />
+                <ScalarProperty Name="FaturaTutar" ColumnName="FaturaTutar" />
+                <ScalarProperty Name="SayactanOkunanHacim" ColumnName="SayactanOkunanHacim" />
+                <ScalarProperty Name="Donem" ColumnName="Donem" />
+                <ScalarProperty Name="OrtakAlan" ColumnName="OrtakAlan" />
+                <ScalarProperty Name="BagBolTur" ColumnName="BagBolTur" />
+                <ScalarProperty Name="Metrekare" ColumnName="Metrekare" />
+                <ScalarProperty Name="KapiNo" ColumnName="KapiNo" />
+                <ScalarProperty Name="KatNo" ColumnName="KatNo" />
+                <ScalarProperty Name="Ad" ColumnName="Ad" />
+                <ScalarProperty Name="BinaID" ColumnName="BinaID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="view_BinaSayacOkuma">
+            <EntityTypeMapping TypeName="PaymatikDBModel.view_BinaSayacOkuma">
+              <MappingFragment StoreEntitySet="view_BinaSayacOkuma">
+                <ScalarProperty Name="OkumaTarihi" ColumnName="OkumaTarihi" />
+                <ScalarProperty Name="GuncelDeger" ColumnName="GuncelDeger" />
+                <ScalarProperty Name="OncekiDeger" ColumnName="OncekiDeger" />
+                <ScalarProperty Name="SayacTuru" ColumnName="SayacTuru" />
+                <ScalarProperty Name="KapiNo" ColumnName="KapiNo" />
+                <ScalarProperty Name="KatNo" ColumnName="KatNo" />
+                <ScalarProperty Name="DonemAdi" ColumnName="DonemAdi" />
+                <ScalarProperty Name="DonemNo" ColumnName="DonemNo" />
+                <ScalarProperty Name="Ad" ColumnName="Ad" />
+                <ScalarProperty Name="SayacOkumaID" ColumnName="SayacOkumaID" />
+                <ScalarProperty Name="DonemID" ColumnName="DonemID" />
+                <ScalarProperty Name="BinaID" ColumnName="BinaID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

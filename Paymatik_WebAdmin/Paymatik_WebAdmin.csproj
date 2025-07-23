@@ -485,6 +485,9 @@
     <Content Include="Content\plugins\leaflet\leaflet-src.js.map" />
     <Content Include="Content\plugins\leaflet\leaflet.js.map" />
     <Content Include="Content\plugins\toastr\toastr.js.map" />
+    <Content Include="Monikers.imagemanifest">
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <None Include="packages.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -505,6 +508,8 @@
     <Content Include="Views\Paylasim\Detay.cshtml" />
     <Content Include="Views\Donem\Index.cshtml" />
     <Content Include="Views\Donem\_donemEkleDuzenle.cshtml" />
+    <Content Include="Views\Sayac\DonemOkumaListesi.cshtml" />
+    <Content Include="Views\Sayac\_sayacOkumaDuzenle.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

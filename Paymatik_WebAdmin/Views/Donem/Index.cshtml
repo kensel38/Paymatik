@@ -16,7 +16,6 @@
         <div class="card-tools">
             <a id="btn_geriDon" href="/Bina/Index" style="margin:3px;" class="btn btn-outline-info btn-sm"> <i class="fas fa-level-down-alt fa-rotate-90"></i>&nbsp;&nbsp; Binalar Listesine Geri Dön&nbsp;&nbsp;</a>
 
-            <a id="btn_YeniKayit" onclick="Show_Modal_Param(0,'BinaId=@_bina.ID')" href="#" style="margin:5px" class="btn btn-outline-dark" data-toggle="modal" data-target="#_modal"> <span class="fas fa-plus">    &nbsp; Kayıt Ekle </span></a>
         </div>
     </div>
 
@@ -36,6 +35,12 @@
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.DonemAdi)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BaslangicTarihi)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BitisTarihi)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.Durum)
@@ -59,26 +64,48 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.DonemAdi)
                     </td>
+                    <td>@item.BaslangicTarihi.Value.ToString("dd.MM.yyyy")</td>
+                    <td>@item.BitisTarihi.Value.ToString("dd.MM.yyyy")</td>
+
 
                     <td>
                         @if (item.Durum == true)
                         {
-                            <span>Tamamlandı</span>
+                            <span style="color:forestgreen">Tamamlandı</span>
                         }
                         else
                         {
-                            <span>Eksik Okuma !</span>
+                        <span style="color:darkorange">Eksik Okuma !</span>
                         }
                     </td>
 
                     <td>
-                        <div style="text-align: center;">
-
-                            <a class='btn btn-outline-primary btn-xs' title="Düzenle" onclick="Show_Modal(@item.ID)" data-toggle="modal" data-target="#_modal">
-                                <span class='far fa-edit'></span> Düzenle
+                        <div style="text-align: right; margin-right:10px;">
+                            <a class='btn btn-outline-success btn-xs' title="Okuma Bilgileri" href="/Sayac/DonemOkumaListesi?binaID=@item.BinaId&&donemID=@item.ID">
+                                <i class="fas fa-grip-vertical"></i> Okuma Bilgileri
                             </a>
-                            <a class='btn btn-outline-danger btn-xs' title="Kaydı Sil !" data-id="@item.ID" onclick="Delete(@item.ID)">
-                                <i class='fas fa-trash-alt'></i> Kaydı Sil !
+                            <span>-</span>
+
+                            <a class='btn btn-outline-dark btn-xs' title="Paylaşım Detayları" href="/Paylasim/Detay?PaylasimId=4/@item.ID">
+                                <i> ₺ </i> Paylaşım Detayları
+                            </a>
+                            <span>-</span>
+                            @if (item.Durum != true)
+                            {
+                                <a class='btn btn-outline-primary btn-xs' title="Dönem Bilgilerini Düzenle" onclick="Show_Modal(@item.ID)" data-toggle="modal" data-target="#_modal">
+                                    <span class='far fa-edit'></span> Dönemi Düzenle
+                                </a>
+                            }
+                            else
+                            {
+                                <a class='btn btn-outline-secondary btn-xs'  title="Okuması Tamamlanmış Dönemler Düzenlemez !">
+                                    <span class='far fa-edit'></span> Dönemi Düzenle
+                                </a>
+                            }
+
+                            <span>-</span>
+                            <a class='btn btn-outline-danger btn-xs' title="Dönem Kaydını Sil !" data-id="@item.ID" onclick="Delete(@item.ID)">
+                                <i class='fas fa-trash-alt'></i> Dönemi Sil !
                             </a>
                         </div>
                     </td>

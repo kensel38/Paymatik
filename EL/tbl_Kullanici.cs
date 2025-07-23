@@ -15,6 +15,8 @@ namespace EL
     public partial class tbl_Kullanici
     {
         public int ID { get; set; }
+        public Nullable<int> BinaID { get; set; }
+        public Nullable<int> BagBolID { get; set; }
         public string AdSoyad { get; set; }
         public string Telefon { get; set; }
         public string Eposta { get; set; }

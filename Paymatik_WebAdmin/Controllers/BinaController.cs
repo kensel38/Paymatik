@@ -1,4 +1,5 @@
-﻿using DAL;
+﻿using BL.Helpers;
+using DAL;
 using EL;
 using System.Web.Mvc;
 
@@ -30,6 +31,9 @@ namespace Paymatik_WebAdmin.Controllers
             if (entity.ID == 0)
             {
                 _uow.GetRepo<tbl_Bina>().Add(entity);
+
+                DonemHelper.DonemleriYilSonunaKadarOlustur(entity.ID, _uow);
+
             }
             else
             {
