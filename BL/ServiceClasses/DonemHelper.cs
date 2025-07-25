@@ -38,7 +38,8 @@ namespace BL.Helpers
                     DonemAdi = ad,
                     BaslangicTarihi = baslangic,
                     BitisTarihi = bitis,
-                    Durum = false // false → okunmadı, açık
+                    SicakSuOkumaDurum = false, // false → okunmadı, açık
+                    DogalGazOkumaDurum = false
                 };
 
                 _donemler.Add(yeniDonem);

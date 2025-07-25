@@ -43,7 +43,10 @@
                     @Html.DisplayNameFor(model => model.BitisTarihi)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Durum)
+                    @Html.DisplayNameFor(model => model.SicakSuOkumaDurum)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DogalGazOkumaDurum)
                 </th>
                 <th> İşlemler </th>
             </tr>
@@ -69,13 +72,23 @@
 
 
                     <td>
-                        @if (item.Durum == true)
+                        @if (item.SicakSuOkumaDurum == true)
                         {
                             <span style="color:forestgreen">Tamamlandı</span>
                         }
                         else
                         {
-                        <span style="color:darkorange">Eksik Okuma !</span>
+                            <span style="color:darkorange">Eksik Okuma !</span>
+                        }
+                    </td>
+                    <td>
+                        @if (item.DogalGazOkumaDurum == true)
+                        {
+                            <span style="color:forestgreen">Tamamlandı</span>
+                        }
+                        else
+                        {
+                            <span style="color:darkorange">Eksik Okuma !</span>
                         }
                     </td>
 
@@ -90,7 +103,7 @@
                                 <i> ₺ </i> Paylaşım Detayları
                             </a>
                             <span>-</span>
-                            @if (item.Durum != true)
+                            @if (item.SicakSuOkumaDurum != true)
                             {
                                 <a class='btn btn-outline-primary btn-xs' title="Dönem Bilgilerini Düzenle" onclick="Show_Modal(@item.ID)" data-toggle="modal" data-target="#_modal">
                                     <span class='far fa-edit'></span> Dönemi Düzenle
@@ -98,7 +111,7 @@
                             }
                             else
                             {
-                                <a class='btn btn-outline-secondary btn-xs'  title="Okuması Tamamlanmış Dönemler Düzenlemez !">
+                                <a class='btn btn-outline-secondary btn-xs' title="Okuması Tamamlanmış Dönemler Düzenlemez !">
                                     <span class='far fa-edit'></span> Dönemi Düzenle
                                 </a>
                             }

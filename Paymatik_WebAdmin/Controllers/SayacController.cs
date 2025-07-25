@@ -27,12 +27,8 @@ namespace Paymatik_WebAdmin.Controllers
             var _aktifBagBol = bagBols[index];
 
             // Dönemler
-            var mevcutDonem = _uow.GetRepo<tbl_Donem>().GetAll_ByParam(x => x.BinaId == id && x.Durum != true).OrderBy(x => x.DonemNo).FirstOrDefault() ?? new tbl_Donem();
+            var mevcutDonem = _uow.GetRepo<tbl_Donem>().GetAll_ByParam(x => x.BinaId == id && x.SicakSuOkumaDurum != true).OrderBy(x => x.DonemNo).FirstOrDefault() ?? new tbl_Donem();
             var oncekiDonem = _uow.GetRepo<tbl_Donem>().GetAll_ByParam(x => x.BinaId == id && x.DonemNo < mevcutDonem.DonemNo).OrderByDescending(x => x.DonemNo).FirstOrDefault() ?? new tbl_Donem();
-
-
-            if (mevcutDonem.Durum == true)
-                ViewBag.DonemDurum = "Bu Dönem Verileri Girilmiş ! Yeni Dönem Oluşturunuz..";
 
             // Sayaçlar
             var sicakSuMevcut = _uow.GetRepo<tbl_SayacOkuma>().Get_ByParam(s => s.BagBolId == _aktifBagBol.ID && s.SayacTuru == SayacTurleri.SicakSu && s.DonemID == mevcutDonem.ID);
@@ -134,7 +130,7 @@ namespace Paymatik_WebAdmin.Controllers
             if (donemOkumaSayisi == bagBols)
             {
                 var donem = _uow.GetRepo<tbl_Donem>().GetByID(model.DonemID);
-                donem.Durum = true;
+                donem.SicakSuOkumaDurum = true;
                 _uow.GetRepo<tbl_Donem>().Update(donem);
             }
         }
@@ -157,6 +153,7 @@ namespace Paymatik_WebAdmin.Controllers
         [HttpPost]
         public ActionResult EkleDuzenle(tbl_SayacOkuma entity, int BinaID)
         {
+            entity.tbl_Donem = null;
             _uow.GetRepo<tbl_SayacOkuma>().Update(entity);
             return Json(true, JsonRequestBehavior.AllowGet);
         }

@@ -26,7 +26,8 @@ namespace EL
         public string DonemAdi { get; set; }
         public Nullable<System.DateTime> BaslangicTarihi { get; set; }
         public Nullable<System.DateTime> BitisTarihi { get; set; }
-        public Nullable<bool> Durum { get; set; }
+        public Nullable<bool> SicakSuOkumaDurum { get; set; }
+        public Nullable<bool> DogalGazOkumaDurum { get; set; }
     
         public virtual tbl_Bina tbl_Bina { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
