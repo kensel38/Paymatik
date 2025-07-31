@@ -1,0 +1,204 @@
+﻿@model List<Paymatik_WebAdmin.Models.SayacOkumaViewModel>
+
+@{
+    var donemAdi = Model.FirstOrDefault()?.DonemAdi ?? "";
+    var donemId = Model.FirstOrDefault()?.DonemID ?? 0;
+}
+
+<div class="card border-info mb-4" style="padding:4px">
+    <div class="card-header bg-info text-white d-flex justify-content-between">
+        <span><strong>Dönem:</strong> @donemAdi</span>
+        <div>
+            <label class="mr-2 font-weight-bold">Okuma Türü:</label>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="okumaTuru" id="okumaS" value="S">
+                <label class="form-check-label" for="okumaS">Sıcak Su</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="okumaTuru" id="okumaSK" value="SK" checked>
+                <label class="form-check-label" for="okumaSK">Sıcak Su + Doğalgaz</label>
+            </div>
+        </div>
+    </div>
+
+    <div class="card-body p-2">
+        <table id="okumaTable" class="table table-bordered table-striped  table-responsive-sm table-hover table-data" data-col_order="0" data-order_type="asc" data-show_Length="0" style="width:100%">
+            <thead class="thead-dark">
+                <tr>
+                    <th>Kat</th>
+                    <th>Daire</th>
+                    <th>Cephe</th>
+                    <th>Sıcak Su (Önceki)</th>
+                    <th>Sıcak Su (Güncel)</th>
+                    <th>Doğalgaz (Önceki)</th>
+                    <th>Doğalgaz (Güncel)</th>
+                    <th>İşlem</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.Count; i++)
+                {
+                    var row = Model[i];
+                    <tr data-index="@i">
+                        <td>@row.KatNo</td>
+                        <td>@row.KapiNo</td>
+                        <td>@row.Cephe</td>
+                        <td>
+                            <input class="form-control form-control-sm" readonly value="@row.SicakSuOnceki" />
+                        </td>
+                        <td>
+                            <input class="form-control form-control-sm sicakInput" name="SicakSuGuncel" value="@row.SicakSuGuncel" />
+                        </td>
+                        <td>
+                            <input class="form-control form-control-sm gazOnceki" readonly value="@row.DogalgazOnceki" />
+                        </td>
+                        <td>
+                            <input class="form-control form-control-sm gazInput" name="DogalgazGuncel" value="@row.DogalgazGuncel" />
+                        </td>
+
+
+                        <td>
+                            <button type="button" class="btn btn-sm btn-success btnKaydet"
+                                    data-bbid="@row.BagimsizBolumId"
+                                    data-donemid="@donemId">
+                                Kaydet
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+
+        </table>
+        <div class="text-right mt-3">
+            <button type="button" class="btn btn-primary" id="btnTopluKaydet">
+                <i class="fas fa-save"></i> Tümünü Kaydet
+            </button>
+        </div>
+
+    </div>
+</div>
+
+
+<script>
+    function handleOkumaTuruChange() {
+        var okumaTuru = $("input[name='okumaTuru']:checked").val();
+
+        $(".table tbody tr").each(function () {
+            var row = $(this);
+            var gazOnceki = row.find(".gazOnceki").val();
+            var gazGuncel = row.find(".gazInput");
+
+            if (okumaTuru === "S") {
+                // Eğer kullanıcı doğalgaz okuması yapmayacaksa ama güncel değer boşsa, sadece o zaman yaz
+                if (!gazGuncel.val()) {
+                    gazGuncel.val(gazOnceki);
+                }
+                gazGuncel.prop("readonly", true);
+            } else {
+                gazGuncel.prop("readonly", false);
+            }
+        });
+    }
+
+    $(document).on("change", "input[name='okumaTuru']", handleOkumaTuruChange);
+    $(document).ready(handleOkumaTuruChange);
+
+    $(".btnKaydet").click(function () {
+        var row = $(this).closest("tr");
+        var bagbolId = $(this).data("bbid");
+        var donemId = $(this).data("donemid");
+        var sicakGuncel = row.find("input[name='SicakSuGuncel']").val();
+        var gazGuncel = row.find("input[name='DogalgazGuncel']").val();
+
+        $.ajax({
+            url: '/SayacOkuma/Kaydet',
+            method: 'POST',
+            data: {
+                BagBolId: bagbolId,
+                DonemID: donemId,
+                SicakSuGuncel: sicakGuncel,
+                DogalgazGuncel: gazGuncel
+            },
+            success: function (res) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Kayıt Başarılı',
+                    timer: 1500,
+                    toast: true,
+                    position: 'top-end',
+                    showConfirmButton: false
+                });
+            },
+            error: function () {
+                alert("Kayıt sırasında hata oluştu.");
+            }
+        });
+    });
+
+    $("#btnTopluKaydet").click(function () {
+        var data = [];
+
+        $(".table tbody tr").each(function () {
+            var row = $(this);
+            debugger
+            var bagbolId = row.find(".btnKaydet").data("bbid");
+            var donemId = row.find(".btnKaydet").data("donemid");
+            var sicakGuncel = row.find("input[name='SicakSuGuncel']").val();
+            var gazGuncel = row.find("input[name='DogalgazGuncel']").val();
+
+            data.push({
+                BagBolId: bagbolId,
+                DonemID: donemId,
+                SicakSuGuncel: sicakGuncel,
+                DogalgazGuncel: gazGuncel
+            });
+        });
+
+        $.ajax({
+            url: '/SayacOkuma/TopluKaydet',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify(data),
+            success: function (res) {
+                if (res.success) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Tüm kayıtlar başarıyla kaydedildi!',
+                        toast: true,
+                        timer: 2000,
+                        position: 'top-end',
+                        showConfirmButton: false
+                    });
+                } else {
+                    alert("Hata: " + res.message);
+                }
+            },
+            error: function () {
+                alert("Kayıt sırasında hata oluştu.");
+            }
+        });
+    });
+
+</script>
+
+<script>
+
+        var table = $('#okumaTable').DataTable({
+            responsive: true,
+            lengthChange: true,
+            autoWidth: false,
+            paging: true,
+            order: [[0, 'asc']],
+            buttons: ["excel", "pdf", "print", "colvis"],
+            initComplete: function () {
+                var api = this.api();
+                $('#okumaTable_filter input').unbind();
+                $('#okumaTable_filter input').bind('keyup', function (e) {
+                    api.search(this.value).draw();
+                });
+            }
+        }).buttons().container().appendTo(`#okumaTable_wrapper .col-md-6:eq(0)`);;
+
+</script>
+
+

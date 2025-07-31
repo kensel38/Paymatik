@@ -6,20 +6,11 @@
         <div class="card card-primary card-outline">
             <div class="card-header">
                 <h3 class="card-title">
-                    @if (ViewBag.DonemDurum == null)
-                    {
-                        <strong>Sayaç Okuma – KatNo: @Model.KatNo | KapıNo: @Model.KapiNo | Cephe: @Model.Cephe - [@(Model.MevcutIndex+1) / @Model.ToplamBagBolSayisi]</strong>
-                    }
-                    else
-                    {
-                <strong style="color:darkred">@ViewBag.DonemDurum</strong>
-                    }
 
-                </h3>               
+                    <strong>Sayaç Okuma – KatNo: @Model.KatNo | KapıNo: @Model.KapiNo | Cephe: @Model.Cephe - [@(Model.MevcutIndex+1) / @Model.ToplamBagBolSayisi]</strong>
+                </h3>
             </div>
             <div class="card-body">
-
-
                 <!-- Dönem Seçimi -->
                 <div class="form-group row">
                     <label class="col-sm-1 col-form-label">Dönem:</label>
@@ -41,10 +32,17 @@
 
 
                             <h5 class="text-primary">Sıcak Su Sayacı</h5>
+
                             <div class="form-group">
                                 <label>Önceki Değer</label>
-                                @Html.TextBoxFor(m => m.SicakSuOnceki, new { @class = "form-control", @readonly = "readonly" })
+                                <div class="d-flex align-items-center">
+                                    @Html.TextBoxFor(m => m.SicakSuOnceki, new { @class = "form-control me-2", @readonly = "readonly", @id = "SicakSuOnceki" })
+                                    <button type="button" class="btn btn-outline-info" onclick="kopyalaSicakSuOnceki()" title="Önceki değeri güncele kopyala" style="margin-left:10px">
+                                        <i class="fas fa-share fa-rotate-90"></i>
+                                    </button>
+                                </div>
                             </div>
+
                             <div class="form-group">
                                 <label>Güncel Değer</label>
                                 @Html.TextBoxFor(m => m.SicakSuGuncel, new { @class = "form-control", type = "number", step = "1" })
@@ -68,8 +66,16 @@
                             <h5 class="text-primary">Doğalgaz Sayacı</h5>
                             <div class="form-group">
                                 <label>Önceki Değer</label>
-                                @Html.TextBoxFor(m => m.DogalgazOnceki, new { @class = "form-control", @readonly = "readonly" })
-                            </div>
+                                <div class="d-flex align-items-center">
+                                    @Html.TextBoxFor(m => m.DogalgazOnceki, new { @class = "form-control me-2", @readonly = "readonly", @id = "DogalgazOnceki" })
+                                    <button type="button" class="btn btn-outline-info" onclick="kopyalaDogalgazOnceki()" title="Önceki değeri güncele kopyala"
+                                            style="margin-left:10px">
+                                        <i class="fas fa-share fa-rotate-90"></i>
+                                    </button>
+                                </div>
+                            </div>                            
+
+
                             <div class="form-group">
                                 <label>Güncel Değer</label>
                                 @Html.TextBoxFor(m => m.DogalgazGuncel, new { @class = "form-control", type = "number", step = "1" })
@@ -102,6 +108,18 @@
 </section>
 
 
+<script>
+    function kopyalaSicakSuOnceki() {
+        var onceki = document.getElementById("SicakSuOnceki").value;
+        document.getElementById("SicakSuGuncel").value = onceki;
+    }
+    function kopyalaDogalgazOnceki() {
+        var onceki = document.getElementById("DogalgazOnceki").value;
+        document.getElementById("DogalgazGuncel").value = onceki;
+    }
+</script>
+
+
 @section Scripts {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -118,4 +136,19 @@
             });
         </script>
     }
+
+    @if (TempData["info"] != null)
+    {
+        <script>
+            Swal.fire({
+                toast: true,
+                icon: 'success',
+                title: '@TempData["info"]',
+                position: 'top-end',
+                showConfirmButton: false,
+                timer: 3000
+            });
+        </script>
+    }
+   
 }

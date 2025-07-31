@@ -1,4 +1,5 @@
 ﻿using BL.constants;
+using BL.Helpers;
 using DAL;
 using EL;
 using Paymatik_WebAdmin.Models;
@@ -14,8 +15,19 @@ namespace Paymatik_WebAdmin.Controllers
         public SayacController() => _uow = new UnitOfWork();
 
         // GET: Sayac
-        public ActionResult Index(int id, int index = 0)
+        public ActionResult Index(int id, int index = 0, int tur = 1)
         {
+            int mevcutYil = DateTime.Now.Year;
+
+            var donemVarMi = _uow.GetRepo<tbl_Donem>().Get_ByParam(x => x.BinaId == id && x.BaslangicTarihi.Value.Year == mevcutYil);
+
+            if (donemVarMi == null)
+            {
+                DonemHelper.DonemleriYilSonunaKadarOlustur(id, _uow);
+                TempData["info"] = "Bu yıl için dönemler oluşturuldu. Okuma işlemine devam edebilirsiniz.";
+            }
+
+
             var bina = _uow.GetRepo<tbl_Bina>().GetByID(id);
             if (bina == null) return HttpNotFound();
 
@@ -135,6 +147,13 @@ namespace Paymatik_WebAdmin.Controllers
             }
         }
 
+
+        /// <summary>
+        /// Dönem Okumaları ile alakalı kod blogu başlangıcı
+        /// </summary>
+        /// <param name="binaID"></param>
+        /// <param name="donemID"></param>
+        /// <returns></returns>
         public ActionResult DonemOkumaListesi(int binaID, int donemID)
         {
             var ent = _uow.GetRepo<view_BinaSayacOkuma>().GetAll_ByParam(x => x.BinaID == binaID && x.DonemID == donemID);

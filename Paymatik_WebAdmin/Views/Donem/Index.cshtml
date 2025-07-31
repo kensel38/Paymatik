@@ -16,6 +16,8 @@
         <div class="card-tools">
             <a id="btn_geriDon" href="/Bina/Index" style="margin:3px;" class="btn btn-outline-info btn-sm"> <i class="fas fa-level-down-alt fa-rotate-90"></i>&nbsp;&nbsp; Binalar Listesine Geri Dön&nbsp;&nbsp;</a>
 
+            <button id="btn_YeniKayit" style="margin:3px;" class="btn btn-outline-dark btn-sm"> <span class="fas fa-plus"> &nbsp; Yeni Dönemleri Tanımla</span></button>
+
         </div>
     </div>
 
@@ -99,7 +101,7 @@
                             </a>
                             <span>-</span>
 
-                            <a class='btn btn-outline-dark btn-xs' title="Paylaşım Detayları" href="/Paylasim/Detay?PaylasimId=4/@item.ID">
+                            <a class='btn btn-outline-info btn-xs' title="Paylaşım Detayları" href="/Paylasim/Detay?PaylasimId=4/@item.ID">
                                 <i> ₺ </i> Paylaşım Detayları
                             </a>
                             <span>-</span>
@@ -108,18 +110,23 @@
                                 <a class='btn btn-outline-primary btn-xs' title="Dönem Bilgilerini Düzenle" onclick="Show_Modal(@item.ID)" data-toggle="modal" data-target="#_modal">
                                     <span class='far fa-edit'></span> Dönemi Düzenle
                                 </a>
+                                <span>-</span>
+                                <a class='btn btn-outline-danger btn-xs' title="Dönem Kaydını Sil !" data-id="@item.ID" onclick="Delete(@item.ID)">
+                                    <i class='fas fa-trash-alt'></i> Dönemi Sil !
+                                </a>
                             }
                             else
                             {
-                                <a class='btn btn-outline-secondary btn-xs' title="Okuması Tamamlanmış Dönemler Düzenlemez !">
+                                <a class='btn btn-outline-secondary btn-xs' title="Okuması Tamamlanmış Dönemler Düzenlenemez !">
                                     <span class='far fa-edit'></span> Dönemi Düzenle
+                                </a>
+                                <span>-</span>
+                                <a class='btn btn-outline-secondary btn-xs' title="Okuması Tamamlanmış Dönemler Silinemez !">
+                                    <i class='fas fa-trash-alt'></i> Dönemi Sil !
                                 </a>
                             }
 
-                            <span>-</span>
-                            <a class='btn btn-outline-danger btn-xs' title="Dönem Kaydını Sil !" data-id="@item.ID" onclick="Delete(@item.ID)">
-                                <i class='fas fa-trash-alt'></i> Dönemi Sil !
-                            </a>
+
                         </div>
                     </td>
                 </tr>
@@ -171,12 +178,48 @@
 
 
 
-@section scripts{
+
+@section Scripts {
 
     <script>
         _control = "Donem";
     </script>
-
+  
+    <script>
+        $("#btn_YeniKayit").click(function () {
+            Swal.fire({
+                title: 'Kayıt Ekleme Onay',
+                html:'Mevcut Yılın Sonuna Kadar Yeni Dönemler Eklensin mi?',
+                icon: 'question',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Evet  &#x2713;',
+                cancelButtonText: 'İptal X',
+                closeOnConfirm: false
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    $.post('/Donem/YeniDonemOlustur', { binaId: @_bina.ID }, function (result) {
+                        if (result.success) {
+                            Swal.fire({
+                                toast: true,
+                                icon: 'success',
+                                title: 'Yeni dönemler başarıyla oluşturuldu.',
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                timer: 2000
+                            }).then(() => location.reload());
+                        } else {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Hata!',
+                                text: result.message
+                            });
+                        }
+                    });
+                }
+            });
+        });
+    </script>
 
 }
-

@@ -131,9 +131,9 @@ scratch. This page gets rid of all links and provides the needed markup only.
                 var hasFooter = $table.find('tfoot').length > 0;
 
                 if (hasFooter) {
-                    // Footer bazlı sütun arama kutuları ekle
-                    $table.find('tfoot th').each(function () {                       
-                            $(this).html('<input type="text" placeholder=" Ara"/>');                        
+                    // Footer'a sütun arama kutuları ekle
+                    $table.find('tfoot th').each(function () {
+                        $(this).html('<input type="text" placeholder="Ara" />');
                     });
                 }
 
@@ -144,11 +144,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     paging: true,
                     buttons: ["excel", "pdf", "print", "colvis"],
                     order: [[col_number, col_order_type]],
-                    dom: hasFooter
-                        ? "Bfrtip" // Hem footer arama hem butonlar aktif olsun
-                        : "<'row'<'col-md-6'l><'col-md-6'f>>" +
-                        "<'row'<'col-md-12'tr>>" +
-                        "<'row'<'col-md-5'i><'col-md-7'p>>", // Global search aktif
+                    dom:
+                        "<'row'<'col-md-6'l><'col-md-6'Bf>>" + // length, buttons, search
+                        "<'row'<'col-md-12'tr>>" +             // table
+                        "<'row'<'col-md-5'i><'col-md-7'p>>",   // info, pagination
 
                     initComplete: function () {
                         if (hasFooter) {
@@ -164,9 +163,11 @@ scratch. This page gets rid of all links and provides the needed markup only.
                     }
                 });
 
+                // Butonları ekranda uygun alana taşı
                 table.buttons().container().appendTo(`#${tableId}_wrapper .col-md-6:eq(0)`);
             });
         };
+
 
         $(document).ready(function () {
             initTables();

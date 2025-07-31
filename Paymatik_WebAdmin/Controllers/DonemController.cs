@@ -1,5 +1,7 @@
-﻿using DAL;
+﻿using BL.Helpers;
+using DAL;
 using EL;
+using System;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -17,7 +19,6 @@ namespace Paymatik_WebAdmin.Controllers
             ViewBag.Bina = _uow.GetRepo<tbl_Bina>().GetByID(id);
             return View(_uow.GetRepo<tbl_Donem>().GetAll_ByParam(x => x.BinaId == id));
         }
-
         [HttpGet]
         public ActionResult EkleDuzenle(int id, int? BinaId)
         {
@@ -71,6 +72,21 @@ namespace Paymatik_WebAdmin.Controllers
                 return Json(false, JsonRequestBehavior.AllowGet);
             }
         }
+
+        [HttpPost]
+        public ActionResult YeniDonemOlustur(int binaId)
+        {
+            try
+            {
+                DonemHelper.DonemleriYilSonunaKadarOlustur(binaId, _uow);
+                return Json(new { success = true });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = ex.Message });
+            }
+        }
+
 
     }
 }

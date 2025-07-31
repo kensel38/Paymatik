@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<EL.view_BinaSayacOkuma>
 
 @{
-    var _bina = Model.FirstOrDefault();
+    var _bina = Model.FirstOrDefault()??new EL.view_BinaSayacOkuma();
 }
 
 <div class="card card-outline card-warning">

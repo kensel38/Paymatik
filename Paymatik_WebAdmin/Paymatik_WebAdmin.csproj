@@ -435,11 +435,15 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\PaylasimController.cs" />
     <Compile Include="Controllers\SayacController.cs" />
+    <Compile Include="Controllers\SayacOkumaController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\PaylasimDetayViewModel.cs" />
+    <Compile Include="Models\SayacOkumaIndexViewModel.cs" />
+    <Compile Include="Models\SayacOkumaSatirViewModel.cs" />
     <Compile Include="Models\SayacOkumaViewModel.cs" />
+    <Compile Include="Models\SayacTopluKayitModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -510,6 +514,8 @@
     <Content Include="Views\Donem\_donemEkleDuzenle.cshtml" />
     <Content Include="Views\Sayac\DonemOkumaListesi.cshtml" />
     <Content Include="Views\Sayac\_sayacOkumaDuzenle.cshtml" />
+    <Content Include="Views\SayacOkuma\Index.cshtml" />
+    <Content Include="Views\SayacOkuma\_sayacOkuma_Liste.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

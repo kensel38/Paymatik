@@ -1,0 +1,42 @@
+﻿@{
+    ViewBag.Title = "Sayaç Okuma";
+}
+
+<h4>🧾 Sayaç Okuma Ekranı</h4>
+
+<div class="row mb-3">
+    <div class="col-md-5">
+        <label>Dönem Seçiniz</label>
+        <select id="ddlDonem" class="form-control">
+            <option value="">Dönem Seçiniz</option>
+            @foreach (var item in ViewBag.Donemler as List<SelectListItem>)
+            {
+                <option value="@item.Value">@item.Text</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-3 d-flex align-items-end">
+        <button id="btnBasla" class="btn btn-primary">Okumaya Başla</button>
+    </div>
+</div>
+
+<div id="okumaPaneli"></div>
+
+@section Scripts {
+    <script>
+    $('#btnBasla').click(function () {
+        var donemId = $('#ddlDonem').val();
+        if (!donemId) {
+            alert("Lütfen bir dönem seçiniz.");
+            return;
+        }
+
+        $.post('@Url.Action("GetOkumaTablosu", "SayacOkuma")', {
+            binaId: '@ViewBag.BinaId',
+            donemId: donemId
+        }, function (html) {
+            $('#okumaPaneli').html(html);
+        });
+    });
+    </script>
+}

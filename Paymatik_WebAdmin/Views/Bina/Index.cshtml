@@ -17,7 +17,7 @@
 
     <!-- /.card-header -->
     <div class="card-body  card-outline  card-blue">
-        <table id="binaListesi" class="table table-bordered table-striped  table-responsive-sm table-hover table-data" data-col_order="1" data-order_type="asc" data-show_Length="0" style="width:100%">
+        <table id="binaListesi" class="table table-bordered table-striped  table-responsive-sm table-hover table-data" data-col_order="1" data-order_type="asc" data-show_Length="1" style="width:100%">
             <thead style="background-color: #CFD8DC">
                 <tr>
                     <th>
@@ -72,15 +72,30 @@
 
                                     </a>
 
-                                    <a class='btn btn-outline-info btn-xs' title="Okuma Girişi" href="/Sayac/Index/@item.ID">
-                                        <i class="fas fa-i-cursor"></i>
-                                        <i class="fas fa-infinity"></i>
-                                    </a>
-
                                     <a class='btn btn-outline-success btn-xs' title="Dönem Tanımla" href="/Donem/Index/@item.ID">
                                         <i class="fas fa-ellipsis-v"></i>
                                         <i class="far fa-calendar-alt"></i>
                                     </a>
+
+                                    <a class='btn btn-outline-info btn-xs' title="Sayaç Okuma İşlemi" href="/SayacOkuma/Index/@item.ID">
+                                        <i class="fas fa-i-cursor"></i>
+                                        <i class="fas fa-pen"></i>
+                                    </a>
+
+                                    @*<div class="btn-group">
+                                            <button type="button" class="btn btn-outline-info btn-xs dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                                <i class="fas fa-i-cursor"></i>
+                                                <i class="fas fa-pen"></i>
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <a class="dropdown-item" href="/Sayac/Index/@item.ID?index=0&&tur=0" style="background-color: #fbb863c9; ">
+                                                    <i class="far fa-lightbulb fa-rotate-180"></i> &nbsp; Sıcak Su
+                                                </a>
+                                                <a class="dropdown-item" href="/Sayac/Index/@item.ID?index=0&&tur=1" style="background-color: #a5e18de0;">
+                                                    <i class="fab fa-hotjar" style="color: #b00729;"></i>&nbsp; Doğalgaz + Sıcak Su
+                                                </a>
+                                            </div>
+                                        </div>*@
                                 }
                                 else
                                 {
@@ -95,9 +110,6 @@
                                 <a class='btn btn-outline-danger btn-xs' title="Kaydı Sil !" data-id="@item.ID" onclick="Delete_Confirm(@item.ID)">
                                     <i class='fas fa-trash-alt'></i>
                                 </a>
-
-
-
                             </div>
                         </td>
                     </tr>
@@ -172,7 +184,7 @@
 @section scripts{
 
     <script>
-        _control = "Bina";       
+        _control = "Bina";
     </script>
 
 
