@@ -66,8 +66,7 @@ function Delete(_id, fireText = "Kaydı Silmek istediğinize emin misiniz?") {
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
         confirmButtonText: 'Evet, Sil &#x2713;',
-        cancelButtonText: 'İptal !',
-        closeOnConfirm: false
+        cancelButtonText: 'İptal !'        
     }).then(function (result) {
         if (result.isConfirmed) {
             $.ajax({
@@ -76,7 +75,8 @@ function Delete(_id, fireText = "Kaydı Silmek istediğinize emin misiniz?") {
                 success: function (data) {
                     if (data) {
                         Swal.fire('Silindi !', 'Kayıt Silme İşlemi Başarılı &#x2713;', 'success');
-                        $("#tr_" + _id).fadeOut($("#tr_" + _id).remove());
+                        const row = $("#tr_" + _id);
+                        row.fadeOut(() => row.remove());
                     }
                     else {
                         Swal.fire('Hata Oluştu!', 'İşlem sırasında hata oluştu?', 'warning');

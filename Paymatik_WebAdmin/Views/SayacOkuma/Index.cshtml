@@ -1,22 +1,42 @@
-﻿@{
-    ViewBag.Title = "Sayaç Okuma";
+﻿
+@{
+    EL.tbl_Bina _bina = (EL.tbl_Bina)ViewBag.Bina;
 }
 
-<h4>🧾 Sayaç Okuma Ekranı</h4>
+<div class="card card-outline card-warning">
+    <div class="card-header" style="padding: 5px 15px; background-color: #e6e6e9;">
+        <div class="d-flex justify-content-between align-items-center w-100 flex-wrap gap-2">
 
-<div class="row mb-3">
-    <div class="col-md-5">
-        <label>Dönem Seçiniz</label>
-        <select id="ddlDonem" class="form-control">
-            <option value="">Dönem Seçiniz</option>
-            @foreach (var item in ViewBag.Donemler as List<SelectListItem>)
-            {
-                <option value="@item.Value">@item.Text</option>
-            }
-        </select>
-    </div>
-    <div class="col-md-3 d-flex align-items-end">
-        <button id="btnBasla" class="btn btn-primary">Okumaya Başla</button>
+            <!-- 1. Açıklama metni -->
+            <div style="flex-shrink: 0;">
+                <i class="fab fa-staylinked">
+                    <b>@_bina.Ad</b> Apartmanı Sayaç Okuma Ekranı 🧾
+                </i>
+            </div>
+
+            <!-- 2. Dönem seçimi + Buton -->
+            <div class="d-flex align-items-center flex-shrink-1" style="gap: 8px;">
+                <label style="white-space: nowrap; min-width: 100px; margin-bottom: 0px" >Dönem Seçiniz:</label>
+                <select id="ddlDonem" class="form-control form-control-sm" style="white-space: nowrap; min-width: 175px;">
+                    <option value="">Dönem Seçiniz</option>
+                    @foreach (var item in ViewBag.Donemler as List<SelectListItem>)
+                    {
+                        <option value="@item.Value">@item.Text</option>
+                    }
+                </select>
+                <button id="btnBasla" class="btn btn-primary btn-sm" style="white-space: nowrap; min-width: 140px;">
+                    <i class="fas fa-play"></i> &nbsp; Okumaya Başla
+                </button>
+            </div>
+
+            <!-- 3. Geri dön linki -->
+            <div style="flex-shrink: 0;">
+                <a id="btn_geriDon" href="/Bina/Index" class="btn btn-outline-info btn-sm">
+                    <i class="fas fa-level-down-alt fa-rotate-90"></i>&nbsp; Binalar Listesine Geri Dön
+                </a>
+            </div>
+
+        </div>
     </div>
 </div>
 
@@ -32,7 +52,7 @@
         }
 
         $.post('@Url.Action("GetOkumaTablosu", "SayacOkuma")', {
-            binaId: '@ViewBag.BinaId',
+            binaId: '@_bina.ID',
             donemId: donemId
         }, function (html) {
             $('#okumaPaneli').html(html);

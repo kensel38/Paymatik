@@ -22,7 +22,8 @@ namespace EL
     
         public int ID { get; set; }
         public int BinaId { get; set; }
-        public string Donem { get; set; }
+        public int DonemID { get; set; }
+        public string DonemAdi { get; set; }
         public Nullable<decimal> SayactanOkunanHacim { get; set; }
         public decimal FaturaTutar { get; set; }
         public Nullable<int> SuSicakligi { get; set; }

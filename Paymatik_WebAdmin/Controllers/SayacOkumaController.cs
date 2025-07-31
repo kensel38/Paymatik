@@ -16,7 +16,7 @@ public class SayacOkumaController : Controller
 
     public ActionResult Index(int id) // binaId
     {
-        ViewBag.BinaId = id;
+        ViewBag.Bina = _uow.GetRepo<tbl_Bina>().GetByID(id);
 
         var donemler = _uow.GetRepo<tbl_Donem>()
             .GetAll_ByParam(x => x.BinaId == id)
@@ -53,7 +53,7 @@ public class SayacOkumaController : Controller
         int oncekiDonemNo = (int)donem.ID - 1;
 
         var oncekiDonem = _uow.GetRepo<tbl_Donem>().Get_ByParam(x =>
-            x.BinaId == binaId && x.DonemNo == oncekiDonemNo);
+            x.BinaId == binaId && x.ID == oncekiDonemNo);
 
         var viewModelList = new List<SayacOkumaViewModel>();
 

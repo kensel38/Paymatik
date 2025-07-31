@@ -29,7 +29,7 @@ namespace Paymatik_WebAdmin.Controllers
         {
             ViewBag.Binalar = _uow.GetRepo<tbl_Bina>().GetAll();
             var donemler = _uow.GetRepo<tbl_Donem>().GetAll_ByParam(x => x.tbl_Bina.ID == id).OrderByDescending(x => x.DonemAdi).ToList();
-            ViewBag.Donem = new SelectList(donemler, "Donem", "Donem");
+            ViewBag.Donem = new SelectList(donemler, "DonemID", "DonemAdi");
             var ent = _uow.GetRepo<tbl_Paylasim>().GetByID(id);
             return PartialView("_paylasimEkle", ent);
         }
@@ -39,9 +39,9 @@ namespace Paymatik_WebAdmin.Controllers
         {
             var donemler = _uow.GetRepo<tbl_Donem>().GetAll_ByParam(x => x.tbl_Bina.ID == binaId).OrderByDescending(x => x.DonemAdi).Select(d => new
             {
-                value = d.DonemAdi,
+                value = d.ID,
                 text = d.DonemAdi
-            }).ToList();
+            }).OrderBy(x => x.value).ToList();
             return Json(donemler, JsonRequestBehavior.AllowGet);
         }
 
@@ -89,6 +89,8 @@ namespace Paymatik_WebAdmin.Controllers
             }
         }
 
+
+
         public ActionResult Detay(int PaylasimId)
         {
             ViewBag.PaylasimId = PaylasimId;
@@ -100,7 +102,7 @@ namespace Paymatik_WebAdmin.Controllers
         {
             var _paylasim = _uow.GetRepo<tbl_Paylasim>().GetByID(PaylasimId);
             var _bagbolList = _uow.GetRepo<tbl_BagBol>().GetAll_ByParam(x => x.BinaId == _paylasim.BinaId);
-            var _sayaclar = _uow.GetRepo<tbl_SayacOkuma>().GetAll_ByParam(x => x.tbl_BagBol.BinaId == _paylasim.BinaId && x.tbl_Donem.DonemAdi == _paylasim.Donem);
+            var _sayaclar = _uow.GetRepo<tbl_SayacOkuma>().GetAll_ByParam(x => x.tbl_BagBol.BinaId == _paylasim.BinaId && x.tbl_Donem.ID == _paylasim.DonemID);
 
             double _toplamMetrekare = _bagbolList.Sum(b => b.Metrekare ?? 0);
             double _toplamKalorimetre = _bagbolList.Sum(b => _sayaclar.FirstOrDefault(s => s.BagBolId == b.ID && s.SayacTuru == SayacTurleri.DogalGaz)?.GuncelDeger
@@ -201,7 +203,7 @@ namespace Paymatik_WebAdmin.Controllers
             var viewModel = new PaylasimDetayViewModel
             {
                 BinaAdi = _paylasim.tbl_Bina.Ad,
-                DonemAdi = _paylasim.Donem,
+                DonemAdi = _paylasim.DonemAdi,
                 FaturaTutar = _paylasim.FaturaTutar,
                 SayactanOkunanHacim = _paylasim.SayactanOkunanHacim ?? 0,
                 SuSicakligi = _paylasim.SuSicakligi ?? 0,

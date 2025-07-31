@@ -18,8 +18,8 @@ namespace EL
         public tbl_Bina()
         {
             this.tbl_BagBol = new HashSet<tbl_BagBol>();
-            this.tbl_Paylasim = new HashSet<tbl_Paylasim>();
             this.tbl_Donem = new HashSet<tbl_Donem>();
+            this.tbl_Paylasim = new HashSet<tbl_Paylasim>();
         }
     
         public int ID { get; set; }
@@ -30,8 +30,8 @@ namespace EL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tbl_BagBol> tbl_BagBol { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tbl_Paylasim> tbl_Paylasim { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tbl_Donem> tbl_Donem { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tbl_Paylasim> tbl_Paylasim { get; set; }
     }
 }
