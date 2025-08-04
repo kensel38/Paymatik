@@ -24,16 +24,18 @@ namespace EL
         public int BinaId { get; set; }
         public int DonemID { get; set; }
         public string DonemAdi { get; set; }
+        public string FaturaTur { get; set; }
         public Nullable<decimal> SayactanOkunanHacim { get; set; }
-        public decimal FaturaTutar { get; set; }
+        public Nullable<decimal> FaturaTutar { get; set; }
         public Nullable<int> SuSicakligi { get; set; }
+        public Nullable<decimal> SogukSuFiyat { get; set; }
         public Nullable<bool> DusukKullanimCeza { get; set; }
         public string CezaDagitimTur { get; set; }
         public Nullable<System.DateTime> HesaplamaTarihi { get; set; }
         public Nullable<System.DateTime> FaturaSonOdemeTarihi { get; set; }
     
-        public virtual tbl_Bina tbl_Bina { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tbl_PaylasimDetay> tbl_PaylasimDetay { get; set; }
+        public virtual tbl_Bina tbl_Bina { get; set; }
     }
 }

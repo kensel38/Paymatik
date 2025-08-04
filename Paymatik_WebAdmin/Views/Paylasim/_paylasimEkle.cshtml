@@ -26,7 +26,7 @@
                             <option value="">-- Seçiniz --</option>
                             @foreach (var bina in binalar)
                             {
-                                <option value="@bina.ID">@bina.Ad</option>
+                                <option value="@bina.ID" @(bina.ID == Model.BinaId ? "selected" : "")>@bina.Ad</option>
                             }
                         </select>
                     </div>
@@ -34,31 +34,41 @@
 
                 <!-- Dönem Seçimi -->
                 <div class="form-group row">
-                    @Html.LabelFor(model => model.DonemAdi, "Dönem Seçiniz", htmlAttributes: new { @class = "control-label col-md-4" })
+                    @Html.LabelFor(model => model.DonemID, "Dönem Seçiniz", htmlAttributes: new { @class = "control-label col-md-4" })
                     <div class="col-md-8">
-                        <select id="Donem" name="Donem" class="form-control">
-                            <option value="">-- Önce bina seçiniz --</option>
+                        <select id="DonemID" name="DonemID" class="form-control">
+                            <option value="">-- Seçiniz --</option>
+                            @foreach (var d in (SelectList)ViewBag.Donem)
+                            {
+                                <option value="@d.Value" @(d.Value == Model.DonemID.ToString() ? "selected" : "")>@d.Text</option>
+                            }
                         </select>
+
                     </div>
                 </div>
+                <!-- DönemAdı Seçimi -->
+                @Html.HiddenFor(model => model.DonemAdi)
 
 
+
+                <!-- Sayactan Okunan Hacim -->
                 <div class="form-group row">
                     @Html.LabelFor(model => model.SayactanOkunanHacim, "Okunan Hacim", htmlAttributes: new { @class = "control-label col-md-4" })
                     <div class="col-md-8">
-                        @Html.TextBoxFor(model => model.SayactanOkunanHacim, new { @class = "form-control ", type = "number", step = "1", min = "0" })
+                        @Html.TextBoxFor(model => model.SayactanOkunanHacim, new { @class = "form-control", type = "number", step = "0.01", min = "0" })
                         @Html.ValidationMessageFor(model => model.SayactanOkunanHacim, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
-
+                <!-- Fatura Tutar -->
                 <div class="form-group row">
-                    @Html.LabelFor(model => model.FaturaTutar, "FaturaTutar (₺)", htmlAttributes: new { @class = "control-label col-md-4" })
+                    @Html.LabelFor(model => model.FaturaTutar, "Fatura Tutarı (₺)", htmlAttributes: new { @class = "control-label col-md-4" })
                     <div class="col-md-8">
-                        @Html.TextBoxFor(model => model.FaturaTutar, new { @class = "form-control ", type = "number", step = "0.01", min = "0" })
+                        @Html.TextBoxFor(model => model.FaturaTutar, new { @class = "form-control", type = "number", step = "0.01", min = "0" })
                         @Html.ValidationMessageFor(model => model.FaturaTutar, "", new { @class = "text-danger" })
                     </div>
                 </div>
+
 
                 <div class="form-group row">
                     @Html.LabelFor(model => model.SuSicakligi, "Su Sıcaklığı", htmlAttributes: new { @class = "control-label col-md-4" })
@@ -69,15 +79,20 @@
                 </div>
 
                 <div class="form-group row">
-                    @Html.LabelFor(model => model.FaturaSonOdemeTarihi, "Son Odeme Tarihi", htmlAttributes: new { @class = "control-label col-md-4" })
+                    @Html.LabelFor(model => model.SogukSuFiyat, "Su Fiyat (m³)", htmlAttributes: new { @class = "control-label col-md-4" })
                     <div class="col-md-8">
-                        @Html.TextBoxFor(model => model.FaturaSonOdemeTarihi, new { @class = "form-control ", type = "date" })
-                        @Html.ValidationMessageFor(model => model.FaturaSonOdemeTarihi, "", new { @class = "text-danger" })
+                        @Html.TextBoxFor(model => model.SogukSuFiyat, new { @class = "form-control ", type = "number", step = "1", min = "0" })
+                        @Html.ValidationMessageFor(model => model.SogukSuFiyat, "", new { @class = "text-danger" })
                     </div>
                 </div>
 
-        
-
+                <div class="form-group row">
+                    @Html.LabelFor(model => model.FaturaSonOdemeTarihi, "Son Odeme Tarihi", htmlAttributes: new { @class = "control-label col-md-4" })
+                    <div class="col-md-8">
+                        @Html.TextBox("FaturaSonOdemeTarihi", Model.FaturaSonOdemeTarihi?.ToString("yyyy-MM-dd"), new { @class = "form-control", type = "date" })
+                        @Html.ValidationMessageFor(model => model.FaturaSonOdemeTarihi, "", new { @class = "text-danger" })
+                    </div>
+                </div>
 
                 <div class="form-group row">
                     @Html.LabelFor(model => model.DusukKullanimCeza, "Düşük Kullnm Ceza ?", htmlAttributes: new { @class = "control-label col-md-4", title = "Düşük kullanım cezası, belirli eşik altında tüketim yapanlar için uygulanır." })
@@ -92,20 +107,17 @@
                 <div id="CezaDagitimTurContainer" class="form-group row" style="display:flex">
                     @Html.LabelFor(model => model.CezaDagitimTur, "Ceza Dağıtım Türü", htmlAttributes: new { @class = "control-label col-md-4" })
                     <div class="col-md-8">
-                        @Html.RadioButtonFor(model => model.CezaDagitimTur, BL.constants.CezaDagitimTur.KomsuKat, new
-                        { @class = "control-label col-md-1", id = "CezaDagitimTur_KomsuKat" })
+                        @Html.RadioButtonFor(model => model.CezaDagitimTur, BL.constants.CezaDagitimTur.KomsuKat,
+                            new { @class = "control-label col-md-1", id = "CezaDagitimTur_KomsuKat" })
                         @BL.constants.CezaDagitimTur.KomsuKat
 
-                        @Html.RadioButtonFor(model => model.CezaDagitimTur, BL.constants.CezaDagitimTur.Genel, new
-                        { @class = "control-label col-md-1 offset-1", id = "CezaDagitimTur_Genel", @checked = true })
+                        @Html.RadioButtonFor(model => model.CezaDagitimTur, BL.constants.CezaDagitimTur.Genel,
+                            new { @class = "control-label col-md-1 offset-1", id = "CezaDagitimTur_Genel" })
                         @BL.constants.CezaDagitimTur.Genel
-
                     </div>
-
-
-
-
                 </div>
+
+
             </div>
         </div>
     </form>
@@ -120,7 +132,7 @@
 
 <script>
     // Save Process
-    $("#btn_Kaydet").click(function () {
+    $("#btn_Kaydet").click(function () {       
         Add();
     });
     //- Save Process
@@ -130,6 +142,8 @@
 
 <script>
     $(document).ready(function () {
+
+
         $('#BinaId').change(function () {
             const binaId = $(this).val();
 
@@ -139,20 +153,25 @@
                     type: 'GET',
                     data: { binaId: binaId },
                     success: function (donemler) {
-                        const donemDropdown = $('#Donem');
+                        const donemDropdown = $('#DonemID');
                         donemDropdown.empty();
 
                         donemDropdown.append($('<option>', {
                             value: '',
                             text: '-- Dönem Seçiniz --'
-                        }));
+                        }));                      
 
                         $.each(donemler, function (i, item) {
-
                             donemDropdown.append($('<option>', {
-                                value: item.value,
-                                text: item.text
+                                value: item.DonemID,
+                                text: item.DonemAdi
                             }));
+                        });
+
+                        // Dönem değiştiğinde adını yakalayıp hidden input'a yaz
+                        $('#DonemID').change(function () {
+                            var selectedText = $("#DonemID option:selected").text();
+                            $('input[name="DonemAdi"]').val(selectedText);
                         });
                     }
                 });
@@ -160,12 +179,6 @@
         });
     });
 </script>
-
-<script>
-
-
-</script>
-
 
 
 <script>

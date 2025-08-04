@@ -21,13 +21,25 @@ namespace Paymatik_WebAdmin.Controllers
         [HttpGet]
         public ActionResult EkleDuzenle(int id)
         {
-            var ent = _uow.GetRepo<tbl_Bina>().GetByID(id);
+            tbl_Bina ent = null;
+            if (id == 0)
+            {
+                ent = new tbl_Bina { BinaKodu = "Bk_10" + (_uow.GetRepo<tbl_Bina>().GetAll().Count + 1), SayacsizCezaOrani = (decimal?)1.6f };
+            }
+            else
+            {
+                ent = _uow.GetRepo<tbl_Bina>().GetByID(id);
+            }
             return PartialView("_binaEkleDuzenlePartial", ent);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult EkleDuzenle(tbl_Bina entity)
         {
+            if (!ModelState.IsValid)
+                return PartialView("_binaEkleDuzenlePartial", entity);
+
             if (entity.ID == 0)
             {
                 _uow.GetRepo<tbl_Bina>().Add(entity);

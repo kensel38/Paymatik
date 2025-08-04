@@ -27,9 +27,29 @@
                         @Html.DisplayNameFor(model => model.BinaKodu)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Adres)
+                        @Html.DisplayNameFor(model => model.DogalgazSayacTuru)
                     </th>
 
+                    <th>
+                        @Html.DisplayNameFor(model => model.SicakSuBaglantiTuru)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.SayacsizCezaOrani)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.Il)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Ilce)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Mahalle)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Adres)
+                    </th>
                     <th> İşlemler </th>
                 </tr>
             </thead>
@@ -45,16 +65,26 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.BinaKodu)
                         </td>
-
-                        <td title="@item.Adres">
-                            @if (item.Adres != null && item.Adres.Length >= 70)
-                            {
-                                @item.Adres.Substring(0, 70) <small><strong> devamı ...</strong></small>
-                            }
-                            else
-                            {
-                                @item.Adres
-                            }
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DogalgazSayacTuru)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SicakSuBaglantiTuru)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SayacsizCezaOrani)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Il)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Ilce)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Mahalle)
+                        </td>
+                        <td class="adres-cell" data-toggle="tooltip" title="@item.Adres">
+                            @(item.Adres?.Length > 20 ? item.Adres.Substring(0, 20) + "..."  : item.Adres)
                         </td>
 
                         <td>
@@ -119,10 +149,31 @@
                 <tr>
 
                     <th>
-                        @Html.DisplayNameFor(model => model.Ad)
+                        @Html.DisplayName("Bina Adı")
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.BinaKodu)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.DogalgazSayacTuru)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.SicakSuBaglantiTuru)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.SayacsizCezaOrani)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.Il)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Ilce)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Mahalle)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.Adres)
@@ -181,12 +232,16 @@
 
 
 
+
 @section scripts{
 
     <script>
         _control = "Bina";
-    </script>
 
+        $(function () {
+            $('[data-toggle="tooltip"]').tooltip();
+        });
+    </script>
 
 }
 

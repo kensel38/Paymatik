@@ -27,14 +27,14 @@ namespace EL
     
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<tbl_BagBol> tbl_BagBol { get; set; }
-        public virtual DbSet<tbl_Bina> tbl_Bina { get; set; }
         public virtual DbSet<tbl_Donem> tbl_Donem { get; set; }
         public virtual DbSet<tbl_Kullanici> tbl_Kullanici { get; set; }
+        public virtual DbSet<tbl_Paylasim> tbl_Paylasim { get; set; }
         public virtual DbSet<tbl_PaylasimDetay> tbl_PaylasimDetay { get; set; }
         public virtual DbSet<tbl_SayacOkuma> tbl_SayacOkuma { get; set; }
         public virtual DbSet<tbl_Tanimlar> tbl_Tanimlar { get; set; }
         public virtual DbSet<view_BinaFaturaDetay> view_BinaFaturaDetay { get; set; }
         public virtual DbSet<view_BinaSayacOkuma> view_BinaSayacOkuma { get; set; }
-        public virtual DbSet<tbl_Paylasim> tbl_Paylasim { get; set; }
+        public virtual DbSet<tbl_Bina> tbl_Bina { get; set; }
     }
 }

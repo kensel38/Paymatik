@@ -18,20 +18,26 @@ namespace EL
         public tbl_Bina()
         {
             this.tbl_BagBol = new HashSet<tbl_BagBol>();
-            this.tbl_Donem = new HashSet<tbl_Donem>();
             this.tbl_Paylasim = new HashSet<tbl_Paylasim>();
+            this.tbl_Donem = new HashSet<tbl_Donem>();
         }
     
         public int ID { get; set; }
         public string Ad { get; set; }
         public string BinaKodu { get; set; }
+        public string DogalgazSayacTuru { get; set; }
+        public string SicakSuBaglantiTuru { get; set; }
+        public Nullable<decimal> SayacsizCezaOrani { get; set; }
+        public string Il { get; set; }
+        public string Ilce { get; set; }
+        public string Mahalle { get; set; }
         public string Adres { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tbl_BagBol> tbl_BagBol { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tbl_Donem> tbl_Donem { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tbl_Paylasim> tbl_Paylasim { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tbl_Donem> tbl_Donem { get; set; }
     }
 }

@@ -24,14 +24,30 @@ namespace Paymatik_WebAdmin.Controllers
             return View(_uow.GetRepo<tbl_Paylasim>().GetAll());
         }
 
+
         [HttpGet]
         public ActionResult EkleDuzenle(int id)
         {
             ViewBag.Binalar = _uow.GetRepo<tbl_Bina>().GetAll();
-            var donemler = _uow.GetRepo<tbl_Donem>().GetAll_ByParam(x => x.tbl_Bina.ID == id).OrderByDescending(x => x.DonemAdi).ToList();
-            ViewBag.Donem = new SelectList(donemler, "DonemID", "DonemAdi");
+
             var ent = _uow.GetRepo<tbl_Paylasim>().GetByID(id);
-            return PartialView("_paylasimEkle", ent);
+
+            if (ent != null)
+            {
+                // Mevcut kayıt güncelleme ise
+                var donemler = _uow.GetRepo<tbl_Donem>().GetAll_ByParam(x => x.BinaId == ent.BinaId).OrderByDescending(x => x.DonemAdi).ToList();
+                ViewBag.Donem = new SelectList(donemler, "ID", "DonemAdi", ent.DonemID);
+                return PartialView("_paylasimEkle", ent);
+            }
+            else
+            {
+                // Yeni kayıt
+                ViewBag.Donem = new SelectList(new List<tbl_Donem>(), "ID", "DonemAdi");
+                return PartialView("_paylasimEkle", new tbl_Paylasim
+                {
+                    SuSicakligi = 50 // Yeni kayıt ise başlangıçta 50 gelsin
+                });
+            }
         }
 
         [HttpGet]
@@ -39,9 +55,9 @@ namespace Paymatik_WebAdmin.Controllers
         {
             var donemler = _uow.GetRepo<tbl_Donem>().GetAll_ByParam(x => x.tbl_Bina.ID == binaId).OrderByDescending(x => x.DonemAdi).Select(d => new
             {
-                value = d.ID,
-                text = d.DonemAdi
-            }).OrderBy(x => x.value).ToList();
+                DonemID = d.ID,
+                DonemAdi = d.DonemAdi
+            }).OrderBy(x => x.DonemID).ToList();
             return Json(donemler, JsonRequestBehavior.AllowGet);
         }
 
@@ -57,7 +73,7 @@ namespace Paymatik_WebAdmin.Controllers
                 _uow.GetRepo<tbl_Paylasim>().Update(entity);
             }
 
-            return RedirectToAction("Detay", new { id = entity.ID });
+            return RedirectToAction("Index");
         }
 
         [HttpGet]
@@ -128,7 +144,7 @@ namespace Paymatik_WebAdmin.Controllers
                 double isinmaDaire = (double)_paylasim.FaturaTutar * 0.7 * kalorimetreFark / _toplamMetrekare;
 
                 double suIsitmaBedeli = 1.2 * _toplamSicakSu * ((int)_paylasim.SuSicakligi - 10) / 1000 * _yakitBirimFiyati;
-                double suBedeli = sicakSuFark * 25;
+                double suBedeli = sicakSuFark * (double)_paylasim.SogukSuFiyat; // soğuksu birim fiyatı
 
                 detayList.Add(new PaylasimDetayItem
                 {
@@ -204,7 +220,7 @@ namespace Paymatik_WebAdmin.Controllers
             {
                 BinaAdi = _paylasim.tbl_Bina.Ad,
                 DonemAdi = _paylasim.DonemAdi,
-                FaturaTutar = _paylasim.FaturaTutar,
+                FaturaTutar = _paylasim.FaturaTutar ?? 0,
                 SayactanOkunanHacim = _paylasim.SayactanOkunanHacim ?? 0,
                 SuSicakligi = _paylasim.SuSicakligi ?? 0,
                 DusukKullanimCeza = _paylasim.DusukKullanimCeza ?? false,

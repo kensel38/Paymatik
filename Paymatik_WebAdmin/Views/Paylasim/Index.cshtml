@@ -38,7 +38,12 @@
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.SuSicakligi)
+                    </th>                 
+
+                    <th>
+                        @Html.DisplayName("Soğuk Su Fiyat (m³)")
                     </th>
+
                     <th title="Düşük Kullanımda Ceza Uygulanacak mı ?">
                         @Html.DisplayName("DüşükCeza")
                     </th>
@@ -75,12 +80,17 @@
                         </td>
 
                         <td>
-                            @(item.FaturaTutar.ToString("#,##0.00 '₺'", new CultureInfo("tr-TR")))
+                            @(item.FaturaTutar.HasValue ? item.FaturaTutar.Value.ToString("N2") + "\u00A0₺" : "0 ₺")
                         </td>
 
                         <td>
-                            @Html.DisplayFor(modelItem => item.SuSicakligi)
+                            @(item.SuSicakligi.HasValue ? item.SuSicakligi.Value.ToString("N2") + "\u00A0℃" : "0 ℃")
                         </td>
+
+                        <td>
+                            @(item.SogukSuFiyat.HasValue ? item.SogukSuFiyat.Value.ToString("N2") + "\u00A0₺" : "0 ₺")
+                        </td>
+
                         <td>
                             @if (item.DusukKullanimCeza == true)
                             {
@@ -115,7 +125,13 @@
                             <div style="text-align: center;">
 
                                 <a class='btn btn-outline-info btn-xs' title="Detay" href="/Paylasim/Detay?PaylasimId=@item.ID">
-                                    <i class="far fa-list-alt"></i>
+                                    <i class="far fa-list-alt"></i> Paylaşım Detayları
+                                </a>
+
+                                <span>—</span>
+
+                                <a class='btn btn-outline-primary btn-xs' title="Düzenle" onclick="Show_Modal(@item.ID)" data-toggle="modal" data-target="#_modal">
+                                    <span class='far fa-edit'></span>
                                 </a>
 
                                 <a class='btn btn-outline-danger btn-xs' title="Kaydı Sil !" data-id="@item.ID" onclick="Delete(@item.ID)">

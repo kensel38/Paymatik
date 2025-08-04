@@ -1,66 +1,236 @@
 ﻿
-@model  EL.tbl_Bina
+@model EL.tbl_Bina
 
 <link href="~/Content/leaflet_files/plugins/Dropdown/dist/css/dd.css" rel="stylesheet" />
 <script src="~/Content/leaflet_files/plugins/Dropdown/dist/js/dd.min.js"></script>
 
-
 @using (Html.BeginForm(null, null, FormMethod.Post, new { id = "form_entity" }))
 {
-    <form class="form-horizontal ">
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.ID)
+
+    @* İl/İlçe/Mahalle adları gizli alanlarda tutulacak *@
+    @Html.HiddenFor(model => model.Il)
+    @Html.HiddenFor(model => model.Ilce)
+    @Html.HiddenFor(model => model.Mahalle)
+
+    <div class="form-horizontal">
         <div class="card-body">
 
-
-            @Html.AntiForgeryToken()
-            @Html.HiddenFor(model => model.ID)
-
-            <div class="form-horizontal">
-
-                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                @Html.HiddenFor(model => model.ID)
-
-                <div class="form-group row">
-                    @Html.LabelFor(model => model.Ad, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.Ad, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.Ad, "", new { @class = "text-danger" })
-                    </div>
+            <div class="form-group row">
+                <label class="control-label col-md-5">Bina Adı</label>
+                <div class="col-md-7">
+                    @Html.TextBoxFor(model => model.Ad, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Ad, "", new { @class = "text-danger" })
                 </div>
-
-                <div class="form-group row">
-                    @Html.LabelFor(model => model.BinaKodu, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.EditorFor(model => model.BinaKodu, new { htmlAttributes = new { @class = "form-control" } })
-                        @Html.ValidationMessageFor(model => model.BinaKodu, "", new { @class = "text-danger" })
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    @Html.LabelFor(model => model.Adres, htmlAttributes: new { @class = "control-label col-md-2" })
-                    <div class="col-md-10">
-                        @Html.TextAreaFor(model => model.Adres, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.Adres, "", new { @class = "text-danger" })
-                    </div>
-                </div>               
-
             </div>
-        </div>
 
-    </form>
+            <div class="form-group row">
+                @Html.LabelFor(model => model.BinaKodu, new { @class = "control-label col-md-5" })
+                <div class="col-md-7">
+                    @Html.TextBoxFor(model => model.BinaKodu, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.BinaKodu, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <!-- Doğalgaz Sayaç Türü -->
+            <div class="form-group row">
+                <label class="control-label col-md-5">Doğalgaz Sayaç Türü</label>
+                <div class="col-md-7">
+                    @foreach (var tur in new[] { "Kalorimetre", "Isımetre" })
+                    {
+                        <label class="radio-inline mr-3">
+                            <input type="radio" name="DogalgazSayacTuru" value="@tur" @(Model.DogalgazSayacTuru == tur ? "checked" : "") /> @tur
+                        </label>
+                    }
+                </div>
+            </div>
+
+            <!-- Sıcak Su Bağlantı Türü -->
+            <div class="form-group row">
+                <label class="control-label col-md-5">Sıcak Su Bağlantı Türü</label>
+                <div class="col-md-7">
+                    @foreach (var tur in new[] { "Merkezi", "Bağımsız" })
+                    {
+                        <label class="radio-inline mr-3">
+                            <input type="radio" name="SicakSuBaglantiTuru" value="@tur" @(Model.SicakSuBaglantiTuru == tur ? "checked" : "") /> @tur
+                        </label>
+                    }
+                </div>
+            </div>
+
+            <!-- Sayaçsız Ceza Oranı -->
+            <div class="form-group row">
+                <label class="control-label col-md-5">Sayaçsız Ceza Oranı (%)</label>
+                <div class="col-md-7">
+                    @Html.TextBoxFor(model => model.SayacsizCezaOrani, new { @class = "form-control", type = "number", step = "0.1", min = "0" })
+                    @Html.ValidationMessageFor(model => model.SayacsizCezaOrani, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <!-- İl Seçimi -->
+            <div class="form-group row">
+                <label class="control-label col-md-5">İl</label>
+                <div class="col-md-7">
+                    <select id="ddlIl" class="form-control">
+                        <option value="">-- İl seçin --</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- İlçe Seçimi -->
+            <div class="form-group row">
+                <label class="control-label col-md-5">İlçe</label>
+                <div class="col-md-7">
+                    <select id="ddlIlce" class="form-control">
+                        <option value="">-- İlçe seçin --</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Mahalle Seçimi -->
+            <div class="form-group row">
+                <label class="control-label col-md-5">Mahalle</label>
+                <div class="col-md-7">
+                    <select id="ddlMahalle" name="Mahalle" class="form-control">
+                        <option value="">-- Mahalle seçin --</option>
+                    </select>
+                </div>
+            </div>
+
+
+            <div class="form-group row">
+                <label class="control-label col-md-5">Cadde/Sokak/BinaNo</label>
+                <div class="col-md-7">
+                    <input type="text" id="txtAdresDiger" class="form-control" placeholder="Örn: Elif Sok. Gül Apt. No:38" />
+                </div>
+            </div>
+
+            <!-- Adres -->
+            <div class="form-group row">
+                @Html.LabelFor(model => model.Adres, new { @class = "control-label col-md-5" })
+                <div class="col-md-7">
+                    @Html.TextAreaFor(model => model.Adres, new { @class = "form-control", rows = 3, id = "txtAdres" })
+                    @Html.ValidationMessageFor(model => model.Adres, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+        </div>
+    </div>
 }
 
 
-<script>
 
+<script>
+    $(document).ready(function () {
+        const ddlIl = $('#ddlIl');
+        const ddlIlce = $('#ddlIlce');
+        const ddlMahalle = $('#ddlMahalle');
+        const txtAdres = $('#txtAdres');
+
+    const hiddenIl = $('input[name="Il"]');
+    const hiddenIlce = $('input[name="Ilce"]');
+    const hiddenMahalle = $('input[name="Mahalle"]');
+
+    // İl dropdown doldur
+    fetch('https://turkiyeapi.dev/api/v1/provinces')
+        .then(response => response.json())
+        .then(result => {
+            ddlIl.empty().append('<option value="">-- İl seçin --</option>');
+            result.data.forEach(il => {
+                ddlIl.append(`<option value="${il.id}">${il.name}</option>`);
+            });
+
+            const eskiIl = '@Model.Il';
+            if (eskiIl) {
+                const selectedIl = result.data.find(x => x.name === eskiIl);
+                if (selectedIl) {
+                    ddlIl.val(selectedIl.id).trigger('change');
+                }
+            }
+        });
+
+    ddlIl.change(function () {
+        const ilId = $(this).val();
+        const ilAd = $(this).find('option:selected').text();
+        hiddenIl.val(ilAd);
+
+        ddlIlce.empty().append('<option value="">-- İlçe seçin --</option>');
+        ddlMahalle.empty().append('<option value="">-- Mahalle seçin --</option>');
+
+        if (!ilId) return;
+
+        fetch(`https://turkiyeapi.dev/api/v1/districts?provinceId=${ilId}`)
+            .then(response => response.json())
+            .then(result => {
+                result.data.forEach(ilce => {
+                    ddlIlce.append(`<option value="${ilce.id}">${ilce.name}</option>`);
+                });
+
+                const eskiIlce = '@Model.Ilce';
+                if (eskiIlce) {
+                    const selectedIlce = result.data.find(x => x.name === eskiIlce);
+                    if (selectedIlce) {
+                        ddlIlce.val(selectedIlce.id).trigger('change');
+                    }
+                }
+            });
+    });
+
+    ddlIlce.change(function () {
+        const ilceId = $(this).val();
+        const ilceAd = $(this).find('option:selected').text();
+        const ilAd = ddlIl.find('option:selected').text();
+
+        hiddenIlce.val(ilceAd);
+
+        ddlMahalle.empty().append('<option value="">-- Mahalle seçin --</option>');
+
+        if (!ilceId) return;
+
+        fetch(`https://turkiyeapi.dev/api/v1/neighborhoods?districtId=${ilceId}`)
+            .then(response => response.json())
+            .then(result => {
+                result.data.forEach(mahalle => {
+                    ddlMahalle.append(`<option value="${mahalle.name}">${mahalle.name}</option>`);
+                });
+
+
+                const eskiMahalle = '@Model.Mahalle';
+                if (eskiMahalle) {
+                    ddlMahalle.val(eskiMahalle);
+                    hiddenMahalle.val(eskiMahalle);
+                }
+            });
+    });
+
+    ddlMahalle.change(function () {
+          const mahalleAd = $(this).val();
+          hiddenMahalle.val(mahalleAd);
+      });
+
+
+      function guncelleAdres() {
+          const diger = $('#txtAdresDiger').val().trim();
+          const mahalle = ddlMahalle.find('option:selected').text();
+          const ilce = ddlIlce.find('option:selected').text();
+          const il = ddlIl.find('option:selected').text();        
+
+          
+          txtAdres.val(`${mahalle} Mah. ${diger}  ${ilce}/${il}`);
+      }
+
+        $(document).on('input', '#txtAdresDiger', guncelleAdres);
+});
+</script>
+
+
+<script>
     // Save Process
     $("#btn_Kaydet").click(function () {
         Add();
     });
     //- Save Process
-
-
-
-
 </script>
 
 

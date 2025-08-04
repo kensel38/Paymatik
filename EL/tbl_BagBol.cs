@@ -29,12 +29,14 @@ namespace EL
         public Nullable<double> Metrekare { get; set; }
         public string BagBolTur { get; set; }
         public bool OrtakAlan { get; set; }
+        public Nullable<bool> IsinmaDahil { get; set; }
+        public Nullable<bool> SicakSuDahil { get; set; }
         public int OkumaSirasi { get; set; }
     
-        public virtual tbl_Bina tbl_Bina { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tbl_PaylasimDetay> tbl_PaylasimDetay { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tbl_SayacOkuma> tbl_SayacOkuma { get; set; }
+        public virtual tbl_Bina tbl_Bina { get; set; }
     }
 }

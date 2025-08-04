@@ -6,23 +6,23 @@
     <edmx:Diagrams>
       <Diagram DiagramId="c483a740dba54e21a8042196f257cefc" Name="Diagram1">
         <EntityTypeShape EntityType="PaymatikDBModel.sysdiagrams" Width="1.5" PointX="5.75" PointY="0.75" />
-        <EntityTypeShape EntityType="PaymatikDBModel.tbl_BagBol" Width="1.5" PointX="3" PointY="7.625" />
-        <EntityTypeShape EntityType="PaymatikDBModel.tbl_Bina" Width="1.5" PointX="0.75" PointY="7.75" />
-        <EntityTypeShape EntityType="PaymatikDBModel.tbl_Donem" Width="1.5" PointX="3" PointY="11.625" />
-        <EntityTypeShape EntityType="PaymatikDBModel.tbl_Kullanici" Width="1.5" PointX="7.75" PointY="0.75" />
-        <EntityTypeShape EntityType="PaymatikDBModel.tbl_PaylasimDetay" Width="1.5" PointX="5.25" PointY="5.5" />
-        <EntityTypeShape EntityType="PaymatikDBModel.tbl_SayacOkuma" Width="1.5" PointX="5.25" PointY="9.75" />
+        <EntityTypeShape EntityType="PaymatikDBModel.tbl_BagBol" Width="1.5" PointX="3" PointY="11.5" />
+        <EntityTypeShape EntityType="PaymatikDBModel.tbl_Donem" Width="1.5" PointX="3" PointY="7.75" />
+        <EntityTypeShape EntityType="PaymatikDBModel.tbl_Kullanici" Width="1.5" PointX="5.75" PointY="3.75" />
+        <EntityTypeShape EntityType="PaymatikDBModel.tbl_Paylasim" Width="1.5" PointX="3" PointY="3.125" />
+        <EntityTypeShape EntityType="PaymatikDBModel.tbl_PaylasimDetay" Width="1.5" PointX="5.25" PointY="7.5" />
+        <EntityTypeShape EntityType="PaymatikDBModel.tbl_SayacOkuma" Width="1.5" PointX="5.25" PointY="12.125" />
         <EntityTypeShape EntityType="PaymatikDBModel.tbl_Tanimlar" Width="1.5" PointX="0.75" PointY="0.75" />
-        <EntityTypeShape EntityType="PaymatikDBModel.view_BinaFaturaDetay" Width="1.5" PointX="7.75" PointY="4.75" />
-        <EntityTypeShape EntityType="PaymatikDBModel.view_BinaSayacOkuma" Width="1.5" PointX="9.75" PointY="0.75" />
-        <AssociationConnector Association="PaymatikDBModel.FK__Daireler__BinaId__2A4B4B5E" />
+        <EntityTypeShape EntityType="PaymatikDBModel.view_BinaFaturaDetay" Width="1.5" PointX="7.75" PointY="0.75" />
+        <EntityTypeShape EntityType="PaymatikDBModel.view_BinaSayacOkuma" Width="1.5" PointX="7.75" PointY="6.75" />
         <AssociationConnector Association="PaymatikDBModel.FK__PaylasimD__Daire__3B75D760" />
         <AssociationConnector Association="PaymatikDBModel.FK_tbl_SayacOkuma_tbl_BagBol" />
-        <AssociationConnector Association="PaymatikDBModel.FK_tbl_Donem_tbl_Bina" />
         <AssociationConnector Association="PaymatikDBModel.FK_tbl_SayacOkuma_tbl_Donem" />
-        <EntityTypeShape EntityType="PaymatikDBModel.tbl_Paylasim" Width="1.5" PointX="3" PointY="3.125" />
-        <AssociationConnector Association="PaymatikDBModel.FK__Paylasiml__BinaI__37A5467C" />
         <AssociationConnector Association="PaymatikDBModel.FK__PaylasimD__Payla__3A81B327" />
+        <EntityTypeShape EntityType="PaymatikDBModel.tbl_Bina" Width="1.5" PointX="0.75" PointY="7.375" />
+        <AssociationConnector Association="PaymatikDBModel.FK__Daireler__BinaId__2A4B4B5E" />
+        <AssociationConnector Association="PaymatikDBModel.FK__Paylasiml__BinaI__37A5467C" />
+        <AssociationConnector Association="PaymatikDBModel.FK_tbl_Donem_tbl_Bina" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
